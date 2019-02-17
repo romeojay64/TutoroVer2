@@ -1,5 +1,7 @@
 {
   "name": "tutoro",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }

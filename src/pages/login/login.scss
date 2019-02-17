@@ -1,0 +1,29 @@
+page-login {
+    .background {
+        background-color:  color($colors, bg);
+        // background: linear-gradient(10deg, color($colors, primary), color($colors, dark))
+    }
+
+    .scroll-content{
+        text-align: center;
+    }
+
+    ion-card.card{
+        border-radius: 10px;
+    }
+
+    ion-input{
+        border-bottom: color($colors, primary) solid 1px;
+    }
+    
+    img{
+        width: 65%;
+        margin-top: 60px;
+        margin-bottom: 40px;
+        margin-right: 20px;
+    }
+        
+    
+    
+
+}

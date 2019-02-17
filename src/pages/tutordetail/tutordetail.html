@@ -1,0 +1,27 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Tutor Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card>
+        <ion-card-header>
+            <h2>{{(profileData | async)?.fname}} {{(profileData | async)?.lname}}</h2>
+          </ion-card-header>
+          <ion-card-content>
+              <p>Type: {{(profileData | async)?.type}}</p>
+              <p>Birthday: {{(profileData | async)?.dob}}</p>
+              <p>Educational Level: {{(profileData | async)?.educlevel}}</p>
+          
+              <p>Subjects:</p>
+              <ion-list>
+                <ion-item  *ngFor="let sub of subjectArray">
+                  <ion-label>{{sub.val | json}}</ion-label>
+                </ion-item>
+              </ion-list>
+          </ion-card-content>
+    </ion-card>
+
+</ion-content>

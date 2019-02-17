@@ -1,0 +1,19 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Interests</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list>
+        <ion-item *ngFor="let sub of subjects">
+          <ion-label>{{sub.val}}</ion-label>
+            <ion-checkbox slot="end" (click)="selectInterests(sub)"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+<br>
+      <button ion-button (click)="logout()">Log out</button>
+      <button ion-button block (click)="done()">Done</button>
+</ion-content>

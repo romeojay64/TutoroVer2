@@ -1,0 +1,52 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Search Tutors</ion-title>
+  </ion-navbar>
+  <ion-navbar>
+      <ion-searchbar></ion-searchbar>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="background">
+    <ion-card *ngFor="let user of userArray | async">
+    
+
+        <ion-item>
+          <ion-avatar item-start>
+            <img src="{{imgurl}}">
+          </ion-avatar>
+          <h2>{{user.fname}} {{user.lname}}</h2>
+          <p>Rating</p>
+          <p>{{user.educlevel}}</p>
+        </ion-item>
+      
+        <ion-card-content>
+          <p>Available on ...</p>
+        </ion-card-content>
+      
+        <ion-row>
+            <!-- <ion-col align-self-center text-center>
+                <ion-note>
+                  11h ago
+                </ion-note>
+              </ion-col> -->
+              <ion-col align-self-center text-center>
+                  <button (click)="goToDetailPage(user.key)" ion-button icon-start clear small> 
+                    <ion-icon name="contact"></ion-icon>
+                    <div>Profile</div>
+                  </button>
+                </ion-col>
+          <ion-col align-self-center text-center>
+            <button ion-button icon-start clear small>
+              <ion-icon name="chatbubbles"></ion-icon>
+              <div>Message</div>
+            </button>
+          </ion-col>
+      
+         
+          
+        </ion-row>
+      
+      </ion-card>
+</ion-content>

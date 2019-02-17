@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Basic Information</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-item>
+        <ion-label floating>Sign up as: </ion-label>
+        <ion-select [(ngModel)]="profile.type">
+          <ion-option value="Tutor">Tutor</ion-option>
+          <ion-option value="Learner">Learner</ion-option>
+        </ion-select>
+      </ion-item>
+
+    <ion-item>
+        <ion-label floating>First Name</ion-label>
+        <ion-input type="text" [(ngModel)]="profile.fname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Last Name</ion-label>
+          <ion-input type="text" [(ngModel)]="profile.lname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Date of Birth</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="profile.dob" ></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Educational Level</ion-label>
+          <ion-select [(ngModel)]="profile.educlevel">
+            <ion-option value="Pre-School">Pre-School</ion-option>
+            <ion-option value="Elementary">Elementary</ion-option>
+            <ion-option value="High School">High School</ion-option>
+            <ion-option value="Junior High School">Junior High School</ion-option>
+            <ion-option value="Senior High School">Senior High School</ion-option>
+            <ion-option value="College Undergraduate">College Undergraduate</ion-option>
+            <ion-option value="College">College Graduate</ion-option>
+          </ion-select>
+        </ion-item>
+  
+      
+        
+
+        <button ion-button clear block (click)="createProfile()">Create Profile</button>
+
+    <button ion-button (click)="logout()">Log out</button>
+
+</ion-content>
