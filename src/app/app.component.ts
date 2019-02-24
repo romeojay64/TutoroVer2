@@ -23,19 +23,19 @@ export class MyApp {
   }
 
   initializeApp() {
-    this.afAuth.authState
-    .subscribe(
-      user => {
-        if (user) {
-          this.rootPage = 'TabsPage';
-        } else {
-          this.rootPage = 'LoginPage';
-        }
-      },
-      () => {
-        this.rootPage = 'LoginPage';
-      }
-    );
+  //   this.afAuth.authState
+  //   .subscribe(
+  //     user => {
+  //       if (user) {
+  //         this.rootPage = 'TabsPage';
+  //       } else {
+  //         this.rootPage = 'LoginPage';
+  //       }
+  //     },
+  //     () => {
+  //       this.rootPage = 'LoginPage';
+  //     }
+  //   );
   }
 
 }

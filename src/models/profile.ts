@@ -1,7 +1,12 @@
 export interface Profile {
-    type: string;
-    fname: string;
-    lname: string;
-    dob: any;
-    educlevel: string;
+    
+    fname?: string;
+    lname?: string;
+    dob?: any;
+    interest?: any[];
+    type?: string;
+    uid?: string;
+    photoURL?: any;
+    school?: string;
+    
 }

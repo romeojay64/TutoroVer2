@@ -11,14 +11,16 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ImghandlerProvider } from '../providers/imghandler/imghandler';
 import { UserProvider } from '../providers/user/user';
 
-import { File } from '@ionic-native/file/ngx';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
+import { File } from '@ionic-native/file';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
 import { HttpClientModule } from '@angular/common/http';
  import { HttpModule } from '@angular/http';
+ import { Camera } from '@ionic-native/camera';
 
 
 
@@ -32,6 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    AngularFirestoreModule,
     HttpModule,
     HttpClientModule
     
@@ -50,6 +53,8 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireAuthModule,
     ImghandlerProvider,
     UserProvider,
+    Camera,
+    
     
   ]
 })

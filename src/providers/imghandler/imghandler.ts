@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { File } from '@ionic-native/file/ngx';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
+import { File } from '@ionic-native/file';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 

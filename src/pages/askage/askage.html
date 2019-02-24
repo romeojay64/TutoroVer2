@@ -1,0 +1,21 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <h2>Before anything else ...</h2>
+  <br>
+  <h3>When is your birthday?</h3>
+  <ion-item>
+    
+    <ion-label floating>Date of Birth</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="profile.dob" ></ion-datetime>
+  </ion-item>
+
+  <button ion-button clear block color="secondary" (click)="check()">Proceed</button>
+
+</ion-content>

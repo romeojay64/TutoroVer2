@@ -5,23 +5,42 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="background">
     <ion-card>
+        <ion-avatar class="profile-image">
+            <img src="{{avatar}}" class="centerer">
+          </ion-avatar>
         <ion-card-header>
-            <h2>{{(profileData | async)?.fname}} {{(profileData | async)?.lname}}</h2>
+            <h1>{{(profileData | async)?.fname}} {{(profileData| async)?.lname}}</h1>
           </ion-card-header>
           <ion-card-content>
-              <p>Type: {{(profileData | async)?.type}}</p>
-              <p>Birthday: {{(profileData | async)?.dob}}</p>
-              <p>Educational Level: {{(profileData | async)?.educlevel}}</p>
+            <p>Type: {{(profileData | async)?.type}}</p>
+            <p>School: {{(profileData | async)?.school}}</p>
+            <p>Birthday: {{(profileData | async)?.dob}}</p>
+            <p>Interests: {{(profileData | async)?.interests}}</p>
           
-              <p>Subjects:</p>
-              <ion-list>
-                <ion-item  *ngFor="let sub of subjectArray">
-                  <ion-label>{{sub.val | json}}</ion-label>
-                </ion-item>
-              </ion-list>
+            
+              
+              <button ion-button full icon-start color="secondary"  (click)="messageTutor()">
+                  <ion-icon name="chatbubbles"></ion-icon>
+                  <div>Message</div>
+                </button>
+          
+           
+          
           </ion-card-content>
     </ion-card>
+
+    <ion-card>
+        
+        <ion-card-header>
+            <h2>Ratings</h2>
+          </ion-card-header>
+          <ion-card-content>
+              
+          
+          </ion-card-content>
+    </ion-card>
+    
 
 </ion-content>

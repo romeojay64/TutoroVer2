@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+// import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs-compat';
+// import { Observable } from 'rxjs-compat';
 
 
 @IonicPage()
@@ -16,7 +16,7 @@ export class MainPage {
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, 
-    private afDatabase: AngularFireDatabase, private app: App) {
+     private app: App) {
       
     
   }
@@ -42,6 +42,12 @@ export class MainPage {
   profilepic() {
  
     this.navCtrl.setRoot('ProfilepicPage');
+    
+  }
+
+  askage() {
+ 
+    this.navCtrl.setRoot('AskagePage');
     
   }
 

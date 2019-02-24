@@ -2,5 +2,8 @@ page-search {
     .background {
         background-color:  color($colors, bg);
     }
+    button {
+        background-color: color($colors, secondary);
+    }
 
 }

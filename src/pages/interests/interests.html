@@ -10,7 +10,7 @@
     <ion-list>
         <ion-item *ngFor="let sub of subjects">
           <ion-label>{{sub.val}}</ion-label>
-            <ion-checkbox slot="end" (click)="selectInterests(sub)"></ion-checkbox>
+            <ion-checkbox slot="end" (click)="selectInterests(sub.val)"></ion-checkbox>
         </ion-item>
       </ion-list>
 <br>

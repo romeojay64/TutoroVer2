@@ -3,25 +3,76 @@
   <ion-navbar>
     <ion-title>Search Tutors</ion-title>
   </ion-navbar>
-  <ion-navbar>
+  <!-- <ion-navbar>
       <ion-searchbar></ion-searchbar>
-    </ion-navbar>
+    </ion-navbar> -->
+    <ion-toolbar>
+        <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+ 
+       
+      </ion-toolbar>
 </ion-header>
 
 <ion-content class="background">
-    <ion-card *ngFor="let user of userArray | async">
+
+    <ion-row>
+        <ion-col>
+            <ion-item>
+                <ion-label>Subject </ion-label>
+                <ion-select>
+                  <ion-option value="Programming">Programming</ion-option>
+                  <ion-option value="Database Mngt">Database Mngt</ion-option>
+                  <ion-option value="Data Structures">Data Structures</ion-option>
+                </ion-select>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item>
+                <ion-label>Level </ion-label>
+                <ion-select>
+                    <ion-option value="Pre-School">Pre-School</ion-option>
+                    <ion-option value="Elementary">Elementary</ion-option>
+                    <ion-option value="High School">High School</ion-option>
+                    <ion-option value="Junior High School">Junior High School</ion-option>
+                    <ion-option value="Senior High School">Senior High School</ion-option>
+                    <ion-option value="College Undergraduate">College Undergraduate</ion-option>
+                    <ion-option value="College">College Graduate</ion-option>
+                  </ion-select>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col></ion-col>
+        
+        <ion-col>
+          <button item-end ion-button icon-start (click)="filtertutors()" >
+            <ion-icon name="search"></ion-icon>
+            <div>Filter</div>
+          </button>
+        </ion-col>
+    
+       
+        
+      </ion-row>
+    
+
+    <ion-card *ngFor="let user of tutors">
     
 
         <ion-item>
-          <ion-avatar item-start>
+          <ion-thumbnail item-start >
+            <img *ngIf = "user.photoURL; else noPic" src="{{user.photoURL}}">
+          </ion-thumbnail>
+          <ng-template #noPic>
             <img src="{{imgurl}}">
-          </ion-avatar>
+          </ng-template>
           <h2>{{user.fname}} {{user.lname}}</h2>
           <p>Rating</p>
-          <p>{{user.educlevel}}</p>
+          <p>{{user.type}}</p>
         </ion-item>
       
         <ion-card-content>
+            <p>{{user.interests}}</p>
           <p>Available on ...</p>
         </ion-card-content>
       
@@ -32,13 +83,13 @@
                 </ion-note>
               </ion-col> -->
               <ion-col align-self-center text-center>
-                  <button (click)="goToDetailPage(user.key)" ion-button icon-start clear small> 
+                  <button (click)="goToDetailPage(user.uid)" ion-button icon-start block color="secondary"> 
                     <ion-icon name="contact"></ion-icon>
                     <div>Profile</div>
                   </button>
                 </ion-col>
           <ion-col align-self-center text-center>
-            <button ion-button icon-start clear small>
+            <button ion-button icon-start block (click)="messageTutor(user.uid)" >
               <ion-icon name="chatbubbles"></ion-icon>
               <div>Message</div>
             </button>
