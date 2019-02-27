@@ -9,7 +9,7 @@
   
       <ion-list>
           <ion-item *ngFor="let educ of level">
-            <ion-label>{{educ.val}}</ion-label>
+            <ion-label>{{educ.label}}</ion-label>
               <ion-checkbox slot="end" (click)="selectlevel(educ.val)"></ion-checkbox>
           </ion-item>
         </ion-list>

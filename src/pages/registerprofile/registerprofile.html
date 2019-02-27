@@ -16,6 +16,7 @@
 
     <ion-item>
         <ion-label floating>First Name</ion-label>
+        <ion-input type="hidden" [(ngModel)]="profile.uid"></ion-input>
         <ion-input type="text" [(ngModel)]="profile.fname"></ion-input>
       </ion-item>
 
@@ -26,7 +27,7 @@
 
       <ion-item>
           <ion-label floating>Date of Birth</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="profile.dob" ></ion-datetime>
+          <ion-datetime displayFormat="MMMM/DD/YYYY" [(ngModel)]="profile.dob" ></ion-datetime>
       </ion-item>
 
       <ion-item>

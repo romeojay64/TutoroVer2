@@ -10,14 +10,14 @@
         <ion-avatar class="profile-image">
             <img src="{{avatar}}" class="centerer">
           </ion-avatar>
-        <ion-card-header>
+        <ion-card-header class="centeritems">
             <h1>{{(profileData | async)?.fname}} {{(profileData| async)?.lname}}</h1>
           </ion-card-header>
-          <ion-card-content>
-            <p>Type: {{(profileData | async)?.type}}</p>
-            <p>School: {{(profileData | async)?.school}}</p>
-            <p>Birthday: {{(profileData | async)?.dob}}</p>
-            <p>Interests: {{(profileData | async)?.interests}}</p>
+          <ion-card-content >
+            <p><b>Type:</b> {{(profileData | async)?.type}}</p>
+            <p><b>School:</b> {{(profileData | async)?.school}}</p>
+            <p><b>Birthday:</b> {{(profileData | async)?.dob}}</p>
+            <p><b>Interests:</b> {{(profileData | async)?.interests}}</p>
           
             
               
@@ -29,6 +29,23 @@
            
           
           </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+        Teaches
+          </ion-card-header>
+          <ion-card-content>
+              <ion-label> <ion-checkbox disabled slot="end" checked="{{levels[0].PreSchool}}"></ion-checkbox> Pre-School</ion-label>
+              <ion-label><ion-checkbox disabled slot="end" checked="{{levels[1].Elementary}}"></ion-checkbox> Elementary</ion-label>
+              <ion-label><ion-checkbox disabled slot="end" checked="{{levels[2].HighSchool}}"></ion-checkbox> High School</ion-label>
+              <ion-label> <ion-checkbox disabled slot="end" checked="{{levels[3].JuniorHighSchool}}"></ion-checkbox> Junior High School</ion-label>
+              <ion-label><ion-checkbox disabled slot="end" checked="{{levels[4].SeniorHighSchool}}"></ion-checkbox> Senior High School</ion-label>
+              <ion-label><ion-checkbox disabled slot="end" checked="{{levels[5].CollegeUndergraduate}}"></ion-checkbox> College Undergraduate</ion-label>
+              <ion-label><ion-checkbox disabled slot="end" checked="{{levels[6].Adult}}"></ion-checkbox> Adult</ion-label>
+           
+          </ion-card-content>
+          
     </ion-card>
 
     <ion-card>

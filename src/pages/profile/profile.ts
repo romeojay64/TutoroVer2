@@ -8,6 +8,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { ImghandlerProvider } from '../../providers/imghandler/imghandler';
 import { UserProvider } from '../../providers/user/user';
 import { Interest } from '../../models/interest';
+import { Profile } from '../../models/profile';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 
@@ -21,9 +22,24 @@ export class ProfilePage {
   avatar: string;
 
 
-  profileData : Observable<any>
+  profileData = {} as Profile
   subjects : Observable<Interest>
   subjectArray = []
+  teaches = []
+  showlevels = []
+  teachesCollege: boolean
+  tutor: boolean
+  utype :  Observable<any>;
+
+  public levels = [
+    {'PreSchool' : false},
+    {'Elementary':  false},
+    {'HighSchool': false},
+    {'JuniorHighSchool': false},
+    {'SeniorHighSchool': false},
+    {'CollegeUndergraduate': false},
+    {'Adult': false},
+  ];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
   public afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
@@ -39,11 +55,64 @@ export class ProfilePage {
   loaduserdetails() {
     this.userservice.getuserdetails().subscribe((res: any) => {
       this.profileData = res;
-      this.zone.run(() => {
-        this.avatar = res.photoURL;
+      this.utype = this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).valueChanges();
+      this.utype.subscribe(res => {
+            if(res.type == 'Tutor'){
+              this.tutor = true;
+              this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).get().subscribe((querySnapshot) => {
+                console.log(querySnapshot.exists);
+                
+                // console.log(querySnapshot.data().teaches.CollegeUndergraduate);
+                if(querySnapshot.exists) {
+                  if(querySnapshot.data().teaches.PreSchool){
+                    console.log('Preschool Exists!');
+                    this.levels[0].PreSchool = true;
+                  }
+                  if(querySnapshot.data().teaches.Elementary){
+                    console.log('Elementary Exists!');
+                    this.levels[1].Elementary = true;
+                  }
+                  if(querySnapshot.data().teaches.HighSchool){
+                    console.log('HighSchool Exists!');
+                    this.levels[2].HighSchool = true;
+                  }
+                  if(querySnapshot.data().teaches.JuniorHighSchool){
+                    console.log('JuniorHighSchool Exists!');
+                    this.levels[3].JuniorHighSchool = true;
+                  }
+                  if(querySnapshot.data().teaches.SeniorHighSchool){
+                    console.log('SeniorHighSchool Exists!');
+                    this.levels[4].SeniorHighSchool = true;
+                  }
+                  if(querySnapshot.data().teaches.CollegeUndergraduate){
+                    console.log('CollegeUndergraduate Exists!');
+                    this.levels[5].CollegeUndergraduate = true;
+                  }
+                  if(querySnapshot.data().teaches.Adult){
+                    console.log('Adult Exists!');
+                    this.levels[6].Adult = true;
+                  }
+                }
+                
+              })
+             
+            }
       })
+      
+      
+      
+      if(!res.photoURL){
+        this.avatar = 'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e';
+      }else {
+        this.zone.run(() => {
+          this.avatar = res.photoURL;
+        })
+      }
+    
+     
     })
   }
+
 
   editimage() {
     let statusalert = this.alertCtrl.create({

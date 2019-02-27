@@ -21,13 +21,34 @@
             <p>School: {{(profileData)?.school}}</p>
             <p>Birthday: {{(profileData)?.dob}}</p>
             <p>Interests: {{(profileData)?.interests}}</p>
+         
         
             <button ion-button color="secondary" block (click)="editimage()">Edit Profile Picture</button>
         </ion-card-content>
         
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="tutor">
+    <ion-card-header>
+    Teaches
+      </ion-card-header>
+      <ion-card-content>
+        
+          <ion-label> <ion-checkbox disabled slot="end" checked="{{levels[0].PreSchool}}"></ion-checkbox> Pre-School</ion-label>
+          <ion-label><ion-checkbox disabled slot="end" checked="{{levels[1].Elementary}}"></ion-checkbox> Elementary</ion-label>
+          <ion-label><ion-checkbox disabled slot="end" checked="{{levels[2].HighSchool}}"></ion-checkbox> High School</ion-label>
+          <ion-label> <ion-checkbox disabled slot="end" checked="{{levels[3].JuniorHighSchool}}"></ion-checkbox> Junior High School</ion-label>
+          <ion-label><ion-checkbox disabled slot="end" checked="{{levels[4].SeniorHighSchool}}"></ion-checkbox> Senior High School</ion-label>
+          <ion-label><ion-checkbox disabled slot="end" checked="{{levels[5].CollegeUndergraduate}}"></ion-checkbox> College Undergraduate</ion-label>
+          <ion-label><ion-checkbox disabled slot="end" checked="{{levels[6].Adult}}"></ion-checkbox> Adult</ion-label>
+          
+  
+       
+      </ion-card-content>
+      
+</ion-card>
+
+  <ion-card *ngIf="!tutor">
     <ion-card-header>
         <h3>Tutors</h3>
       </ion-card-header>

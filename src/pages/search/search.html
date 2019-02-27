@@ -6,54 +6,58 @@
   <!-- <ion-navbar>
       <ion-searchbar></ion-searchbar>
     </ion-navbar> -->
-    <ion-toolbar>
-        <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+    <!-- <ion-toolbar> -->
+        <!-- <ion-searchbar (input)="getItems($event)"></ion-searchbar> -->
+      <!-- </ion-toolbar> -->
  
        
-      </ion-toolbar>
 </ion-header>
 
 <ion-content class="background">
 
-    <ion-row>
-        <ion-col>
-            <ion-item>
-                <ion-label>Subject </ion-label>
-                <ion-select>
-                  <ion-option value="Programming">Programming</ion-option>
-                  <ion-option value="Database Mngt">Database Mngt</ion-option>
-                  <ion-option value="Data Structures">Data Structures</ion-option>
-                </ion-select>
-              </ion-item>
-        </ion-col>
-        <ion-col>
-            <ion-item>
-                <ion-label>Level </ion-label>
-                <ion-select>
-                    <ion-option value="Pre-School">Pre-School</ion-option>
-                    <ion-option value="Elementary">Elementary</ion-option>
-                    <ion-option value="High School">High School</ion-option>
-                    <ion-option value="Junior High School">Junior High School</ion-option>
-                    <ion-option value="Senior High School">Senior High School</ion-option>
-                    <ion-option value="College Undergraduate">College Undergraduate</ion-option>
-                    <ion-option value="College">College Graduate</ion-option>
-                  </ion-select>
-              </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col></ion-col>
-        
-        <ion-col>
-          <button item-end ion-button icon-start (click)="filtertutors()" >
-            <ion-icon name="search"></ion-icon>
-            <div>Filter</div>
-          </button>
-        </ion-col>
-    
-       
-        
-      </ion-row>
+  <ion-row>
+    <ion-col>
+        <ion-item>
+            <ion-label>Subject</ion-label>
+            <ion-select  [(ngModel)]="filter.subj"  (change)="choosesubj()">
+              <ion-option value="Programming">Programming</ion-option>
+              <ion-option value="Database Mngt">Database Mngt</ion-option>
+              <ion-option value="Data Structures">Data Structures</ion-option>
+              <ion-option value="Networking">Networking</ion-option>
+            </ion-select>
+          </ion-item>
+    </ion-col>
+    <ion-col>
+        <ion-item>
+            <ion-label>Level</ion-label>
+            <ion-select  [(ngModel)]="filter.level" (change)="chooselevel()">
+                <ion-option value="PreSchool">Pre-School</ion-option>
+                <ion-option value="Elementary">Elementary</ion-option>
+                <ion-option value="HighSchool">High School</ion-option>
+                <ion-option value="JuniorHighSchool">Junior High School</ion-option>
+                <ion-option value="SeniorHighSchool">Senior High School</ion-option>
+                <ion-option value="CollegeUndergraduate">College Undergraduate</ion-option>
+                <ion-option value="Adult">Adult</ion-option>
+              </ion-select>
+          </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <button item-end ion-button block icon-start (click)="filtertutors()" color="secondary">
+        <ion-icon name="search"></ion-icon>
+        <div>Filter</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button item-end ion-button block icon-start (click)="reset()" color="energy">
+        <ion-icon name="refresh"></ion-icon>
+        <div>Reset</div>
+      </button>
+    </ion-col>
+  </ion-row>
+
+      
     
 
     <ion-card *ngFor="let user of tutors">
@@ -66,14 +70,15 @@
           <ng-template #noPic>
             <img src="{{imgurl}}">
           </ng-template>
-          <h2>{{user.fname}} {{user.lname}}</h2>
+          <h2><b>{{user.fname}} {{user.lname}}</b></h2>
+         
+          <p>{{user.school}}</p>
           <p>Rating</p>
-          <p>{{user.type}}</p>
         </ion-item>
       
         <ion-card-content>
-            <p>{{user.interests}}</p>
-          <p>Available on ...</p>
+            <!-- <p>{{user.interests}}</p>
+          <p>Available on ...</p> -->
         </ion-card-content>
       
         <ion-row>
@@ -83,13 +88,13 @@
                 </ion-note>
               </ion-col> -->
               <ion-col align-self-center text-center>
-                  <button (click)="goToDetailPage(user.uid)" ion-button icon-start block color="secondary"> 
+                  <button (click)="goToDetailPage(user.uid)" ion-button icon-start block clear color="secondary"> 
                     <ion-icon name="contact"></ion-icon>
                     <div>Profile</div>
                   </button>
                 </ion-col>
           <ion-col align-self-center text-center>
-            <button ion-button icon-start block (click)="messageTutor(user.uid)" >
+            <button ion-button icon-start block clear (click)="messageTutor(user.uid)" >
               <ion-icon name="chatbubbles"></ion-icon>
               <div>Message</div>
             </button>

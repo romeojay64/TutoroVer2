@@ -30,7 +30,7 @@ export class MainPage {
   logout() {
     this.afAuth.auth.signOut();
     // this.navCtrl.setRoot('LoginPage');
-    this.app.getRootNavs()[0].setRoot('LoginPage');
+    this.app.getRootNav().setRoot('LoginPage');
   }
 
   interest() {

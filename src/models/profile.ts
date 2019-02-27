@@ -8,5 +8,6 @@ export interface Profile {
     uid?: string;
     photoURL?: any;
     school?: string;
+    teaches?: any;
     
 }

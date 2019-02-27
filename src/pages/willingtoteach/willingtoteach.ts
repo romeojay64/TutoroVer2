@@ -1,59 +1,92 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabase } from '@angular/fire/database';
-import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from 'firebase/app';
-/**
- * Generated class for the WillingtoteachPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, App } from "ionic-angular";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFireDatabase } from "@angular/fire/database";
+import { AngularFirestore } from "@angular/fire/firestore";
+import * as firebase from "firebase/app";
 
 @IonicPage()
 @Component({
-  selector: 'page-willingtoteach',
-  templateUrl: 'willingtoteach.html',
+  selector: "page-willingtoteach",
+  templateUrl: "willingtoteach.html"
 })
 export class WillingtoteachPage {
-
   public level = [
-    { val: 'Pre-School'},
-    { val: 'Elementary'},
-    { val: 'High School'},
-    { val: 'Junior High School'},
-    { val: 'Senior High School'},
-    { val: 'College Undergraduate'},
-    { val: 'College'},
+    { label: "Pre-School", val: "PreSchool" },
+    { label: "Elementary", val: "Elementary" },
+    { label: "High School", val: "HighSchool" },
+    { label: "Junior High School", val: "JuniorHighSchool" },
+    { label: "Senior High School", val: "SeniorHighSchool" },
+    { label: "College Undergraduate", val: "CollegeUndergraduate" },
+    { label: "Adult", val: "Adult" }
+  ];
+  // public level = [
+  //   { val: "PreSchool" },
+  //   { val: "Elementary" },
+  //   { val: "HighSchool" },
+  //   { val: "JuniorHighSchool" },
+  //   { val: "SeniorHighSchool" },
+  //   { val: "CollegeUndergraduate" },
+  //   { val: "Adult" }
+  // ];
+
+  Levels: any = [
+    "PreSchool",
+    "Elementary",
+    "HighSchool",
+    "JuniorHighSchool",
+    "SeniorHighSchool",
+    "CollegeUndergraduate",
+    "Adult"
   ];
 
-  selectedArray :any = [];
+  selectedArray: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, 
-    private afDatabase: AngularFireDatabase, private app: App, private afStore: AngularFirestore) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public afAuth: AngularFireAuth,
+    private afDatabase: AngularFireDatabase,
+    private app: App,
+    private afStore: AngularFirestore
+  ) {
+    
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WillingtoteachPage');
+    console.log("ionViewDidLoad WillingtoteachPage");
   }
 
-  selectlevel(data){
-    
+  selectlevel(data) {
     this.selectedArray.push(data);
-  
- console.log(this.selectedArray);
-}
+
+    console.log(this.selectedArray);
+  }
+
+  setLevel() {
+    this.Levels.forEach(ele => {
+      this.afStore
+        .collection("profile")
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          ["teaches." + ele]: false
+        });
+
+      console.log("LEVELS SET");
+    });
+  }
 
   done() {
-
+    this.setLevel();
     this.selectedArray.forEach(ele => {
-      this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).update({
-        "teaches": firebase.firestore.FieldValue.arrayUnion(ele)
-      })  
-    })
-    
-      this.app.getRootNavs()[0].setRoot('ProfilepicPage');
-  }
+      this.afStore
+        .collection("profile")
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          ["teaches." + ele]: true
+        });
 
+      this.app.getRootNavs()[0].setRoot("ProfilepicPage");
+    });
+  }
 }
