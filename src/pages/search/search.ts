@@ -118,6 +118,7 @@ export class SearchPage implements OnInit {
   goToDetailPage(tutor) {
     console.log(tutor);
     this.navCtrl.push("TutordetailPage", { tutorid: tutor });
+    
   }
 
   messageTutor(tutor) {

@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, App } from "ionic-angular";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFireDatabase } from "@angular/fire/database";
 import { AngularFirestore } from "@angular/fire/firestore";
 import * as firebase from "firebase/app";
 
@@ -20,15 +19,7 @@ export class WillingtoteachPage {
     { label: "College Undergraduate", val: "CollegeUndergraduate" },
     { label: "Adult", val: "Adult" }
   ];
-  // public level = [
-  //   { val: "PreSchool" },
-  //   { val: "Elementary" },
-  //   { val: "HighSchool" },
-  //   { val: "JuniorHighSchool" },
-  //   { val: "SeniorHighSchool" },
-  //   { val: "CollegeUndergraduate" },
-  //   { val: "Adult" }
-  // ];
+
 
   Levels: any = [
     "PreSchool",
@@ -46,21 +37,17 @@ export class WillingtoteachPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public afAuth: AngularFireAuth,
-    private afDatabase: AngularFireDatabase,
-    private app: App,
-    private afStore: AngularFirestore
+    private afStore: AngularFirestore,
+    private app: App
   ) {
     
   }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad WillingtoteachPage");
   }
 
   selectlevel(data) {
     this.selectedArray.push(data);
-
-    console.log(this.selectedArray);
   }
 
   setLevel() {
@@ -86,7 +73,12 @@ export class WillingtoteachPage {
           ["teaches." + ele]: true
         });
 
-      this.app.getRootNavs()[0].setRoot("ProfilepicPage");
+        // this.navCtrl.setRoot("ProfilepicPage");
+        this.app.getRootNav().setRoot('ProfilepicPage');
     });
+  }
+
+  goback(){
+    this.navCtrl.pop();
   }
 }

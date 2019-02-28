@@ -21,6 +21,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { HttpClientModule } from '@angular/common/http';
  import { HttpModule } from '@angular/http';
  import { Camera } from '@ionic-native/camera';
+import { DataProvider } from '../providers/data/data';
 
 
 
@@ -54,6 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
     ImghandlerProvider,
     UserProvider,
     Camera,
+    DataProvider,
     
     
   ]

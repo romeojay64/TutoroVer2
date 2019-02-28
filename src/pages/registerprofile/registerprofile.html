@@ -6,6 +6,8 @@
 
 <ion-content padding>
 
+  <ion-list>
+
     <ion-item>
         <ion-label floating>Sign up as: </ion-label>
         <ion-select [(ngModel)]="profile.type">
@@ -14,9 +16,17 @@
         </ion-select>
       </ion-item>
 
+      <ion-item>
+          <ion-label floating>Gender: </ion-label>
+          <ion-select [(ngModel)]="profile.gender">
+            <ion-option value="Male">Male</ion-option>
+            <ion-option value="Female">Female</ion-option>
+          </ion-select>
+        </ion-item>
+
     <ion-item>
         <ion-label floating>First Name</ion-label>
-        <ion-input type="hidden" [(ngModel)]="profile.uid"></ion-input>
+        <!-- <ion-input type="hidden" [(ngModel)]="profile.uid"></ion-input> -->
         <ion-input type="text" [(ngModel)]="profile.fname"></ion-input>
       </ion-item>
 
@@ -49,11 +59,11 @@
         </ion-item> -->
 
        
-  
+      </ion-list>
       
         
 
-        <button ion-button clear block (click)="createProfile()">Create Profile</button>
+        <button ion-button color="secondary" block (click)="createProfile()">Create Profile</button>
 
     <button ion-button (click)="logout()">Log out</button>
 

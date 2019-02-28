@@ -3,22 +3,33 @@
   <ion-navbar>
     <ion-title>Interests</ion-title>
   </ion-navbar>
-  <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-
-     
-    </ion-toolbar>
+ 
 </ion-header>
 
 <ion-content padding class="background">
+  
     
   <ion-list>
+    <h4>
+      Select your subjects of Expertise
+    </h4>
+    <ion-searchbar  (ionInput)="getItems($event)"></ion-searchbar>
+    
     <ion-item *ngFor="let sub of subjects">
       <ion-label>{{sub}}</ion-label>
       <ion-checkbox slot="end" (click)="selectInterests(sub)"></ion-checkbox>
     </ion-item>
   </ion-list>
+<br>
+ 
 
-      
-      <button ion-button block (click)="done()">Done</button>
+      <ion-row>
+        <ion-col>
+          <button ion-button block color="secondary" (click)="goback()">Previous</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button block (click)="done()">Next</button>
+        </ion-col>
+      </ion-row>
+    
 </ion-content>

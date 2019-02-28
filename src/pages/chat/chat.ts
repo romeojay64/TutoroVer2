@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ChatPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { UserProvider } from '../../providers/user/user';
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from "firebase/app";
 
 @IonicPage()
 @Component({
@@ -15,11 +11,23 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ChatPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  list: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private userservice: UserProvider,
+    private afStore: AngularFirestore) {
+
+      this.getmessages();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
+    
   }
+
+  getmessages() {
+    this.afStore.collection('messages').doc(firebase.auth().currentUser.uid).get()
+  }
+
+
 
 }

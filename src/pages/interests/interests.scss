@@ -2,5 +2,10 @@ page-interests {
     .background {
         background-color:  color($colors, bg);
     }
+    .spinner-container {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+    }
 
 }

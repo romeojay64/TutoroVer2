@@ -1,19 +1,28 @@
 
 <ion-header>
     <ion-navbar>
-      <ion-title></ion-title>
+      <ion-title>Educational level of students</ion-title>
     </ion-navbar>
   </ion-header>
   
   <ion-content padding>
   
       <ion-list>
+        <ion-list-header>
+            What level/s are you able to teach?
+        </ion-list-header>
           <ion-item *ngFor="let educ of level">
             <ion-label>{{educ.label}}</ion-label>
               <ion-checkbox slot="end" (click)="selectlevel(educ.val)"></ion-checkbox>
           </ion-item>
         </ion-list>
   <br>
-        
-        <button ion-button block (click)="done()">Done</button>
+  <ion-row>
+    <ion-col>
+      <button ion-button block color="secondary" (click)="goback()">Previous</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button block (click)="done()">Next</button>
+    </ion-col>
+  </ion-row>
   </ion-content>

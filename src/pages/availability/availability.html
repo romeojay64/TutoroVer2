@@ -1,0 +1,30 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Availability</ion-title>
+  </ion-navbar>
+ 
+</ion-header>
+
+<ion-content padding class="background">
+    
+  <ion-list>
+      <ion-list-header>
+          What days are you available?
+        </ion-list-header>
+      <ion-item *ngFor="let day of adlaw">
+        <ion-label>{{day.val}}</ion-label>
+        <ion-checkbox slot="end" (click)="selectDays(day.val)"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button block color="secondary" (click)="goback()">Previous</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block (click)="done()">Next</button>
+      </ion-col>
+    </ion-row>
+</ion-content>
+

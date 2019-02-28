@@ -2,13 +2,12 @@ import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ImghandlerProvider } from '../../providers/imghandler/imghandler';
 import { UserProvider } from '../../providers/user/user';
-import { File } from '@ionic-native/file';
-import { FileChooser } from '@ionic-native/file-chooser';
-import { FilePath } from '@ionic-native/file-path';
-import * as firebase from 'firebase/app';
+// import { File } from '@ionic-native/file';
+// import { FileChooser } from '@ionic-native/file-chooser';
+// import { FilePath } from '@ionic-native/file-path';
+// import * as firebase from 'firebase/app';
 import 'firebase/storage';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-// import {} from 'ionic-angular';
+// import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -23,12 +22,15 @@ export class ProfilepicPage {
   moveon = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public imgservice: ImghandlerProvider,
-    public zone: NgZone, public loadingCtrl: LoadingController, public userservice: UserProvider, private fileChooser: FileChooser,
-    private file: File, private filePath: FilePath, private camera: Camera) {
+    public zone: NgZone, public loadingCtrl: LoadingController, public userservice: UserProvider, 
+    // private fileChooser: FileChooser,
+    // private file: File, 
+    // private filePath: FilePath, 
+    // private camera: Camera
+    ) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilepicPage');
   }
 
   // chooseimage() {
@@ -133,5 +135,7 @@ export class ProfilepicPage {
   proceed() {
     this.navCtrl.setRoot('TabsPage');
   }
+
+  
 
 }

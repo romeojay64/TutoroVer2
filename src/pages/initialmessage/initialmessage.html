@@ -6,38 +6,42 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>Message Tutor</ion-title>
+    <ion-title>Message {{(profileData)?.fname}} {{(profileData)?.lname}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-    <form (ngSubmit)="logForm()">
+    
         <ion-item>
             <ion-label floating>Topic</ion-label>
-            <ion-select>
-              <ion-option value="Programming">Programming</ion-option>
-              <ion-option value="Database Mngt">Database Mngt</ion-option>
-              <ion-option value="Data Structure">Data Structure</ion-option>
+            <ion-select [(ngModel)]="initialmessage.topic">
+              <ion-option *ngFor="let interest of forSelect" value="{{interest}}">{{interest}}</ion-option>
             </ion-select>
           </ion-item>
           <ion-item>
-              <ion-label floating>Place</ion-label>
-              <ion-select>
-                <ion-option value="Pre-School">Home</ion-option>
-                <ion-option value="Elementary">Public Place</ion-option>
-                
+            <ion-label floating>Level</ion-label>
+            <ion-select [(ngModel)]="initialmessage.level">
+              <ion-option  *ngFor="let level of levels" value="{{level.val}}">{{level.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>Preferred Meeting Place</ion-label>
+              <ion-select [(ngModel)]="initialmessage.place">
+                <ion-option value="Home">Home</ion-option>
+                <ion-option value="PublicPlace">Public Place</ion-option>
               </ion-select>
             </ion-item>
         <ion-item>
-          <ion-label>Title</ion-label>
-          <ion-input type="text"  name="title"></ion-input>
+          <ion-label>Subject</ion-label>
+          <ion-input type="text"  [(ngModel)]="initialmessage.subject">></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Message</ion-label>
-          <ion-textarea name="message"></ion-textarea>
+          <ion-textarea  rows="6" [(ngModel)]="initialmessage.message"></ion-textarea>
         </ion-item>
-        <button ion-button type="submit" block>Send</button>
-      </form>
+      
+     
+      <button ion-button type="submit" block (click)="sendmessage()">Send</button>
 
 </ion-content>

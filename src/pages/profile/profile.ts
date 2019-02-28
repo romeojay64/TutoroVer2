@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, App } from 'ionic-angular';
 // import { Observable } from 'rxjs/Observable';
 // import { Observable } from 'rxjs';
 import { Observable } from 'rxjs-compat';
@@ -40,12 +40,22 @@ export class ProfilePage {
     {'CollegeUndergraduate': false},
     {'Adult': false},
   ];
+  public adlaw = [
+    {'Monday' : false},
+    {'Tuesday':  false},
+    {'Wednesday': false},
+    {'Thursday': false},
+    {'Friday': false},
+    {'Saturday': false},
+    {'Sunday': false},
+  ];
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
   public afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
   public userservice: UserProvider, public zone: NgZone, public alertCtrl: AlertController,
     public imghandler: ImghandlerProvider, public loadingCtrl: LoadingController,
-    private afStore: AngularFirestore ){
+    private afStore: AngularFirestore,  private app: App){
   }
 
   ionViewWillEnter() {
@@ -113,6 +123,49 @@ export class ProfilePage {
     })
   }
 
+  getavail(){
+    this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).get().subscribe((querySnapshot) => {
+      console.log(querySnapshot.exists);
+      if(querySnapshot.exists) {
+        if(querySnapshot.data().days.Monday){
+          
+          this.adlaw[0].Monday = true;
+        }
+        if(querySnapshot.data().days.Tuesday){
+          
+          this.adlaw[1].Tuesday = true;
+        }
+        if(querySnapshot.data().days.Wednesday){
+         
+          this.adlaw[2].Wednesday = true;
+        }
+        if(querySnapshot.data().days.Thursday){
+          
+          this.adlaw[3].Thursday = true;
+        }
+        if(querySnapshot.data().days.Friday){
+          
+          this.adlaw[4].Friday = true;
+        }
+        if(querySnapshot.data().days.Saturday){
+          
+          this.adlaw[5].Saturday = true;
+        }
+        if(querySnapshot.data().days.Sunday){
+          
+          this.adlaw[6].Sunday = true;
+        }
+      }
+      
+    })
+  }
+
+  logout() {
+    this.afAuth.auth.signOut();
+    // this.navCtrl.setRoot('LoginPage');
+    this.app.getRootNav().setRoot('LoginPage');
+  }
+
 
   editimage() {
     let statusalert = this.alertCtrl.create({
@@ -134,14 +187,16 @@ export class ProfilePage {
         })  
         }  
       }).catch((err) => {
-          statusalert.setTitle('Failed');
-          statusalert.setSubTitle('Your profile pic was not changed');
-          statusalert.present();
+        statusalert.setTitle('Failed');
+        statusalert.setSubTitle('Your profile pic was not changed');
+        statusalert.present();
       })
-      })
+    })
+    
   }
 
   ionViewDidLoad() {
+    this.getavail();
     // this.loaduserdetails();
     // this.afAuth.authState.subscribe(data => {
     //   if(data && data.email && data.uid) {

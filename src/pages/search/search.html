@@ -88,13 +88,13 @@
                 </ion-note>
               </ion-col> -->
               <ion-col align-self-center text-center>
-                  <button (click)="goToDetailPage(user.uid)" ion-button icon-start block clear color="secondary"> 
+                  <button (click)="goToDetailPage(user.uid)" ion-button icon-start block clear > 
                     <ion-icon name="contact"></ion-icon>
                     <div>Profile</div>
                   </button>
                 </ion-col>
           <ion-col align-self-center text-center>
-            <button ion-button icon-start block clear (click)="messageTutor(user.uid)" >
+            <button ion-button icon-start block clear (click)="messageTutor(user.uid)" color="secondary">
               <ion-icon name="chatbubbles"></ion-icon>
               <div>Message</div>
             </button>
