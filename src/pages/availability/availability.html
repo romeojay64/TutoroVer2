@@ -16,6 +16,11 @@
         <ion-label>{{day.val}}</ion-label>
         <ion-checkbox slot="end" (click)="selectDays(day.val)"></ion-checkbox>
       </ion-item>
+
+      <ion-item>
+          <ion-label>Flexible?</ion-label>
+          <ion-toggle [(ngModel)]="flex"></ion-toggle>
+        </ion-item>
     </ion-list>
 
     <ion-row>

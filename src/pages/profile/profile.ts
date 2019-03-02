@@ -30,6 +30,8 @@ export class ProfilePage {
   teachesCollege: boolean
   tutor: boolean
   utype :  Observable<any>;
+  fname: string;
+  lname: string;
 
   public levels = [
     {'PreSchool' : false},
@@ -65,8 +67,10 @@ export class ProfilePage {
   loaduserdetails() {
     this.userservice.getuserdetails().subscribe((res: any) => {
       this.profileData = res;
-      this.utype = this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).valueChanges();
+      this.utype = this.afStore.collection('user').doc(firebase.auth().currentUser.uid).valueChanges();
       this.utype.subscribe(res => {
+        this.fname = res.fname;        
+        this.lname = res.lname;        
             if(res.type == 'Tutor'){
               this.tutor = true;
               this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).get().subscribe((querySnapshot) => {
@@ -161,7 +165,9 @@ export class ProfilePage {
   }
 
   logout() {
+    
     this.afAuth.auth.signOut();
+   
     // this.navCtrl.setRoot('LoginPage');
     this.app.getRootNav().setRoot('LoginPage');
   }
@@ -179,12 +185,13 @@ export class ProfilePage {
       this.userservice.updateimage(url).then((res: any) => {
         loader.dismiss();
         if (res.success) {
+          this.zone.run(() => {
+            this.avatar = url;
+          })  
           statusalert.setTitle('Updated');
           statusalert.setSubTitle('Your profile pic has been changed successfully!!');
           statusalert.present();
-          this.zone.run(() => {
-          this.avatar = url;
-        })  
+          
         }  
       }).catch((err) => {
         statusalert.setTitle('Failed');
@@ -193,6 +200,30 @@ export class ProfilePage {
       })
     })
     
+  }
+
+  check(){
+    if(this.tutor && this.adlaw[0].Monday){
+      return true
+    }
+    if(this.tutor && this.adlaw[1].Tuesday){
+      return true
+    }
+    if(this.tutor && this.adlaw[2].Wednesday){
+      return true
+    }
+    if(this.tutor && this.adlaw[3].Thursday){
+      return true
+    }
+    if(this.tutor && this.adlaw[4].Friday){
+      return true
+    }
+    if(this.tutor && this.adlaw[5].Saturday){
+      return true
+    }
+    if(this.tutor && this.adlaw[6].Sunday){
+      return true
+    }
   }
 
   ionViewDidLoad() {

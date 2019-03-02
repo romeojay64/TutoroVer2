@@ -6,11 +6,17 @@
 </ion-header>
 
 <ion-content padding>
+
+  <div>
+    <h4><b>Before we proceed</b></h4>
+    <p>We have to make sure you are 18 years old and above.</p>
+  </div>
   <ion-list>
     <ion-item>
       <ion-label floating>What year were you born?</ion-label>
       <ion-datetime displayFormat="YYYY" [(ngModel)]="profile.dob"></ion-datetime>
     </ion-item>
   </ion-list>
+  
   <button ion-button  block color="secondary" (click)="check()">Proceed</button>
 </ion-content>

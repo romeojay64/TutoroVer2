@@ -20,8 +20,10 @@ export class AvailabilityPage {
     { val: 'Saturday'},
     { val: 'Sunday'},
   ];
+  
 
   selectedDays :any = [];
+  flex: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, 
     private app: App, private afStore: AngularFirestore) {
@@ -36,19 +38,34 @@ export class AvailabilityPage {
 
   }
 
+  
+
   done() {
+    console.log(this.flex);
+
     this.selectedDays.forEach(ele => {
       this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).update({
         ["days." + ele]: true
-      })  
+      })
     })
+
+    if(this.flex){
+      this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).update({
+        isFlexible : true
+      });
+    } else {
+      this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).update({
+        isFlexible : false
+      });
+    }
+    
    
     this.rawt();
     
   }
 
   rawt() {
-    this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).get().subscribe((documentSnapshot) => {  
+    this.afStore.collection('user').doc(firebase.auth().currentUser.uid).get().subscribe((documentSnapshot) => {  
       if(documentSnapshot.data().type == "Tutor"){
         this.navCtrl.push('WillingtoteachPage');
       } else {

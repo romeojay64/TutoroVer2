@@ -21,16 +21,7 @@ export class WillingtoteachPage {
   ];
 
 
-  Levels: any = [
-    "PreSchool",
-    "Elementary",
-    "HighSchool",
-    "JuniorHighSchool",
-    "SeniorHighSchool",
-    "CollegeUndergraduate",
-    "Adult"
-  ];
-
+  
   selectedArray: any = [];
 
   constructor(
@@ -50,21 +41,10 @@ export class WillingtoteachPage {
     this.selectedArray.push(data);
   }
 
-  setLevel() {
-    this.Levels.forEach(ele => {
-      this.afStore
-        .collection("profile")
-        .doc(firebase.auth().currentUser.uid)
-        .update({
-          ["teaches." + ele]: false
-        });
-
-      console.log("LEVELS SET");
-    });
-  }
+  
 
   done() {
-    this.setLevel();
+   
     this.selectedArray.forEach(ele => {
       this.afStore
         .collection("profile")

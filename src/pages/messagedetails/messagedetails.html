@@ -1,0 +1,37 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Message Request</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngIf = "!tutor; else isTutor">
+    <ion-item *ngFor="let item of messagedetails">
+      <p>Tutor: {{item.recieverfname}}</p>
+      <p>Level: {{item.level}}</p>
+      <p>Topic: {{item.topic}}</p>
+      <p>Subject: {{item.subject}}</p>
+      <p>Preferred Place: {{item.place}}</p>
+      <p>Message: {{item.message}}</p>
+    </ion-item>
+    <button disabled ion-button color="primary" block>Pending</button>
+  </ion-list>
+
+  <ng-template #isTutor>
+      <ion-list>
+      <ion-item *ngFor="let item of messagedetails">
+          <p>Sender: {{item.senderfname}}</p>
+          <p>Level: {{item.level}}</p>
+          <p>Topic: {{item.topic}}</p>
+          <p>Subject: {{item.subject}}</p>
+          <p>Preferred Place: {{item.place}}</p>
+          <p>Message: {{item.message}}</p>
+        </ion-item>
+      </ion-list>
+      <button ion-button color="primary" block (click)="editimage()">Accept</button>
+      <button ion-button color="secondary" block (click)="editimage()">Reject</button>
+ 
+  </ng-template>
+
+</ion-content>

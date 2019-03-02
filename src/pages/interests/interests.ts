@@ -67,7 +67,7 @@ export class InterestsPage {
   }
 
   rawt() {
-    this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).get().subscribe((documentSnapshot) => {  
+    this.afStore.collection('user').doc(firebase.auth().currentUser.uid).get().subscribe((documentSnapshot) => {  
       if(documentSnapshot.data().type == "Tutor"){
         this.navCtrl.push('AvailabilityPage');
       } else {

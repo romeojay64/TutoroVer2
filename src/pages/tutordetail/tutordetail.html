@@ -12,16 +12,31 @@
         </ion-avatar>
         <ion-card-header class="centeritems">
           <h1>
-            <b
-              >{{ (profileData | async)?.fname }}
-              {{ (profileData | async)?.lname }}</b
-            >
+            <b>{{(profileData | async)?.displayName }}</b>
           </h1>
+          <p>{{(profileData | async)?.school }}</p>
         </ion-card-header>
         <ion-card-content>
-          <p><b>Type:</b> {{ (profileData | async)?.type }}</p>
-          <p><b>School:</b> {{ (profileData | async)?.school }}</p>
-          <p><b>Birthday:</b> {{ (profileData | async)?.dob }}</p>
+            <p><span><ion-icon name="star" color="primary"></ion-icon></span><b> Specializations:</b> </p>
+              <p>{{ (profileData | async)?.interests }}</p>
+            <p><span><ion-icon name="calendar" color="primary"></ion-icon></span><b> Availble on:</b></p>
+            <span *ngIf="adlaw[0].Monday">Monday,</span>
+              <span *ngIf="adlaw[1].Tuesday">Tuesday,</span>
+              <span *ngIf="adlaw[2].Wednesday">Wednesday,</span>
+              <span *ngIf="adlaw[3].Thursday">Thursday,</span>
+              <span *ngIf="adlaw[4].Friday">Friday,</span>
+              <span *ngIf="adlaw[5].Saturday">Saturday,</span>
+              <span *ngIf="adlaw[6].Sunday">Sunday</span>
+              <p><b>Flexible?:</b>
+                <span *ngIf="flex; else no">Yes</span>
+                <ng-template #no>
+                   <span>No</span>
+                  </ng-template>
+              </p>
+            
+          
+              
+        
          
          
           <button ion-button full icon-start color="secondary" (click)="messageTutor()" class="message">
@@ -32,27 +47,14 @@
         </ion-card-content>
       </ion-card>
 
-     
-
       <ion-card>
-        <ion-card-header>
-          Tutor Profile
-        </ion-card-header>
-        <ion-card-content>
-            <p><span><ion-icon name="star" color="primary"></ion-icon></span><b> Specializations:</b> <span>{{ (profileData | async)?.interests }}</span></p>
-            <p><span><ion-icon name="calendar" color="primary"></ion-icon></span><b> Availble on:</b></p>
-            <span *ngIf="adlaw[0].Monday">Monday,</span>
-              <span *ngIf="adlaw[1].Tuesday">Tuesday,</span>
-              <span *ngIf="adlaw[2].Wednesday">Wednesday,</span>
-              <span *ngIf="adlaw[3].Thursday">Thursday,</span>
-              <span *ngIf="adlaw[4].Friday">Friday,</span>
-              <span *ngIf="adlaw[5].Saturday">Saturday,</span>
-              <span *ngIf="adlaw[6].Sunday">Sunday</span>
-              
-              <p><span><ion-icon name="people" color="primary"></ion-icon></span><b> Teaches:</b></p>
+          <ion-card-header>
+            <h2><ion-icon name="people" color="primary"></ion-icon>Teaches</h2>
+          </ion-card-header>
+          <ion-card-content>
               <span *ngIf="levels[0].PreSchool">
                   <ion-checkbox disabled slot="end" checked="{{ levels[0].PreSchool }}"></ion-checkbox> Pre-School
-                </span>
+              </span>
                 <span *ngIf="levels[1].Elementary">
                     <ion-checkbox disabled slot="end" checked="{{ levels[1].Elementary }}"></ion-checkbox> Elementary
                 </span>
@@ -71,10 +73,8 @@
                 <span *ngIf="levels[6].Adult">
                     <ion-checkbox disabled slot="end" checked="{{ levels[6].Adult }}"></ion-checkbox> Adult
                 </span>
-          
-        </ion-card-content>
-      </ion-card>
-
+          </ion-card-content>
+        </ion-card>
       
 
 

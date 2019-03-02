@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UserProvider } from '../../providers/user/user';
-import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from "firebase/app";
+
 
 @IonicPage()
 @Component({
@@ -11,22 +9,18 @@ import * as firebase from "firebase/app";
 })
 export class ChatPage {
 
-  list: any;
+  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    private userservice: UserProvider,
-    private afStore: AngularFirestore) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
 
-      this.getmessages();
+     
   }
 
   ionViewDidLoad() {
     
   }
 
-  getmessages() {
-    this.afStore.collection('messages').doc(firebase.auth().currentUser.uid).get()
-  }
+  
 
 
 

@@ -6,6 +6,12 @@ export interface Message {
     place?: string;
     topic?: string;
     subject?: string;
+    reciever?: string;
+    recieverfname?: string;
+    senderfname?: string;
+    sender?: string;
+    isRead? : boolean;
+    photoURL?: string;
 
 
 }

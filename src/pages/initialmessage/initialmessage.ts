@@ -32,8 +32,16 @@ export class InitialmessagePage {
     private afStore: AngularFirestore, public toastCtrl: ToastController) {
 
     this.params  = this.navParams.get('tutorid');
+    this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).valueChanges().subscribe((res: any) => {
+      this.initialmessage.senderfname = res.displayName;
+    })
     this.afStore.collection('profile').doc(this.params).valueChanges().subscribe((res: any) => {
       this.profileData = res;
+      this.initialmessage.reciever = this.params;
+      this.initialmessage.sender = firebase.auth().currentUser.uid;
+      this.initialmessage.recieverfname = res.displayName;
+      this.initialmessage.isAccepted = false;
+      this.initialmessage.isRead = false;
       
       this.forSelect = this.profileData.interests;
     })
@@ -48,9 +56,9 @@ export class InitialmessagePage {
     this.afStore
       .collection("messages")
       .doc(firebase.auth().currentUser.uid)
-      .update({
-          [this.params] : this.initialmessage
-        })
+      .set(
+           this.initialmessage
+        )
       
       let toast = this.toastCtrl.create({
         message: 'Message was successfully sent',

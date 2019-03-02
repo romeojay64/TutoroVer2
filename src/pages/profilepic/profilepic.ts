@@ -58,8 +58,9 @@ export class ProfilepicPage {
     })
     loader.present();
     this.imgservice.uploadimage().then((uploadedurl: any) => {
-      loader.dismiss();
+     
       this.zone.run(() => {
+        loader.dismiss();
         this.imgurl = uploadedurl;
         this.moveon = false;
       })

@@ -7,8 +7,26 @@
 
 <ion-content padding>
     <ion-item>
+        <ion-label floating>Sign up as: </ion-label>
+        <ion-select [(ngModel)]="profile.type">
+          <ion-option value="Tutor">Tutor</ion-option>
+          <ion-option value="Learner">Learner</ion-option>
+        </ion-select>
+      </ion-item>
+
+    <ion-item>
+        <ion-label floating>First Name</ion-label>
+        <!-- <ion-input type="hidden" [(ngModel)]="profile.uid"></ion-input> -->
+        <ion-input type="text" [(ngModel)]="profile.fname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Last Name</ion-label>
+          <ion-input type="text" [(ngModel)]="profile.lname"></ion-input>
+      </ion-item>
+    <ion-item>
         <ion-label floating>Email</ion-label>
-        <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+        <ion-input type="email" [(ngModel)]="user.email"></ion-input>
       </ion-item>
     
       <ion-item>

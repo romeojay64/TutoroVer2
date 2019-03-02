@@ -51,4 +51,10 @@ export class MainPage {
     
   }
 
+  avail() {
+ 
+    this.navCtrl.setRoot('AvailabilityPage');
+    
+  }
+
 }

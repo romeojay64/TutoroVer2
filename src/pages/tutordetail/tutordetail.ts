@@ -19,6 +19,7 @@ export class TutordetailPage {
   avatar: string;
   utype :  Observable<any>;
   tutor: boolean;
+  flex: boolean;
 
   public levels = [
     {'PreSchool' : false},
@@ -46,6 +47,9 @@ export class TutordetailPage {
     this.params  = this.navParams.get('tutorid');
     
     this.profileData = this.afStore.collection('profile').doc(this.params).valueChanges();
+   this.profileData.subscribe(ref => {
+     this.flex = ref.isFlexible;
+   })
     // this.profileData = this.afDatabase.object('profile/'+this.params).valueChanges();
     //     this.afDatabase.list('interests/'+this.params).valueChanges()
     //     .subscribe(datas => {

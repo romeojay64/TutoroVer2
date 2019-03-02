@@ -19,6 +19,7 @@ export class TabsPage {
   tab2: string = "CalendarPage" 
   tab3: string = "ChatPage"
   tab4: string = "ProfilePage"
+  tab5: string = "InboxPage"
   learner: boolean = false;
   utype :  Observable<any>;
 
@@ -27,7 +28,7 @@ export class TabsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, 
    private afStore: AngularFirestore) {
 
-      this.utype = this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).valueChanges();
+      this.utype = this.afStore.collection('user').doc(firebase.auth().currentUser.uid).valueChanges();
       this.utype.subscribe(res => {
             if(res.type != 'Tutor'){
               this.learner = true;

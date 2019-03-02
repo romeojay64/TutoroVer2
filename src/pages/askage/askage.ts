@@ -20,7 +20,7 @@ export class AskagePage {
   check() {
     const today = new Date().getFullYear();
     const inputdate = new Date(this.profile.dob).getFullYear();
-    if(inputdate < today - 17) {
+    if(inputdate <= today - 18) {
       this.proceed();
     } else {
       const alert = this.alertCtrl.create({

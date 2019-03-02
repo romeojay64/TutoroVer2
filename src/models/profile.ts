@@ -10,5 +10,10 @@ export interface Profile {
     school?: string;
     teaches?: any;
     gender?: string;
+    city? : string;
+    brgy? : string;
+    displayName?: string;
+    educlevel?: string;
+    profession?: string; 
     
 }

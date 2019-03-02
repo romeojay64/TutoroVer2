@@ -1,7 +1,7 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>{{(profileData)?.fname}} {{(profileData)?.lname}}</ion-title>
+    <ion-title>{{fname}} {{lname}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only>
         <ion-icon name="more"></ion-icon>
@@ -21,20 +21,20 @@
 
       <ion-card-header class="centeritems">
           
-          <h1><b>{{(profileData)?.fname}} {{(profileData)?.lname}}</b></h1>
+          <h1><b>{{fname}} {{lname}}</b></h1>
         </ion-card-header>
         <ion-card-content>
-            <p><b>Type:</b> {{(profileData)?.type}}</p>
             <p><b>School:</b> {{(profileData)?.school}}</p>
+            <p><b>Location:</b> {{(profileData)?.brgy}}, {{(profileData)?.city}}</p>
             <p><b>Birthday:</b> {{(profileData)?.dob}}</p>
             <span *ngIf="tutor"><b>Availble on:</b></span>
-          <span *ngIf="adlaw[0].Monday">Monday,</span>
-            <span *ngIf="adlaw[1].Tuesday">Tuesday,</span>
-            <span *ngIf="adlaw[2].Wednesday">Wednesday,</span>
-            <span *ngIf="adlaw[3].Thursday">Thursday,</span>
-            <span *ngIf="adlaw[4].Friday">Friday,</span>
-            <span *ngIf="adlaw[5].Saturday">Saturday,</span>
-            <span *ngIf="adlaw[6].Sunday">Sunday</span>
+            <span *ngIf="check()">Monday,</span>
+            <span *ngIf="check()">Tuesday,</span>
+            <span *ngIf="check()">Wednesday,</span>
+            <span *ngIf="check()">Thursday,</span>
+            <span *ngIf="check()">Friday,</span>
+            <span *ngIf="check()">Saturday,</span>
+            <span *ngIf="check()">Sunday</span>
 
             <ion-row>
                 <ion-col>
