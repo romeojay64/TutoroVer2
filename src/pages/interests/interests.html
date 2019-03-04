@@ -9,15 +9,16 @@
 <ion-content padding class="background">
   
     
-  <ion-list>
+  <ion-list no-lines>
     <h4>
       Select your subjects of Expertise
     </h4>
-    <ion-searchbar  (ionInput)="getItems($event)"></ion-searchbar>
+    <!-- <ion-searchbar  (ionInput)="getItems($event)"></ion-searchbar> -->
+    <ion-searchbar  [(ngModel)]="searchstring" (input)="searchuser($event)"></ion-searchbar>
     
-    <ion-item *ngFor="let sub of subjects">
+    <ion-item *ngFor="let sub of filteredsub">
       <ion-label>{{sub}}</ion-label>
-      <ion-checkbox slot="end" (click)="selectInterests(sub)"></ion-checkbox>
+      <ion-checkbox slot="end" (ionChange)="addCheckbox($event,sub)"></ion-checkbox>
     </ion-item>
   </ion-list>
 <br>

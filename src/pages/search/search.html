@@ -6,9 +6,9 @@
   <!-- <ion-navbar>
       <ion-searchbar></ion-searchbar>
     </ion-navbar> -->
-    <!-- <ion-toolbar> -->
-        <!-- <ion-searchbar (input)="getItems($event)"></ion-searchbar> -->
-      <!-- </ion-toolbar> -->
+    <ion-toolbar>
+        <ion-searchbar [(ngModel)]="searchstring" (input)="searchuser($event)"></ion-searchbar>
+      </ion-toolbar>
  
        
 </ion-header>
@@ -44,6 +44,24 @@
   </ion-row>
   <ion-row>
     <ion-col>
+        <ion-item>
+            <ion-label>City</ion-label>
+            <ion-select  [(ngModel)]="filter.city"  (change)="choosesubj()">
+              <ion-option *ngFor="let city of cities" value="{{city.name}}">{{city.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+    </ion-col>
+    <ion-col>
+        <ion-item>
+            <ion-label>Brgy</ion-label>
+            <ion-select  [(ngModel)]="filter.brgy">
+              <ion-option *ngFor="let brgy of brgys" value="{{brgy.name}}">{{brgy.name}}</ion-option>
+              </ion-select>
+          </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
       <button item-end ion-button block icon-start (click)="filtertutors()" color="secondary">
         <ion-icon name="search"></ion-icon>
         <div>Filter</div>
@@ -60,7 +78,7 @@
       
     
 
-    <ion-card *ngFor="let user of tutors">
+    <ion-card *ngFor="let user of filteredtutors">
     
 
         <ion-item>

@@ -21,20 +21,13 @@
 
       <ion-card-header class="centeritems">
           
-          <h1><b>{{fname}} {{lname}}</b></h1>
+          <h1><b>{{fname}} {{lname}}</b> <ion-icon *ngIf="verify()" name="checkmark-circle" color="verifycolor"></ion-icon></h1>
         </ion-card-header>
         <ion-card-content>
             <p><b>School:</b> {{(profileData)?.school}}</p>
             <p><b>Location:</b> {{(profileData)?.brgy}}, {{(profileData)?.city}}</p>
             <p><b>Birthday:</b> {{(profileData)?.dob}}</p>
-            <span *ngIf="tutor"><b>Availble on:</b></span>
-            <span *ngIf="check()">Monday,</span>
-            <span *ngIf="check()">Tuesday,</span>
-            <span *ngIf="check()">Wednesday,</span>
-            <span *ngIf="check()">Thursday,</span>
-            <span *ngIf="check()">Friday,</span>
-            <span *ngIf="check()">Saturday,</span>
-            <span *ngIf="check()">Sunday</span>
+            
 
             <ion-row>
                 <ion-col>
@@ -50,48 +43,52 @@
 
   <ion-card *ngIf="tutor">
       <ion-card-header>
-        Specializations
+        Tutor Profile
       </ion-card-header>
       <ion-card-content>
-          {{(profileData)?.interests }}
+          <p><span><ion-icon name="star" color="primary"></ion-icon></span><b> Specializations:</b> </p>
+          <p>{{(profileData)?.interests }}</p>
+          <p><b>Teaches: </b></p>
+            <span *ngIf="levels[0].PreSchool">
+                <ion-checkbox disabled slot="end" checked="{{ levels[0].PreSchool }}"></ion-checkbox> Pre-School
+              </span>
+              <span *ngIf="levels[1].Elementary">
+                  <ion-checkbox disabled slot="end" checked="{{ levels[1].Elementary }}"></ion-checkbox> Elementary
+              </span>
+              <span *ngIf="levels[2].HighSchool">
+                  <ion-checkbox disabled slot="end" checked="{{ levels[2].HighSchool }}"></ion-checkbox> High School
+              </span>
+              <span *ngIf="levels[3].JuniorHighSchool">
+                  <ion-checkbox disabled slot="end" checked="{{ levels[3].JuniorHighSchool }}"></ion-checkbox> Junior High School
+              </span>
+              <span *ngIf="levels[4].SeniorHighSchool">
+                  <ion-checkbox disabled slot="end" checked="{{ levels[4].SeniorHighSchool }}"></ion-checkbox> Senior High School
+              </span>
+              <span *ngIf="levels[5].CollegeUndergraduate">
+                  <ion-checkbox disabled slot="end" checked="{{ levels[5].CollegeUndergraduate }}"></ion-checkbox> College Undergraduate
+              </span>
+              <span *ngIf="levels[6].Adult">
+                  <ion-checkbox disabled slot="end" checked="{{ levels[6].Adult }}"></ion-checkbox> Adult
+              </span>
+            <p><ion-icon name="calendar" color="primary"></ion-icon><b> Availble on:</b></p>
+            <span *ngIf="check()">Monday,</span>
+            <span *ngIf="check()">Tuesday,</span>
+            <span *ngIf="check()">Wednesday,</span>
+            <span *ngIf="check()">Thursday,</span>
+            <span *ngIf="check()">Friday,</span>
+            <span *ngIf="check()">Saturday,</span>
+            <span *ngIf="check()">Sunday</span>
+            <p><b>Flexible?:</b>
+              <span *ngIf="flex; else no">Yes</span>
+              <ng-template #no>
+                 <span>No</span>
+                </ng-template>
+            </p>
+            
+            <button ion-button color="secondary" block (click)="editteaches()">Edit</button>
           
       </ion-card-content>
     </ion-card>
-
-  <ion-card *ngIf="tutor">
-    <ion-card-header>
-    Teaches
-      </ion-card-header>
-      <ion-card-content>
-        
-          <span *ngIf="levels[0].PreSchool">
-              <ion-checkbox disabled slot="end" checked="{{ levels[0].PreSchool }}"></ion-checkbox> Pre-School
-            </span>
-            <span *ngIf="levels[1].Elementary">
-                <ion-checkbox disabled slot="end" checked="{{ levels[1].Elementary }}"></ion-checkbox> Elementary
-            </span>
-            <span *ngIf="levels[2].HighSchool">
-                <ion-checkbox disabled slot="end" checked="{{ levels[2].HighSchool }}"></ion-checkbox> High School
-            </span>
-            <span *ngIf="levels[3].JuniorHighSchool">
-                <ion-checkbox disabled slot="end" checked="{{ levels[3].JuniorHighSchool }}"></ion-checkbox> Junior High School
-            </span>
-            <span *ngIf="levels[4].SeniorHighSchool">
-                <ion-checkbox disabled slot="end" checked="{{ levels[4].SeniorHighSchool }}"></ion-checkbox> Senior High School
-            </span>
-            <span *ngIf="levels[5].CollegeUndergraduate">
-                <ion-checkbox disabled slot="end" checked="{{ levels[5].CollegeUndergraduate }}"></ion-checkbox> College Undergraduate
-            </span>
-            <span *ngIf="levels[6].Adult">
-                <ion-checkbox disabled slot="end" checked="{{ levels[6].Adult }}"></ion-checkbox> Adult
-            </span>
-          <button ion-button color="secondary" block (click)="editteaches()">Edit</button>
-  
-       
-      </ion-card-content>
-      
-</ion-card>
-
 
 
   <ion-card *ngIf="!tutor">
@@ -101,7 +98,7 @@
       <ion-card-content>
         
       
-          <button ion-button color="secondary" block (click)="editimage()">View All</button>
+          <button ion-button color="secondary" block (click)="viewtutors()">View All</button>
       </ion-card-content>
       
 </ion-card>

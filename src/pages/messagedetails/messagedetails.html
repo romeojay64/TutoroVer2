@@ -7,30 +7,51 @@
 
 <ion-content padding>
   <ion-list *ngIf = "!tutor; else isTutor">
-    <ion-item *ngFor="let item of messagedetails">
-      <p>Tutor: {{item.recieverfname}}</p>
-      <p>Level: {{item.level}}</p>
-      <p>Topic: {{item.topic}}</p>
-      <p>Subject: {{item.subject}}</p>
-      <p>Preferred Place: {{item.place}}</p>
-      <p>Message: {{item.message}}</p>
-    </ion-item>
-    <button disabled ion-button color="primary" block>Pending</button>
+      <div *ngFor="let item of messagedetails">
+         
+          <ion-item> 
+            <!-- <ion-avatar item-start>
+              <img *ngIf = "item.photoURL; else noPic" src="{{item.photoURL}}">
+              <ng-template #noPic>
+                  <img src="{{imgurl}}">
+                </ng-template>
+          </ion-avatar> -->
+           <b>Tutor:</b> <span>{{item.recieverfname}}</span></ion-item>
+           <ion-item><b>Level:</b> <span>{{item.level}}</span></ion-item>
+           <ion-item><b>Topic:</b> <span>{{item.topic}}</span></ion-item>
+           <ion-item><b>Subject:</b> <span>{{item.subject}}</span></ion-item>
+           <ion-item><b>Preferred Place:</b> <span>{{item.place}}</span></ion-item>
+           
+           <p style='padding: 15px;'>{{item.message}}</p>
+           <button *ngIf="!item.isAccepted" disabled ion-button color="primary" block>Pending</button>
+           <button *ngIf="item.isAccepted" ion-button color="secondary" block>Hire Tutor</button>
+        </div>
+    
   </ion-list>
 
   <ng-template #isTutor>
-      <ion-list>
-      <ion-item *ngFor="let item of messagedetails">
-          <p>Sender: {{item.senderfname}}</p>
-          <p>Level: {{item.level}}</p>
-          <p>Topic: {{item.topic}}</p>
-          <p>Subject: {{item.subject}}</p>
-          <p>Preferred Place: {{item.place}}</p>
-          <p>Message: {{item.message}}</p>
-        </ion-item>
-      </ion-list>
-      <button ion-button color="primary" block (click)="editimage()">Accept</button>
-      <button ion-button color="secondary" block (click)="editimage()">Reject</button>
+     
+      <div *ngFor="let item of messagedetails">
+         
+        <ion-item> 
+          <!-- <ion-avatar item-start>
+            <img *ngIf = "item.photoURL; else noPic" src="{{item.photoURL}}">
+            <ng-template #noPic>
+                <img src="{{imgurl}}">
+              </ng-template>
+        </ion-avatar> -->
+         <b>Sender:</b> <span>{{item.senderfname}}</span></ion-item>
+         <ion-item><b>Level:</b> <span>{{item.level}}</span></ion-item>
+         <ion-item><b>Topic:</b> <span>{{item.topic}}</span></ion-item>
+         <ion-item><b>Subject:</b> <span>{{item.subject}}</span></ion-item>
+         <ion-item><b>Preferred Place:</b> <span>{{item.place}}</span></ion-item>
+         
+         <p  style='padding: 15px;'>{{item.message}}</p>
+         <button ion-button color="primary" block (click)="accept(item.sender)">Accept</button>
+      <button ion-button color="secondary" block (click)="reject()">Reject</button>
+      </div>
+      
+      
  
   </ng-template>
 

@@ -2,10 +2,14 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
+import { AngularFireObject } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs-compat';
 // import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase/app';
+// import AuthProvider = firebase.auth.AuthProvider;
+import {AuthProvider} from '@firebase/auth-types';
+import {AuthCredential} from '@firebase/auth-types';
 
 
 @IonicPage()
@@ -121,5 +125,8 @@ export class LoginPage {
   register() {
     this.navCtrl.push('AskagePage');
   }
+
+
+
 
 }

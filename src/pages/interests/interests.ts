@@ -19,6 +19,66 @@ export class InterestsPage {
   
 
   selectedArray :any = [];
+  temparr = [];
+  filteredsub  = [];
+  asignatura = [
+    'Accounting',
+     'Ancient History',
+	'Anthropology',
+	 'Archaeology',
+	'Art',
+	'Astronomy',
+	'Basic Skills',
+	'Biochemistry',
+	'Biology',
+	'BMAT',
+	'Business Studies',
+'Chemistry',
+	'Citizenship Studies',
+ 'Computing',
+'Criminology',
+	'Dentistry',
+	'Design and Craft',
+	 'Design and Technology',
+	 'Drama',
+	 'Early Years',
+	 'Economics',
+	 'Electronics',
+ 'Eleven Plus',
+	'Engineering',
+	'English',
+	'Entrance Exams',
+	'General Science',
+	'General Studies',
+'Geography',
+ 'Geology',
+	'History',
+ 'Home Economics',
+ 'Humanities',
+ 'IELTS',
+	 'Law',
+	 'Leisure Studies',
+	'Maths',
+	'Media',
+	'Medicine',
+ 'Music',
+ 'Music Technology',
+'Neuroscience',
+	'Pathology',
+	'Personal Statements',
+	'Philosophy',
+	'Photography',
+	'Physical Education',
+	 'Physics',
+	'Politics',
+	'Psychology',
+'Religious Studies',
+	'Seven Plus',
+	'Sociology',
+	'Special Needs',
+	'UKCAT',
+  ]
+  
  
   profile = {} as Profile
   user: any
@@ -28,7 +88,24 @@ export class InterestsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, 
    private app: App, private afStore: AngularFirestore, public loadingCtrl: LoadingController, public dataService: DataProvider) {
- 
+
+    let ref = firebase.database().ref('interests').set(this.asignatura);
+
+    // this.asignatura.forEach(element => {
+    //   ref.update(element.name);
+    // }); 
+    
+    firebase.database().ref('interests').once('value', (snapshot) => {
+      let userdata = snapshot.val();
+      console.log(userdata);
+      for (var key in userdata) {
+        console.log(userdata[key]);
+        this.temparr.push(userdata[key]);
+        this.filteredsub .push(userdata[key]);
+      }
+      
+    });
+
     let loader = this.loadingCtrl.create({
       content: 'Please wait ...'
     })
@@ -36,6 +113,21 @@ export class InterestsPage {
     this.initializeItems();
     loader.dismiss();
     
+  }
+
+  searchuser(searchbar) {
+    this.filteredsub = this.temparr;
+    var q = searchbar.target.value;
+    if (q.trim() == '') {
+      return;
+    }
+
+    this.filteredsub = this.filteredsub.filter((v) => {
+      if (v.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+        return true;
+      }
+      return false;
+    })
   }
 
 
@@ -51,8 +143,32 @@ export class InterestsPage {
     })
   }
 
+  addCheckbox(event, checkbox : String) { 
+    console.log(event.checked, checkbox);
+    
+    if ( event.checked ) {
+      this.selectedArray.push(checkbox);
+      console.log(this.selectedArray);
+          let sentuser = this.temparr.indexOf(checkbox);
+          this.temparr.splice(sentuser, 1);
+    } else {
+      let index = this.removeCheckedFromArray(checkbox);
+      this.selectedArray.splice(index,1);
+      console.log(this.selectedArray);
+    }
+  }
+
+  removeCheckedFromArray(checkbox : String) {
+    return this.selectedArray.findIndex((category)=>{
+      return category === checkbox;
+    })
+  }
+
   selectInterests(data) {
     this.selectedArray.push(data);
+    console.log(this.selectedArray);
+    
+          
   }
 
   done() {

@@ -82,7 +82,12 @@
     <ion-card-header>
       <h2>Ratings</h2>
     </ion-card-header>
-    <ion-card-content> </ion-card-content>
+    <ion-card-content> 
+        <div>
+            <ion-icon name="star" *ngFor="let num of [1, 2, 3, 4, 5]" (click)="rate(num)" [ngStyle]="{'color': getColor(num)}">
+            </ion-icon>
+          </div>
+    </ion-card-content>
   </ion-card>
 
  

@@ -12,6 +12,7 @@ export interface Message {
     sender?: string;
     isRead? : boolean;
     photoURL?: string;
+    timestamp?: any;
 
 
 }

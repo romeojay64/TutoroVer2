@@ -15,11 +15,42 @@
       </ion-item>
       <div><small>The name you want to show to learners</small></div> -->
 
+      
+
       <ion-item>
           <ion-label floating>Gender: </ion-label>
           <ion-select [(ngModel)]="profile.gender">
             <ion-option value="Male">Male</ion-option>
             <ion-option value="Female">Female</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>City: </ion-label>
+          <ion-select [(ngModel)]="profile.city">
+            <ion-option *ngFor="let city of cities" value="{{city.name}}">{{city.name}}</ion-option>
+            
+          </ion-select>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label floating>Baranggay: </ion-label>
+          <ion-select [(ngModel)]="profile.brgy">
+            <ion-option *ngFor="let brgy of brgys" value="{{brgy.name}}">{{brgy.name}}</ion-option>
+           
+          </ion-select>
+        </ion-item>
+  
+        <ion-item>
+            <ion-label floating>Date of Birth</ion-label>
+            <ion-datetime displayFormat="MMMM/DD/YYYY" [(ngModel)]="profile.dob" ></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Profession: </ion-label>
+          <ion-select [(ngModel)]="profile.profession">
+            <ion-option value="Student">Student</ion-option>
+            <ion-option value="Female">Employed</ion-option>
           </ion-select>
         </ion-item>
 
@@ -40,36 +71,10 @@
         </ion-item>
 
         <ion-item>
-            <ion-label floating>Profession: </ion-label>
-            <ion-select [(ngModel)]="profile.profession">
-              <ion-option value="Student">Student</ion-option>
-              <ion-option value="Female">Employed</ion-option>
-            </ion-select>
-          </ion-item>
+          <ion-label floating>Brief Description: </ion-label>
+          <ion-textarea  rows="3" [(ngModel)]="profile.desc"></ion-textarea>
+        </ion-item>
 
-      <ion-item>
-        <ion-label floating>City: </ion-label>
-        <ion-select [(ngModel)]="profile.city">
-          <ion-option *ngFor="let city of cities" value="{{city.name}}">{{city.name}}</ion-option>
-          
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Baranggay: </ion-label>
-        <ion-select [(ngModel)]="profile.brgy">
-          <ion-option *ngFor="let brgy of brgys" value="{{brgy.name}}">{{brgy.name}}</ion-option>
-         
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-          <ion-label floating>Date of Birth</ion-label>
-          <ion-datetime displayFormat="MMMM/DD/YYYY" [(ngModel)]="profile.dob" ></ion-datetime>
-      </ion-item>
-
-      
-     
 
        
       </ion-list>

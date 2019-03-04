@@ -1,0 +1,28 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Upload a valid ID</ion-title>
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content>
+
+  <h4>Upload a valid ID to be verified.</h4>
+ 
+  <p>Valid IDs include: School ID, SSS ID, UMID</p>
+  <div class="profile-image">
+    <img src="{{imgurl}}">
+  </div>
+  <div>
+    <button ion-button round outline (click)="chooseimage()">Choose image</button>
+  </div>
+  <div [hidden]="!moveon">
+    <button ion-button round outline (click)="proceed()">Skip this step</button>
+  </div>
+  <div [hidden]="moveon">
+    <button ion-button round outline (click)="updateproceed()">Upload & proceed</button>
+  </div>
+  <div>
+    
+  </div>
+</ion-content>

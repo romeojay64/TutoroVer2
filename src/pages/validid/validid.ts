@@ -1,28 +1,25 @@
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { ImghandlerProvider } from '../../providers/imghandler/imghandler';
+import * as firebase from 'firebase/app';
 import { UserProvider } from '../../providers/user/user';
-import 'firebase/storage';
-
+import { ImghandlerProvider } from '../../providers/imghandler/imghandler';
 
 @IonicPage()
 @Component({
-  selector: 'page-profilepic',
-  templateUrl: 'profilepic.html',
-  
+  selector: 'page-validid',
+  templateUrl: 'validid.html',
 })
-
-export class ProfilepicPage {
+export class ValididPage {
 
   imgurl = 'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e';
   moveon = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public imgservice: ImghandlerProvider,
-    public zone: NgZone, public loadingCtrl: LoadingController, public userservice: UserProvider
-    ) {
+    public zone: NgZone, public loadingCtrl: LoadingController, public userservice: UserProvider) {
   }
 
   ionViewDidLoad() {
+    console.log('ionViewDidLoad ValididPage');
   }
 
   chooseimage() {
@@ -30,7 +27,7 @@ export class ProfilepicPage {
       content: 'Please wait'
     })
     loader.present();
-    this.imgservice.uploadimage().then((uploadedurl: any) => {
+    this.imgservice.uploadimageid().then((uploadedurl: any) => {
      
       this.zone.run(() => {
         loader.dismiss();
@@ -46,10 +43,10 @@ export class ProfilepicPage {
       content: 'Please wait'
     })
     loader.present();
-    this.userservice.updateimage(this.imgurl).then((res: any) => {
+    this.userservice.updateid(this.imgurl).then((res: any) => {
       loader.dismiss();
       if (res.success) {
-        this.navCtrl.setRoot('TabsPage');
+        this.navCtrl.setRoot('ProfilepicPage');
       }
       else {
         alert(res);
@@ -58,9 +55,8 @@ export class ProfilepicPage {
   }
  
   proceed() {
-    this.navCtrl.setRoot('TabsPage');
+    this.navCtrl.setRoot('ProfilepicPage');
   }
 
-  
 
 }

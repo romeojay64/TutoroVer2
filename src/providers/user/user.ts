@@ -9,8 +9,9 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class UserProvider {
-  // firedata = firebase.database().ref('profile');
-  firedata = firebase.database().ref("users");
+  firedata = firebase.database().ref('profile');
+  
+
   tutors: Observable<any[]>;
 
   constructor(
@@ -38,6 +39,46 @@ export class UserProvider {
             .doc(firebase.auth().currentUser.uid)
             .update({
               photoURL: imageurl
+            })
+            .then(() => {
+              resolve({ success: true });
+            })
+            .catch(err => {
+              reject(err);
+            });
+        })
+        .catch(err => {
+          reject(err);
+        });
+      //     firebase.database().ref('/users/' + firebase.auth().currentUser.uid).update({
+      //     displayName: this.afAuth.auth.currentUser.displayName,
+      //     photoURL: imageurl,
+      //     uid: firebase.auth().currentUser.uid
+      //     }).then(() => {
+      //         resolve({ success: true });
+      //         }).catch((err) => {
+      //             reject(err);
+      //         })
+      // }).catch((err) => {
+      //       reject(err);
+      //    })
+    });
+    return promise;
+  }
+
+  updateid(imageurl) {
+    var promise = new Promise((resolve, reject) => {
+      this.afAuth.auth.currentUser
+        .updateProfile({
+          displayName: this.afAuth.auth.currentUser.displayName,
+          photoURL: imageurl
+        })
+        .then(() => {
+          this.afStore
+            .collection("profile")
+            .doc(firebase.auth().currentUser.uid)
+            .update({
+              idURL: imageurl
             })
             .then(() => {
               resolve({ success: true });

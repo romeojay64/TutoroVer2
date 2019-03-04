@@ -54,7 +54,7 @@ export class WillingtoteachPage {
         });
 
         // this.navCtrl.setRoot("ProfilepicPage");
-        this.app.getRootNav().setRoot('ProfilepicPage');
+        this.app.getRootNav().setRoot('ValididPage');
     });
   }
 

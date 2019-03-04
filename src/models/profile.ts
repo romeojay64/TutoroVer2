@@ -15,5 +15,6 @@ export interface Profile {
     displayName?: string;
     educlevel?: string;
     profession?: string; 
+    desc?: string;
     
 }

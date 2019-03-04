@@ -32,6 +32,7 @@ export class ProfilePage {
   utype :  Observable<any>;
   fname: string;
   lname: string;
+  verified: boolean;
 
   public levels = [
     {'PreSchool' : false},
@@ -51,6 +52,7 @@ export class ProfilePage {
     {'Saturday': false},
     {'Sunday': false},
   ];
+  flex: boolean;
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -71,10 +73,13 @@ export class ProfilePage {
       this.utype.subscribe(res => {
         this.fname = res.fname;        
         this.lname = res.lname;        
+        
             if(res.type == 'Tutor'){
               this.tutor = true;
+              this.verified = res.isVerified;
               this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).get().subscribe((querySnapshot) => {
                 console.log(querySnapshot.exists);
+                this.flex = querySnapshot.data().isFlexible;
                 
                 // console.log(querySnapshot.data().teaches.CollegeUndergraduate);
                 if(querySnapshot.exists) {
@@ -224,6 +229,21 @@ export class ProfilePage {
     if(this.tutor && this.adlaw[6].Sunday){
       return true
     }
+  }
+
+  verify(){
+
+    if(this.verified && this.tutor){
+      return true
+    }
+    else {
+      return false
+    }
+
+  }
+
+  viewtutors(){
+
   }
 
   ionViewDidLoad() {

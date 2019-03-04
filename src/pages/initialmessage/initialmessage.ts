@@ -55,7 +55,7 @@ export class InitialmessagePage {
   sendmessage() {
     this.afStore
       .collection("messages")
-      .doc(firebase.auth().currentUser.uid)
+      .doc(firebase.auth().currentUser.uid+this.initialmessage.reciever)
       .set(
            this.initialmessage
         )

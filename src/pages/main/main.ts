@@ -57,4 +57,10 @@ export class MainPage {
     
   }
 
+  pay() {
+ 
+    this.navCtrl.setRoot('PaypalPage');
+    
+  }
+
 }

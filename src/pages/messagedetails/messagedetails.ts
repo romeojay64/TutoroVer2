@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import * as firebase from "firebase/app";
 import { AngularFirestore } from '@angular/fire/firestore';
+import { connreq } from '../../models/requests';
 
 @IonicPage()
 @Component({
@@ -10,12 +11,16 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class MessagedetailsPage {
 
+  newrequest = {} as connreq;
   tutorid: any;
   messagedetails: any;
   tutor: boolean;
   senderid: any;
+  imgurl =
+  "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afStore: AngularFirestore) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afStore: AngularFirestore,
+    public alertCtrl: AlertController) {
     this.senderid = this.navParams.get('learnerid');
     this.tutorid  = this.navParams.get('tutorid');
     this.afStore.collection('user').doc(firebase.auth().currentUser.uid).get().subscribe(ref => {
@@ -46,6 +51,21 @@ export class MessagedetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MessagedetailsPage');
+    
+  }
+
+  accept(sender){
+    
+
+      this.afStore.collection("messages").doc(sender+firebase.auth().currentUser.uid).update({
+          'isAccepted': true 
+        })
+        this.navCtrl.pop();
+      
+
+  }
+
+  reject(){
     
   }
 

@@ -48,7 +48,7 @@ export class InboxPage {
 
   gettutormessages() {
     this.afStore.collection('messages', ref =>
-    ref.where("reciever", "==", firebase.auth().currentUser.uid)).valueChanges().subscribe(ref => {
+    ref.where("reciever", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", false)).valueChanges().subscribe(ref => {
       this.tutormessages = ref;
      console.log(this.tutormessages);
     });
