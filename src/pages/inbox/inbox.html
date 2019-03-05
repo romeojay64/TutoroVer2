@@ -8,9 +8,10 @@
 <ion-content >
     <ion-list *ngIf="!tutor; else istutor">
         <ion-list-header>
-            Messages sent to Tutors
+            Pending Requests sent to Tutors
           </ion-list-header>
-            <ion-item *ngFor="let message of learnermessages" (click)="openmessage(message.reciever,message.sender)">
+          <div *ngIf="exists; else noexists">
+            <ion-item  *ngFor="let message of learnermessages" (click)="openmessage(message.reciever,message.sender)">
               <ion-avatar item-start>
                   <img *ngIf = "message.photoURL; else noPic" src="{{message.photoURL}}">
                   <ng-template #noPic>
@@ -23,12 +24,48 @@
               </span>
               <ion-icon item-end name="arrow-dropright"></ion-icon>
             </ion-item>
+          </div>
+
+            <ng-template #noexists>
+
+                <p style="text-align: center; align-content: center;">You have no pending requests.</p>
+          
+              </ng-template>
+
+            <ion-list-header>
+              Approved Requests
+            </ion-list-header>
+              <ion-item *ngFor="let message of learnerapprovedmessages">
+               <!-- (click)="openmessage(message.reciever,message.sender)" -->
+                <ion-avatar item-start>
+                    <img *ngIf = "message.photoURL; else noPic" src="{{message.photoURL}}">
+                    <ng-template #noPic>
+                        <img src="{{imgurl}}">
+                      </ng-template>
+                </ion-avatar>
+                <span *ngIf="!message.isRead; else read">
+                <h2><b>{{message.recieverfname}}</b></h2>
+                <p><b>{{message.topic}}</b></p>
+              </span>
+              <ng-template #read>
+                  <h2>{{message.recieverfname}}</h2>
+                    <p>{{message.subject}}</p>
+              </ng-template>
+             
+                  <ion-icon *ngIf="!message.isBuddies; else bud" name="person-add" item-end (click)="hiretutor(message.reciever, message.recieverfname, message.sender)"></ion-icon>
+              
+              <ng-template #bud>
+                  <ion-icon name="person" item-end (click)="goToDetailPage(message.reciever)"></ion-icon>
+              </ng-template>
+             
+                <!-- <ion-icon item-end name="arrow-dropright"></ion-icon> -->
+              </ion-item>
          
         </ion-list>
 
         
 <ng-template #istutor>
-
+    
       <ion-list-header>
           Messages Requests by Learners
         </ion-list-header>
@@ -49,6 +86,30 @@
           </ng-template>
             <ion-icon item-end name="arrow-dropright"></ion-icon>
           </ion-item>
+         
+
+          <ion-list-header>
+                  Approved Requests
+                </ion-list-header>
+                  <ion-item *ngFor="let message of tutorapprovedmessages" (click)="openmessage(message.reciever,message.sender)">
+                    <ion-avatar item-start>
+                        <img *ngIf = "message.photoURL; else noPic" src="{{message.photoURL}}">
+                        <ng-template #noPic>
+                            <img src="{{imgurl}}">
+                          </ng-template>
+                    </ion-avatar>
+                    <span *ngIf="!message.isRead; else read">
+                    <h2><b>{{message.senderfname}}</b></h2>
+                    <p><b>{{message.topic}}</b></p>
+                  </span>
+                  <ng-template #read>
+                      <h2>{{message.senderfname}}</h2>
+                        <p>{{message.subject}}</p>
+                  </ng-template>
+                    <ion-icon item-end name="arrow-dropright"></ion-icon>
+                  </ion-item>
+               
+
 
           
 

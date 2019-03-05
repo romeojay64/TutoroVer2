@@ -38,11 +38,19 @@
               
         
          
-         
-          <button ion-button full icon-start color="secondary" (click)="messageTutor()" class="message">
-              <ion-icon name="chatbubbles"></ion-icon>
-              <div>Message</div>
-            </button>
+         <div *ngIf="!buddies; else bud">
+            <button ion-button block icon-start round color="secondary" (click)="messageTutor()" class="message">
+                <ion-icon name="mail"></ion-icon>
+                <div>Message</div>
+              </button>
+         </div>
+         <ng-template #bud>
+            <button ion-button block icon-start round  color="secondary" (click)="messageTutor()" class="message">
+                <ion-icon name="chatbubbles"></ion-icon>
+                <div>Chat</div>
+              </button>
+         </ng-template>
+          
          
         </ion-card-content>
       </ion-card>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Keyboard } from "ionic-angular";
 import { AngularFireDatabase } from "@angular/fire/database";
 import { AngularFireAuth } from "@angular/fire/auth";
 // import * as Lodash from 'lodash';
@@ -20,10 +20,71 @@ import { t } from "@angular/core/src/render3";
   templateUrl: "search.html"
 })
 export class SearchPage implements OnInit {
+
+  private list: string[] = [ 'Accounting',
+  'Ancient History',
+'Anthropology',
+'Archaeology',
+'Art',
+'Astronomy',
+'Basic Skills',
+'Biochemistry',
+'Biology',
+'BMAT',
+'Business Studies',
+'Chemistry',
+'Citizenship Studies',
+'Computing',
+'Criminology',
+'Dentistry',
+'Design and Craft',
+'Design and Technology',
+'Drama',
+'Early Years',
+'Economics',
+'Electronics',
+'Eleven Plus',
+'Engineering',
+'English',
+'Entrance Exams',
+'General Science',
+'General Studies',
+'Geography',
+'Geology',
+'History',
+'Home Economics',
+'Humanities',
+'IELTS',
+'Law',
+'Leisure Studies',
+'Maths',
+'Media',
+'Medicine',
+'Music',
+'Music Technology',
+'Neuroscience',
+'Pathology',
+'Personal Statements',
+'Philosophy',
+'Photography',
+'Physical Education',
+'Physics',
+'Politics',
+'Psychology',
+'Religious Studies',
+'Seven Plus',
+'Sociology',
+'Special Needs',
+'UKCAT'];
+  public input: string = '';
+  public countries: string[] = [];
+
   userArray: Observable<any[]>;
   public cities = [
     {name: 'Cebu City'},
   ];
+
+
 
   public brgys = [
     {name: 'Adlaon'},
@@ -112,6 +173,9 @@ export class SearchPage implements OnInit {
   filteredusers = [];
   filteredtutors = [];
   filter = {} as Filter;
+  searchstring: string;
+  exists = true;
+  
   imgurl =
     "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e";
   tutors: Profile[];
@@ -123,15 +187,17 @@ export class SearchPage implements OnInit {
     public afAuth: AngularFireAuth,
     private afDatabase: AngularFireDatabase,
     private userservice: UserProvider,
-    private afStore: AngularFirestore
+    private afStore: AngularFirestore,
+    private keyboard: Keyboard
   ) {
-    this.userservice.getTutors().subscribe(items => {
-      this.tutors = items;
+
+    
+    // this.userservice.getTutors().subscribe(items => {
+    //   this.tutors = items;
       
-      this.filteredtutors = this.tutors;
-      // console.log(this.filteredtutors.values.);
-      // console.log(this.tutors);
-    });
+    //   this.filteredtutors = this.tutors;
+  
+    // });
     //  afStore.collection('profile', ref => ref.where('type','==', 'Tutor')).get().subscribe(function(querySnapshot) {
     //   querySnapshot.docs.forEach(doc => {
     //     console.log(doc.data());
@@ -169,6 +235,24 @@ export class SearchPage implements OnInit {
     
   }
 
+  add(item: string) {
+    this.input = item;
+    this.countries = [];
+  }
+
+  removeFocus() {
+    this.keyboard.close();
+  }
+
+  search() {
+    if (!this.input.trim().length || !this.keyboard.isOpen()) {
+      this.countries = [];
+      return;
+    }
+    
+    this.countries = this.list.filter(item => item.toUpperCase().includes(this.input.toUpperCase()));
+  }
+
   ngOnInit() {
     // this.userservice.getTutors().subscribe(items => {
     //   this.tutors = items;
@@ -199,32 +283,72 @@ export class SearchPage implements OnInit {
     console.log("RESET!");
     this.filter.level = null;
     this.filter.subj = null;
+    // this.input = null;
     this.userservice.resetTutors().subscribe(items => {
       this.filteredtutors = items;
     });
   }
   filtertutors() {
     console.log(this.filter.level);
-    console.log(this.filter.subj);
-    if (this.filter.subj && this.filter.level) {
-      this.userservice
-        .getFilteredtutorsbyBoth(this.filter.subj, this.filter.level)
-        .subscribe(items => {
-          this.filteredtutors = items;
-        });
-    } else if (this.filter.subj) {
-      this.userservice
-        .getFilteredtutorsbySubj(this.filter.subj)
-        .subscribe(items => {
-          this.filteredtutors = items;
-        });
-    } else {
-      this.userservice
-        .getFilteredtutorsbyLevel(this.filter.level)
-        .subscribe(items => {
-          this.filteredtutors = items;
-        });
-    }
+    console.log(this.input);
+    console.log(this.filter.city);
+    console.log(this.filter.brgy);
+    if (this.filter.level && this.filter.brgy) {
+        this.userservice
+          .getFilteredtutorsbyBoth(this.filter.level, this.filter.brgy, this.input)
+          .subscribe(items => {
+            this.filteredtutors = items;
+          });
+      } else if (this.filter.brgy) {
+        this.userservice
+          .getFilteredtutorsbrgy(this.filter.brgy,this.input)
+          .subscribe(items => {
+            this.filteredtutors = items;
+          });
+      }
+
+      else {
+        this.userservice
+          .getFilteredtutorsbyLevel(this.filter.level,this.input)
+          .subscribe(items => {
+            this.filteredtutors = items;
+          });
+      }
+    // if (this.filter.subj && this.filter.level) {
+    //   this.userservice
+    //     .getFilteredtutorsbyBoth(this.filter.subj, this.filter.level)
+    //     .subscribe(items => {
+    //       this.filteredtutors = items;
+    //     });
+    // } else if (this.filter.subj) {
+    //   this.userservice
+    //     .getFilteredtutorsbySubj(this.filter.subj)
+    //     .subscribe(items => {
+    //       this.filteredtutors = items;
+    //     });
+    // } else {
+    //   this.userservice
+    //     .getFilteredtutorsbyLevel(this.filter.level)
+    //     .subscribe(items => {
+    //       this.filteredtutors = items;
+    //     });
+    // }
+  }
+  searchtutors(){
+    this.exists = true;
+    console.log(this.input)
+    this.userservice
+          .search(this.input)
+          .subscribe(items => {
+            if(items.length > 0){
+              console.log(items);
+              this.filteredtutors = items;
+            } else {
+              console.log("WALEY");
+              this.exists = false;
+            }
+            
+          });
   }
 
   goToDetailPage(tutor) {

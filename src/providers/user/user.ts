@@ -155,17 +155,7 @@ export class UserProvider {
       )
       .valueChanges();
   }
-  getFilteredtutorsbyLevel(level) {
-    return this.afStore
-      .collection("profile", ref =>
-        ref
-          .where("teaches", "array-contains", level)
-          .where("type", "==", "Tutor")
-      )
-      .valueChanges();
-  }
-  getFilteredtutorsbyBoth(subj, level) {
-    console.log("BOTH");
+  getFilteredtutorsbyLevel(level, subj) {
     return this.afStore
       .collection("profile", ref =>
         ref
@@ -174,5 +164,49 @@ export class UserProvider {
           .where("type", "==", "Tutor")
       )
       .valueChanges();
+  }
+
+  getFilteredtutorsbrgy(brgy, subj) {
+    return this.afStore
+      .collection("profile", ref =>
+        ref
+          .where("brgy", "==", brgy)
+          .where("interests", "array-contains", subj)
+          .where("type", "==", "Tutor")
+      )
+      .valueChanges();
+  }
+  // getFilteredtutorsbyBoth(subj, level) {
+  //   console.log("BOTH");
+  //   return this.afStore
+  //     .collection("profile", ref =>
+  //       ref
+  //         .where("teaches." + level, "==", true)
+  //         .where("interests", "array-contains", subj)
+  //         .where("type", "==", "Tutor")
+  //     )
+  //     .valueChanges();
+  // }
+  getFilteredtutorsbyBoth(level, brgy, subj) {
+    console.log("BOTH");
+    return this.afStore
+      .collection("profile", ref =>
+        ref
+          .where("brgy", "==", brgy)
+          .where("teaches", "array-contains", level)
+          .where("interests", "array-contains", subj)
+          .where("type", "==", "Tutor")
+      )
+      .valueChanges();
+  }
+  search(subj) {
+    return this.afStore
+      .collection("profile", ref =>
+        ref
+          .where("interests", "array-contains", subj)
+          .where("type", "==", "Tutor")
+      )
+      .valueChanges();
+
   }
 }

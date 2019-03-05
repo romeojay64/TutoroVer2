@@ -57,10 +57,18 @@ export class MessagedetailsPage {
   accept(sender){
     
 
-      this.afStore.collection("messages").doc(sender+firebase.auth().currentUser.uid).update({
+      this.afStore.collection("messages").doc(sender+"_"+firebase.auth().currentUser.uid).update({
           'isAccepted': true 
-        })
+        }).then(() => {
+        const alert = this.alertCtrl.create({
+          title: 'Alright!',
+          subTitle: 'You accepted the offer. Please wait for the tutor to contact you.',
+          buttons: ['OK']
+        });
+        alert.present();
         this.navCtrl.pop();
+      })
+        
       
 
   }

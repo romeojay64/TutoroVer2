@@ -38,10 +38,20 @@ export class InitialmessagePage {
     this.afStore.collection('profile').doc(this.params).valueChanges().subscribe((res: any) => {
       this.profileData = res;
       this.initialmessage.reciever = this.params;
+      if(res.photoURL){
+        console.log("It exists!");
+        this.initialmessage.photoURL = res.photoURL;
+      } else {
+        this.initialmessage.photoURL = "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e"
+      }
+      
+      
       this.initialmessage.sender = firebase.auth().currentUser.uid;
       this.initialmessage.recieverfname = res.displayName;
       this.initialmessage.isAccepted = false;
       this.initialmessage.isRead = false;
+      this.initialmessage.isBuddies = false;
+      
       
       this.forSelect = this.profileData.interests;
     })
@@ -55,7 +65,7 @@ export class InitialmessagePage {
   sendmessage() {
     this.afStore
       .collection("messages")
-      .doc(firebase.auth().currentUser.uid+this.initialmessage.reciever)
+      .doc(firebase.auth().currentUser.uid+"_"+this.initialmessage.reciever)
       .set(
            this.initialmessage
         )

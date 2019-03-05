@@ -12,15 +12,22 @@ import { Config } from '../../app/app.paypal.config';
 export class PaypalPage {
 
   payPalEnvironment: string = 'payPalEnvironmentSandbox';
-  payment: PayPalPayment = new PayPalPayment('10.10', 'USD', 'TV', 'sale');
-  
+	payment: PayPalPayment = new PayPalPayment('2.00', 'USD', 'Tutoro Subscription', 'subscription');
+
+ 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private payPal: PayPal) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PaypalPage');
+	}
+
+	proceed() {
+    this.navCtrl.setRoot('ValididPage');
   }
+	
+	
 
   makePayment() {
 		this.payPal.init({

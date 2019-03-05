@@ -89,4 +89,5 @@
     <allow-navigation href="http://192.168.254.105:8100" sessionid="838b221f" />
     <engine name="android" spec="7.1.4" />
     <engine name="ios" spec="4.5.5" />
+    <plugin name="com.paypal.cordova.mobilesdk" spec="~3.5.0" />
 </widget>

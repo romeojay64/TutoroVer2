@@ -1,9 +1,49 @@
 page-search {
+
     .background {
         background-color:  color($colors, bg);
     }
     button {
         background-color: color($colors, secondary);
     }
+
+    .toolbar-md {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    .searchbutton{
+        padding: 0 !important;
+        margin:0 !important;
+    }
+
+    .autocomplete {
+        width: 100%;
+      
+        ion-item {
+            ion-input {
+                padding: 1px !important;
+            }
+        }
+      
+        ion-list {
+            position: absolute;
+            width: 95%;
+            overflow-y: scroll;
+            max-height: 150%;
+            border: 5px;
+            z-index: 999;
+      
+            ion-item {
+                background: #f1f1f1;
+                // z-index: 999;
+            }
+      
+            ion-item:hover {
+                cursor: pointer;
+                background: #dddddd
+            }
+        }
+      }
 
 }

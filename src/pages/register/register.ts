@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -17,7 +17,7 @@ export class RegisterPage {
   profile = {} as Profile
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public afAuth: AngularFireAuth, private afStore: AngularFirestore) {
+    public afAuth: AngularFireAuth, private afStore: AngularFirestore,  public alertCtrl: AlertController) {
   }
 
   async register(user: User) {
@@ -25,6 +25,12 @@ export class RegisterPage {
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
       if(result){
         this.createProfile();
+        const alert = this.alertCtrl.create({
+          title: 'Success!',
+          subTitle: "You have successfully registered an account. You can now login.",
+          buttons: ['OK']
+        });
+        alert.present();
         this.navCtrl.setRoot('LoginPage');
       }
     }

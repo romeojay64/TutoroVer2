@@ -13,6 +13,6 @@ export interface Message {
     isRead? : boolean;
     photoURL?: string;
     timestamp?: any;
-
+    isBuddies?: boolean;
 
 }

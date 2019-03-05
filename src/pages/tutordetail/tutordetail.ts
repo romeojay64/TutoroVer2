@@ -20,6 +20,7 @@ export class TutordetailPage {
   utype :  Observable<any>;
   tutor: boolean;
   flex: boolean;
+  buddies: boolean = false;
 
   public levels = [
     {'PreSchool' : false},
@@ -54,6 +55,15 @@ export class TutordetailPage {
    this.profileData.subscribe(ref => {
      this.flex = ref.isFlexible;
    })
+
+   this.afStore.collection('messages').doc(firebase.auth().currentUser.uid+"_"+this.params).get().subscribe((querySnapshot) => {
+    if(querySnapshot.data().isBuddies == true){
+      this.buddies = true;
+    } else {
+      this.buddies = false;
+    }
+   })
+   
     // this.profileData = this.afDatabase.object('profile/'+this.params).valueChanges();
     //     this.afDatabase.list('interests/'+this.params).valueChanges()
     //     .subscribe(datas => {

@@ -22,6 +22,7 @@
       <ion-card-header class="centeritems">
           
           <h1><b>{{fname}} {{lname}}</b> <ion-icon *ngIf="verify()" name="checkmark-circle" color="verifycolor"></ion-icon></h1>
+          <p>{{(profileData)?.desc}}</p>
         </ion-card-header>
         <ion-card-content>
             <p><b>School:</b> {{(profileData)?.school}}</p>
@@ -31,10 +32,10 @@
 
             <ion-row>
                 <ion-col>
-                    <button ion-button color="secondary" block (click)="editimage()">Edit Profile</button>
+                    <button ion-button color="secondary" block round (click)="editimage()">Edit Profile</button>
                 </ion-col>
                 <ion-col>
-                    <button ion-button color="secondary" block (click)="logout()">Sign out</button>
+                    <button ion-button color="energy" block round (click)="logout()">Sign out</button>
                 </ion-col>
               </ion-row>
         </ion-card-content>
@@ -85,7 +86,7 @@
                 </ng-template>
             </p>
             
-            <button ion-button color="secondary" block (click)="editteaches()">Edit</button>
+            <!-- <button ion-button color="secondary" block (click)="editteaches()">Edit</button> -->
           
       </ion-card-content>
     </ion-card>
@@ -98,7 +99,7 @@
       <ion-card-content>
         
       
-          <button ion-button color="secondary" block (click)="viewtutors()">View All</button>
+          <!-- <button ion-button color="secondary" block (click)="viewtutors()">View All</button> -->
       </ion-card-content>
       
 </ion-card>

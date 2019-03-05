@@ -47,8 +47,9 @@
          <ion-item><b>Preferred Place:</b> <span>{{item.place}}</span></ion-item>
          
          <p  style='padding: 15px;'>{{item.message}}</p>
-         <button ion-button color="primary" block (click)="accept(item.sender)">Accept</button>
-      <button ion-button color="secondary" block (click)="reject()">Reject</button>
+         <button *ngIf="!item.isAccepted" ion-button color="primary" block (click)="accept(item.sender)">Accept</button>
+      <button *ngIf="!item.isAccepted" ion-button color="secondary" block (click)="reject()">Reject</button>
+      <button *ngIf="item.isAccepted" disabled ion-button color="primary" block>Pending</button>
       </div>
       
       
