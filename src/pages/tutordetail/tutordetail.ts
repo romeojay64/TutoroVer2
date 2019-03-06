@@ -1,10 +1,11 @@
-import { Component, NgZone, Input, EventEmitter ,Output } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, NgZone, EventEmitter, Output } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController  } from 'ionic-angular';
 import { Observable } from 'rxjs-compat';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { UserProvider } from '../../providers/user/user';
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Rating } from '../../models/rating';
 
 @IonicPage()
 @Component({
@@ -21,6 +22,11 @@ export class TutordetailPage {
   tutor: boolean;
   flex: boolean;
   buddies: boolean = false;
+  allratings: Observable<any>;
+  alleachratings = [] as Rating;
+  
+
+  @Output() ratingChange: EventEmitter<number> = new EventEmitter();
 
   public levels = [
     {'PreSchool' : false},
@@ -42,14 +48,14 @@ export class TutordetailPage {
     {'Sunday': false},
   ];
 
-  @Input() rating: number ;
 
-  @Output() ratingChange: EventEmitter<number> = new EventEmitter();;
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private afDatabase: AngularFireDatabase,
-    public userservice: UserProvider, public zone: NgZone, private afStore: AngularFirestore) {
+    public userservice: UserProvider, public zone: NgZone, private afStore: AngularFirestore,
+    public modalCtrl: ModalController) {
     this.params  = this.navParams.get('tutorid');
+    this.getratings();
     
     this.profileData = this.afStore.collection('profile').doc(this.params).valueChanges();
    this.profileData.subscribe(ref => {
@@ -78,51 +84,23 @@ export class TutordetailPage {
     //     });
   }
 
-  rate(index: number) {
-    // function used to change the value of our rating 
-    // triggered when user, clicks a star to change the rating
-    this.rating = index;
-    this.ratingChange.emit(this.rating);
- }
-
-
-
-getColor(index: number) {
-
-  enum COLORS {
-    GREY = "#E0E0E0",
-    GREEN = "#76FF03",
-    YELLOW = "#FFCA28",
-    RED = "#DD2C00"
-  }
-
-  if(this.isAboveRating(index)) {
-    return COLORS.GREY;
-  }
-  switch (this.rating) {
-    case 1: 
-    case 2: return COLORS.RED;
-    case 3: return COLORS.YELLOW;
-    case 4: 
-    case 5: return COLORS.GREEN;
-    default: return COLORS.GREY;
-
-  }
-    /* function to return the color of a star based on what
-     index it is. All stars greater than the index are assigned
-     a grey color , while those equal or less than the rating are
-     assigned a color depending on the rating. Using the following criteria:
   
-          1-2 stars: red
-          3 stars  : yellow
-          4-5 stars: green 
-    */
-  }
 
-isAboveRating(index: number): boolean {
-  // returns whether or not the selected index is above ,the current rating
-  // function is called from the getColor function.
-  return index > this.rating;
+ratingmodal() {
+  const modal = this.modalCtrl.create('RatingmodalPage', {tutorid: this.params});
+  modal.present();
+}
+
+getratings(){
+  this.allratings = this.afStore
+  .collection("ratings", ref => ref.where("tutor", "==", this.params))
+  .valueChanges()
+  this.allratings.subscribe(items => {
+    console.log(items);
+    
+      this.alleachratings = items;
+      
+  });
 }
 
 

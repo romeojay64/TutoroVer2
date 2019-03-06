@@ -13,15 +13,19 @@
           <div *ngIf="exists; else noexists">
             <ion-item  *ngFor="let message of learnermessages" (click)="openmessage(message.reciever,message.sender)">
               <ion-avatar item-start>
-                  <img *ngIf = "message.photoURL; else noPic" src="{{message.photoURL}}">
+                  <img *ngIf = "message.recieverphotoURL; else noPic" src="{{message.recieverphotoURL}}">
                   <ng-template #noPic>
                       <img src="{{imgurl}}">
                     </ng-template>
               </ion-avatar>
-              <span>
-              <h2>{{message.recieverfname}}</h2>
-              <p>{{message.subject}}</p>
-              </span>
+              <span *ngIf="!message.isRead; else read">
+                  <h2><b>{{message.recieverfname}}</b></h2>
+                  <p><b>{{message.subject}}</b></p>
+                </span>
+                <ng-template #read>
+                    <h2>{{message.recieverfname}}</h2>
+                      <p>{{message.subject}}</p>
+                </ng-template>
               <ion-icon item-end name="arrow-dropright"></ion-icon>
             </ion-item>
           </div>
@@ -38,25 +42,24 @@
               <ion-item *ngFor="let message of learnerapprovedmessages">
                <!-- (click)="openmessage(message.reciever,message.sender)" -->
                 <ion-avatar item-start>
-                    <img *ngIf = "message.photoURL; else noPic" src="{{message.photoURL}}">
+                    <img *ngIf = "message.recieverphotoURL; else noPic" src="{{message.recieverphotoURL}}">
                     <ng-template #noPic>
                         <img src="{{imgurl}}">
                       </ng-template>
                 </ion-avatar>
-                <span *ngIf="!message.isRead; else read">
-                <h2><b>{{message.recieverfname}}</b></h2>
-                <p><b>{{message.topic}}</b></p>
+                <span>
+                    <h2>{{message.recieverfname}}</h2>
+                    <p>{{message.topic}}</p>
               </span>
-              <ng-template #read>
-                  <h2>{{message.recieverfname}}</h2>
-                    <p>{{message.subject}}</p>
-              </ng-template>
+             
              
                   <ion-icon *ngIf="!message.isBuddies; else bud" name="person-add" item-end (click)="hiretutor(message.reciever, message.recieverfname, message.sender)"></ion-icon>
               
               <ng-template #bud>
-                  <ion-icon name="person" item-end (click)="goToDetailPage(message.reciever)"></ion-icon>
+                  <ion-icon name="chatbubbles" item-end (click)="buddychat(message.reciever, message.recieverphotoURL)"></ion-icon>
               </ng-template>
+
+              <!-- <ion-icon name="person" item-end (click)="goToDetailPage(message.reciever)"></ion-icon> -->
              
                 <!-- <ion-icon item-end name="arrow-dropright"></ion-icon> -->
               </ion-item>
@@ -69,9 +72,10 @@
       <ion-list-header>
           Messages Requests by Learners
         </ion-list-header>
+        <div *ngIf="exists; else noexists">
           <ion-item *ngFor="let message of tutormessages" (click)="openmessage(message.reciever,message.sender)">
             <ion-avatar item-start>
-                <img *ngIf = "message.photoURL; else noPic" src="{{message.photoURL}}">
+                <img *ngIf = "message.senderphotoURL; else noPic" src="{{message.senderphotoURL}}">
                 <ng-template #noPic>
                     <img src="{{imgurl}}">
                   </ng-template>
@@ -86,27 +90,31 @@
           </ng-template>
             <ion-icon item-end name="arrow-dropright"></ion-icon>
           </ion-item>
-         
+         </div>
+
+         <ng-template #noexists>
+
+            <p style="text-align: center; align-content: center;">You have no requests.</p>
+      
+          </ng-template>
 
           <ion-list-header>
                   Approved Requests
                 </ion-list-header>
-                  <ion-item *ngFor="let message of tutorapprovedmessages" (click)="openmessage(message.reciever,message.sender)">
+                  <ion-item *ngFor="let message of tutorapprovedmessages">
                     <ion-avatar item-start>
-                        <img *ngIf = "message.photoURL; else noPic" src="{{message.photoURL}}">
+                        <img *ngIf = "message.senderphotoURL; else noPic" src="{{message.senderphotoURL}}">
                         <ng-template #noPic>
                             <img src="{{imgurl}}">
                           </ng-template>
                     </ion-avatar>
-                    <span *ngIf="!message.isRead; else read">
-                    <h2><b>{{message.senderfname}}</b></h2>
-                    <p><b>{{message.topic}}</b></p>
+                    <span>
+                    <h2>{{message.senderfname}}</h2>
+                    <p>{{message.topic}}</p>
                   </span>
-                  <ng-template #read>
-                      <h2>{{message.senderfname}}</h2>
-                        <p>{{message.subject}}</p>
-                  </ng-template>
-                    <ion-icon item-end name="arrow-dropright"></ion-icon>
+
+                  <ion-icon *ngIf="message.isBuddies" name="chatbubbles" item-end (click)="buddychat(message.sender,message.senderphotoURL)"></ion-icon>
+                  
                   </ion-item>
                
 

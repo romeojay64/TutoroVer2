@@ -23,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
  import { Camera } from '@ionic-native/camera';
 import { DataProvider } from '../providers/data/data';
 import { PayPal } from '@ionic-native/paypal';
+import { ChatProvider } from '../providers/chat/chat';
 
 
 
@@ -60,7 +61,8 @@ import { PayPal } from '@ionic-native/paypal';
     UserProvider,
     Camera,
     DataProvider,
-    PayPal
+    PayPal,
+    ChatProvider
     
     
   ]

@@ -1,7 +1,5 @@
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, App } from 'ionic-angular';
-// import { Observable } from 'rxjs/Observable';
-// import { Observable } from 'rxjs';
 import { Observable } from 'rxjs-compat';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -130,6 +128,10 @@ export class ProfilePage {
     
      
     })
+  }
+
+  editprofile(){
+    this.navCtrl.push("EditprofilePage");
   }
 
   getavail(){

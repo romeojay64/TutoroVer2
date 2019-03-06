@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from "firebase/app";
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
 import { Config } from '../../app/app.paypal.config';
+import { ChatProvider } from '../../providers/chat/chat';
 
 
 @IonicPage()
@@ -26,7 +27,7 @@ export class InboxPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private afStore: AngularFirestore, public alertCtrl: AlertController,
-    private payPal: PayPal) {
+    private payPal: PayPal, public chatservice: ChatProvider) {
     this.afStore.collection('user').doc(firebase.auth().currentUser.uid).get().subscribe(ref => {
       if(ref.data().type == "Tutor"){
         console.log('You are a tutor!')
@@ -63,7 +64,13 @@ export class InboxPage {
   gettutormessages() {
     this.afStore.collection('messages', ref =>
     ref.where("reciever", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", false)).valueChanges().subscribe(ref => {
-      this.tutormessages = ref;
+     
+      if(ref.length > 0){
+        this.tutormessages = ref;
+      } else {
+        this.exists = false;
+      }
+     
      console.log(this.tutormessages);
     });
   
@@ -73,7 +80,7 @@ export class InboxPage {
     this.afStore.collection('messages', ref =>
     ref.where("reciever", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", true)).valueChanges().subscribe(ref => {
       this.tutorapprovedmessages = ref;
-     console.log(this.tutormessages);
+     console.log(this.tutorapprovedmessages);
     });
   
   }
@@ -82,7 +89,7 @@ export class InboxPage {
     this.afStore.collection('messages', ref =>
     ref.where("sender", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", true)).valueChanges().subscribe(ref => {
       this.learnerapprovedmessages = ref;
-     console.log(this.tutormessages);
+     console.log(this.learnerapprovedmessages);
     });
   
   }
@@ -103,6 +110,11 @@ export class InboxPage {
             })
     this.navCtrl.push('MessagedetailsPage', { tutorid: tutor, learnerid: learner });
     // console.log(tutor);
+  }
+
+  buddychat(buddy, buddypic) {
+    this.chatservice.initializebuddy(buddy);
+    this.navCtrl.push('BuddychatPage', {buddypic: buddypic});
   }
 
   hiretutor(tutor, name, sender){

@@ -1,0 +1,82 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+
+        <ion-item>
+            <ion-label floating>First Name</ion-label>
+            <ion-input type="text" [(ngModel)]="fname"></ion-input>      
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Last Name</ion-label>
+            <ion-input type="text" [(ngModel)]="lname"></ion-input>      
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Brief Description: </ion-label>
+            <ion-textarea  rows="3" [(ngModel)]="profile.desc"></ion-textarea>
+          </ion-item>
+    
+        <ion-item>
+            <ion-label floating>Gender: </ion-label>
+            <ion-select [(ngModel)]="profile.gender">
+              <ion-option value="Male">Male</ion-option>
+              <ion-option value="Female">Female</ion-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label floating>City: </ion-label>
+            <ion-select [(ngModel)]="profile.city">
+              <ion-option *ngFor="let city of cities" value="{{city.name}}">{{city.name}}</ion-option>
+              
+            </ion-select>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label floating>Baranggay: </ion-label>
+            <ion-select [(ngModel)]="profile.brgy">
+              <ion-option *ngFor="let brgy of brgys" value="{{brgy.name}}">{{brgy.name}}</ion-option>
+             
+            </ion-select>
+          </ion-item>
+    
+          <ion-item>
+              <ion-label floating>Date of Birth</ion-label>
+              <ion-datetime displayFormat="MMMM/DD/YYYY" [(ngModel)]="profile.dob" ></ion-datetime>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label floating>Profession: </ion-label>
+            <ion-select [(ngModel)]="profile.profession">
+              <ion-option value="Student">Student</ion-option>
+              <ion-option value="Employed">Employed</ion-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item>
+              <ion-label floating>Educational Level</ion-label>
+              <ion-select [(ngModel)]="profile.educlevel">
+                <ion-option value="Senior High School">Senior High School</ion-option>
+                <ion-option value="College Undergraduate">College Undergraduate</ion-option>
+                <ion-option value="College">College Graduate</ion-option>
+                <ion-option value="PhD">Doctorate</ion-option>
+                <ion-option value="MAT">Masteral</ion-option>
+              </ion-select>
+            </ion-item>
+  
+          <ion-item>
+              <ion-label floating>School</ion-label>
+              <ion-input type="text" [(ngModel)]="profile.school"></ion-input>
+          </ion-item>
+   
+        </ion-list>
+
+        <button ion-button color="secondary" block round (click)="save()"> <ion-icon name="save"></ion-icon>Save</button>
+
+</ion-content>

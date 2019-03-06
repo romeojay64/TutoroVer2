@@ -32,10 +32,10 @@
 
             <ion-row>
                 <ion-col>
-                    <button ion-button color="secondary" block round (click)="editimage()">Edit Profile</button>
+                    <button ion-button color="secondary" block round (click)="editprofile()"> <ion-icon name="create"></ion-icon><div style="padding-left: 10px;"> Edit</div> Profile</button>
                 </ion-col>
                 <ion-col>
-                    <button ion-button color="energy" block round (click)="logout()">Sign out</button>
+                    <button ion-button color="energy" block round (click)="logout()"><ion-icon name="log-out"></ion-icon><div style="padding-left: 10px;"> Sign out</div></button>
                 </ion-col>
               </ion-row>
         </ion-card-content>
@@ -49,7 +49,7 @@
       <ion-card-content>
           <p><span><ion-icon name="star" color="primary"></ion-icon></span><b> Specializations:</b> </p>
           <p>{{(profileData)?.interests }}</p>
-          <p><b>Teaches: </b></p>
+          <p><ion-icon name="people" color="primary"></ion-icon><b>Teaches: </b></p>
             <span *ngIf="levels[0].PreSchool">
                 <ion-checkbox disabled slot="end" checked="{{ levels[0].PreSchool }}"></ion-checkbox> Pre-School
               </span>

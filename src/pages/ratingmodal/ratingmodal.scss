@@ -1,0 +1,14 @@
+page-ratingmodal {
+    .background {
+        background-color:  color($colors, bg);
+    }
+
+    .scroll-items {
+        align-content: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+}

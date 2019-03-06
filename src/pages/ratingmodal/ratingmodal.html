@@ -1,0 +1,32 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Rate this tutor</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="dismiss()">
+          CLOSE
+        </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="background">
+
+    <div>
+      <ion-item>
+          <span>Rating: </span>
+        <ion-icon name="star" *ngFor="let num of [1, 2, 3, 4, 5]" (click)="rate(num)" [ngStyle]="{'color': getColor(num)}">
+        </ion-icon>
+      </ion-item>
+        <ion-item>
+            <ion-label floating>Describe your experience: </ion-label>
+            <ion-textarea  rows="2" [(ngModel)]="desc"></ion-textarea>
+          </ion-item>
+        <button ion-button block icon-start round  color="secondary" (click)="submitrating()" class="message">
+            <ion-icon name="star"></ion-icon>
+            <div>Submit</div>
+          </button>
+
+      </div>
+
+</ion-content>

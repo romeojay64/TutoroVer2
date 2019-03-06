@@ -35,20 +35,33 @@
               </p>
             
           
-              
+              <ion-row *ngIf="!buddies; else bud">
+                  <ion-col >
+                      <button ion-button block icon-start round color="secondary" (click)="messageTutor()" class="message">
+                          <ion-icon name="mail"></ion-icon>
+                          <div>Message</div>
+                        </button>
+                  </ion-col>
+                 
+                </ion-row>
         
          
-         <div *ngIf="!buddies; else bud">
-            <button ion-button block icon-start round color="secondary" (click)="messageTutor()" class="message">
-                <ion-icon name="mail"></ion-icon>
-                <div>Message</div>
-              </button>
-         </div>
+       
          <ng-template #bud>
+           <ion-row>
+            <ion-col>
             <button ion-button block icon-start round  color="secondary" (click)="messageTutor()" class="message">
                 <ion-icon name="chatbubbles"></ion-icon>
                 <div>Chat</div>
               </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button block icon-start round  color="energy" (click)="ratingmodal()" class="message">
+                    <ion-icon name="star"></ion-icon>
+                    <div>Rate</div>
+                  </button>
+            </ion-col>
+          </ion-row>
          </ng-template>
           
          
@@ -88,13 +101,20 @@
 
   <ion-card>
     <ion-card-header>
-      <h2>Ratings</h2>
+      <span>Reviews</span>
+     
+     
+      
     </ion-card-header>
     <ion-card-content> 
-        <div>
-            <ion-icon name="star" *ngFor="let num of [1, 2, 3, 4, 5]" (click)="rate(num)" [ngStyle]="{'color': getColor(num)}">
-            </ion-icon>
-          </div>
+       <ion-list>
+         <ion-item *ngFor="let rating of alleachratings">
+            <!-- <ion-icon name="star" *ngFor="let num of [1, 2, 3, 4, 5]" (click)="rate(num)" [ngStyle]="{'color': getColor(num)}">
+              </ion-icon> -->
+            "<i>{{rating.desc}}</i>" - {{rating.learnerfname}}
+        
+         </ion-item>
+         </ion-list>
     </ion-card-content>
   </ion-card>
 

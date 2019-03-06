@@ -34,15 +34,23 @@ export class InitialmessagePage {
     this.params  = this.navParams.get('tutorid');
     this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).valueChanges().subscribe((res: any) => {
       this.initialmessage.senderfname = res.displayName;
+      
+      if(res.photoURL){
+        console.log("It exists!");
+        this.initialmessage.senderphotoURL = res.photoURL;
+      } else {
+        this.initialmessage.recieverphotoURL = "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e"
+      }
     })
     this.afStore.collection('profile').doc(this.params).valueChanges().subscribe((res: any) => {
       this.profileData = res;
       this.initialmessage.reciever = this.params;
+   
       if(res.photoURL){
         console.log("It exists!");
-        this.initialmessage.photoURL = res.photoURL;
+        this.initialmessage.recieverphotoURL = res.photoURL;
       } else {
-        this.initialmessage.photoURL = "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e"
+        this.initialmessage.recieverphotoURL = "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e"
       }
       
       

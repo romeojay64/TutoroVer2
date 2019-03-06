@@ -11,7 +11,8 @@ export interface Message {
     senderfname?: string;
     sender?: string;
     isRead? : boolean;
-    photoURL?: string;
+    senderphotoURL?: string;
+    recieverphotoURL?: string;
     timestamp?: any;
     isBuddies?: boolean;
 
