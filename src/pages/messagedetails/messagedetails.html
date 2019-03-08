@@ -48,7 +48,7 @@
          
          <p  style='padding: 15px;'>{{item.message}}</p>
          <button *ngIf="!item.isAccepted" ion-button color="primary" block (click)="accept(item.sender)">Accept</button>
-      <button *ngIf="!item.isAccepted" ion-button color="secondary" block (click)="reject()">Reject</button>
+      <button *ngIf="!item.isAccepted" ion-button color="secondary" block (click)="reject(item.sender)">Reject</button>
       <button *ngIf="item.isAccepted" disabled ion-button color="primary" block>Pending</button>
       </div>
       

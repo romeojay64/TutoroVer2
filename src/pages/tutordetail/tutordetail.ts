@@ -1,4 +1,4 @@
-import { Component, NgZone, EventEmitter, Output } from '@angular/core';
+import { Component, NgZone, EventEmitter, Output, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController  } from 'ionic-angular';
 import { Observable } from 'rxjs-compat';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -24,9 +24,9 @@ export class TutordetailPage {
   buddies: boolean = false;
   allratings: Observable<any>;
   alleachratings = [] as Rating;
-  
+  rating: any;
+  verified: boolean;
 
-  @Output() ratingChange: EventEmitter<number> = new EventEmitter();
 
   public levels = [
     {'PreSchool' : false},
@@ -47,7 +47,10 @@ export class TutordetailPage {
     {'Saturday': false},
     {'Sunday': false},
   ];
-
+photo: string;
+accumulaterating: number = 0;
+counter: number = 0;
+avgrating: number;
 
   
 
@@ -60,14 +63,34 @@ export class TutordetailPage {
     this.profileData = this.afStore.collection('profile').doc(this.params).valueChanges();
    this.profileData.subscribe(ref => {
      this.flex = ref.isFlexible;
+     if(ref.photoURL){
+      this.photo = ref.photoURL;
+     } else {
+      this.photo = 'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e';
+     }
+     
    })
 
    this.afStore.collection('messages').doc(firebase.auth().currentUser.uid+"_"+this.params).get().subscribe((querySnapshot) => {
-    if(querySnapshot.data().isBuddies == true){
-      this.buddies = true;
-    } else {
-      this.buddies = false;
+    if(querySnapshot.exists){
+      if(querySnapshot.data().isBuddies == true){
+        this.buddies = true;
+      } else {
+        this.buddies = false;
+      }
     }
+    
+   })
+
+   this.afStore.collection('users').doc(this.params).get().subscribe((querySnapshot) => {
+    if(querySnapshot.exists){
+      if(querySnapshot.data().isVerified == true){
+        this.verified = true;
+      } else {
+        this.verified = false;
+      }
+    }
+    
    })
    
     // this.profileData = this.afDatabase.object('profile/'+this.params).valueChanges();
@@ -84,7 +107,9 @@ export class TutordetailPage {
     //     });
   }
 
-  
+  gotochat(){
+    this.navCtrl.push('BuddychatPage', {buddypic: this.photo});
+  }
 
 ratingmodal() {
   const modal = this.modalCtrl.create('RatingmodalPage', {tutorid: this.params});
@@ -97,11 +122,36 @@ getratings(){
   .valueChanges()
   this.allratings.subscribe(items => {
     console.log(items);
+    items.forEach(element => {
+      let rate
+      rate = element.rating;
+      this.counter++;
+      this.accumulaterating = this.accumulaterating + rate;
+      console.log(this.counter, this.accumulaterating);
+      this.avgrating = this.accumulaterating/this.counter;
+    });
     
       this.alleachratings = items;
       
   });
 }
+
+getColor(index: number) {
+
+  enum COLORS {
+    GREY = "#E0E0E0",
+    GREEN = "#76FF03",
+    YELLOW = "#FFCA28",
+    RED = "#DD2C00"
+  }
+
+  
+    return COLORS.YELLOW;
+  
+  }
+
+
+
 
 
   gettutordetails(tutor) {

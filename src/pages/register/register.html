@@ -6,34 +6,96 @@
 </ion-header>
 
 <ion-content padding>
+  <form  novalidate (ngSubmit)="register(user)" [formGroup]="signupform">
     <ion-item>
         <ion-label floating>Sign up as: </ion-label>
-        <ion-select [(ngModel)]="profile.type">
+        <ion-select [(ngModel)]="user.type" formControlName="type" name="type">
           <ion-option value="Tutor">Tutor</ion-option>
           <ion-option value="Learner">Learner</ion-option>
         </ion-select>
       </ion-item>
+      <ion-item no-lines *ngIf="signupform.get('type').hasError('required') && signupform.get('type').touched">
+          <div class="error" *ngIf="signupform.get('type').hasError('required') && signupform.get('type').touched">
+              Please choose one
+            </div>
+      </ion-item>
 
     <ion-item>
         <ion-label floating>First Name</ion-label>
-        <!-- <ion-input type="hidden" [(ngModel)]="profile.uid"></ion-input> -->
-        <ion-input type="text" [(ngModel)]="profile.fname"></ion-input>
+        <ion-input type="text" [(ngModel)]="user.fname" name="fname" formControlName="fname"></ion-input>     
+      </ion-item>
+      <ion-item no-lines *ngIf="(signupform.get('fname').hasError('required') || signupform.get('fname').hasError('pattern') ) && signupform.get('fname').touched">
+          <div class="error" *ngIf="signupform.get('fname').hasError('required') && signupform.get('fname').touched">
+              Please input your name
+            </div>
+            <div class="error" *ngIf="signupform.get('fname').hasError('pattern') && signupform.get('fname').touched">
+              Just use alphabet character
+            </div>
       </ion-item>
 
       <ion-item>
           <ion-label floating>Last Name</ion-label>
-          <ion-input type="text" [(ngModel)]="profile.lname"></ion-input>
+          <ion-input type="text" [(ngModel)]="user.lname" name="lname" formControlName="lname"></ion-input>
       </ion-item>
+      <ion-item no-lines *ngIf="(signupform.get('lname').hasError('required') || signupform.get('lname').hasError('pattern')) && signupform.get('lname').touched">
+          <div class="error" *ngIf="signupform.get('lname').hasError('required') && signupform.get('lname').touched">
+              Please input your name
+            </div>
+            <div class="error" *ngIf="signupform.get('lname').hasError('pattern') && signupform.get('lname').touched">
+              Just use alphabet character
+            </div>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Contact No.</ion-label>
+          <ion-input type="number" [(ngModel)]="user.contactno" name="contactno" formControlName="contactno"></ion-input>
+        </ion-item>
+        <ion-item no-lines *ngIf="(signupform.get('contactno').hasError('minlength') || signupform.get('contactno').hasError('maxlength')) && signupform.get('contactno').touched">
+            <div class="error" *ngIf="signupform.get('contactno').hasError('minlength') && signupform.get('contactno').touched">
+                Minimum of 12 characters
+              </div>
+              <div class="error" *ngIf="signupform.get('contactno').hasError('maxlength') && signupform.get('contactno').touched">
+                  Maximum of 12 characters
+                </div>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Date of Birth</ion-label>
+            <ion-datetime displayFormat="MMMM/DD/YYYY" [(ngModel)]="dob" name="dob" formControlName="dob" max="{{daterange}}"></ion-datetime>
+        </ion-item>
+        <ion-item no-lines *ngIf="signupform.get('dob').hasError('required') && signupform.get('dob').touched">
+            <div class="error" *ngIf="signupform.get('dob').hasError('required') && signupform.get('dob').touched">
+                Please input your birthday
+              </div>
+        </ion-item>
+
     <ion-item>
         <ion-label floating>Email</ion-label>
-        <ion-input type="email" [(ngModel)]="user.email"></ion-input>
+        <ion-input type="email" [(ngModel)]="user.email" name="email" formControlName="email" [class.error1]="!signupform.controls.email.valid && signupform.controls.email.dirty"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="(signupform.get('email').hasError('required') || signupform.get('email').hasError('pattern')) && signupform.get('email').touched">
+          <div class="error" *ngIf="signupform.get('email').hasError('required') && signupform.get('email').touched">
+              Please input your email
+            </div>
+            <div class="error" *ngIf="signupform.get('email').hasError('pattern') && signupform.get('email').touched">
+              Email address invalid
+            </div>
       </ion-item>
     
       <ion-item>
           <ion-label floating>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+          <ion-input type="password" [(ngModel)]="user.password" name="password" formControlName="password"></ion-input>
         </ion-item>
-        <p><small padding>By clicking Register, you agree to our Terms and Conditions.</small></p>
-        <button ion-button color="secondary" block round (click)="register(user)">Register</button>
-
+        <ion-item no-lines *ngIf="(signupform.get('password').hasError('required') || signupform.get('password').hasError('pattern')) && signupform.get('password').touched">
+            <div class="error" *ngIf="signupform.get('password').hasError('required') && signupform.get('password').touched">
+                Please input your password
+              </div>
+              <div class="error" *ngIf="signupform.get('password').hasError('minlength') && signupform.get('password').touched">
+                Minimum 6 characters
+              </div>
+          </ion-item>
+        <br>
+        <p style="text-align: center;"><small padding>By clicking Register, you agree to our Terms and Conditions.</small></p>
+        <button type="submit" ion-button color="secondary" block round [disabled]="signupform.invalid">Register</button>
+      </form>
 </ion-content>

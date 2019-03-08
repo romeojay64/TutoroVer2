@@ -42,7 +42,12 @@ export class MyApp {
             .get();
           this.utype.subscribe(querySnapshot => {
             if (querySnapshot.exists) {
-              this.rootPage = "TabsPage";
+              if(querySnapshot.data().uid == 'LhrBACDxh0Zf4mpxmpg5KVz6aHI2'){
+                this.rootPage = "AdminPage";
+              } else {
+                this.rootPage = "TabsPage";
+              }
+              
             } else {
               this.rootPage = "LoginPage";
             }

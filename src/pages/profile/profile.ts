@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, App, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs-compat';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -31,6 +31,7 @@ export class ProfilePage {
   fname: string;
   lname: string;
   verified: boolean;
+  hiredtutors: any;
 
   public levels = [
     {'PreSchool' : false},
@@ -57,17 +58,21 @@ export class ProfilePage {
   public afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
   public userservice: UserProvider, public zone: NgZone, public alertCtrl: AlertController,
     public imghandler: ImghandlerProvider, public loadingCtrl: LoadingController,
-    private afStore: AngularFirestore,  private app: App){
+    private afStore: AngularFirestore,  private app: App, public toastCtrl: ToastController){
   }
 
   ionViewWillEnter() {
     this.loaduserdetails();
   }
 
+  edittutorprofile(){
+    this.navCtrl.push("InterestsPage");
+  }
+
   loaduserdetails() {
     this.userservice.getuserdetails().subscribe((res: any) => {
       this.profileData = res;
-      this.utype = this.afStore.collection('user').doc(firebase.auth().currentUser.uid).valueChanges();
+      this.utype = this.afStore.collection('users').doc(firebase.auth().currentUser.uid).valueChanges();
       this.utype.subscribe(res => {
         this.fname = res.fname;        
         this.lname = res.lname;        
@@ -112,7 +117,19 @@ export class ProfilePage {
                 }
                 
               })
+
              
+
+              
+             
+            } else {
+              console.log("Learner");
+              this.afStore.collection('messages', ref =>
+              ref.where("sender", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", true).where("isBuddies", "==", true)).valueChanges().subscribe(ref => {
+                
+                this.hiredtutors = ref;
+                console.log(this.hiredtutors);
+              })
             }
       })
       
@@ -130,6 +147,10 @@ export class ProfilePage {
     })
   }
 
+  gototutorcontact(tutor){
+    this.navCtrl.push("TutorcontactPage", {tutorid: tutor});
+  }
+
   editprofile(){
     this.navCtrl.push("EditprofilePage");
   }
@@ -139,31 +160,32 @@ export class ProfilePage {
       console.log(querySnapshot.exists);
       if(querySnapshot.exists) {
         if(querySnapshot.data().days.Monday){
-          
+
+          console.log("Monday true");
           this.adlaw[0].Monday = true;
         }
         if(querySnapshot.data().days.Tuesday){
-          
+          console.log("Tuesday true");
           this.adlaw[1].Tuesday = true;
         }
         if(querySnapshot.data().days.Wednesday){
-         
+          console.log("Wednesday true");
           this.adlaw[2].Wednesday = true;
         }
         if(querySnapshot.data().days.Thursday){
-          
+          console.log("Thursday true");
           this.adlaw[3].Thursday = true;
         }
         if(querySnapshot.data().days.Friday){
-          
+          console.log("Friday true");
           this.adlaw[4].Friday = true;
         }
         if(querySnapshot.data().days.Saturday){
-          
+          console.log("Saturday true");
           this.adlaw[5].Saturday = true;
         }
         if(querySnapshot.data().days.Sunday){
-          
+          console.log("Sunday true");
           this.adlaw[6].Sunday = true;
         }
       }
@@ -250,6 +272,21 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     this.getavail();
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        if(!user.emailVerified){
+          let toast = this.toastCtrl.create({
+            message: 'Check your email to verify your account',
+            // duration: 3000,
+            position: 'bottom',
+            showCloseButton: true,
+            closeButtonText: "Okay"
+          });
+    
+          toast.present();
+        }
+      }
+    })
     // this.loaduserdetails();
     // this.afAuth.authState.subscribe(data => {
     //   if(data && data.email && data.uid) {

@@ -1,0 +1,18 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Change your password</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+        <ion-label floating>New Password: </ion-label>
+        <ion-input type="password" [(ngModel)]="newpassword"></ion-input>
+      </ion-item>
+      <br>
+      <button ion-button block icon-start round color="secondary" (click)="save()">
+          <ion-icon name="save"></ion-icon>
+          <div>Save</div>
+        </button>
+</ion-content>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
 import { Config } from '../../app/app.paypal.config';
-
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase/app';
 
 @IonicPage()
 @Component({
@@ -16,7 +17,7 @@ export class PaypalPage {
 
  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private payPal: PayPal) {
+  constructor(public alertCtrl: AlertController, private afStore: AngularFirestore, public navCtrl: NavController, public navParams: NavParams, private payPal: PayPal) {
   }
 
   ionViewDidLoad() {
@@ -36,8 +37,21 @@ export class PaypalPage {
 		}).then(() => {
 			this.payPal.prepareToRender(this.payPalEnvironment, new PayPalConfiguration({})).then(() => {
 				this.payPal.renderSinglePaymentUI(this.payment).then((response) => {
-					alert('Successfully paid. Status = ${response.response.state}');
-					console.log(response);
+					// alert('Successfully paid. Status = ${response.response.state}');
+					const alert = this.alertCtrl.create({
+						title: 'Success!',
+						subTitle: "You are now Premium.",
+						buttons: ['OK']
+					});
+					alert.present();
+					// console.log(response);
+					this.afStore
+      .collection("profile")
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        'isPremium': true
+      })
+					this.navCtrl.setRoot('ValididPage');
 				}, () => {
 					console.error('Error or render dialog closed without being successful');
 				});

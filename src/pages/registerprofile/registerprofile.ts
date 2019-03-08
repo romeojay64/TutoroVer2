@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFireDatabase } from "@angular/fire/database";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Profile } from "../../models/profile";
 import * as firebase from "firebase/app";
@@ -123,18 +122,15 @@ export class RegisterprofilePage {
     private afStore: AngularFirestore
   ) {
     this.profile.uid = firebase.auth().currentUser.uid;
-    this.afStore
-      .collection("user")
-      .doc(firebase.auth().currentUser.uid)
-      .get()
-      .subscribe(ref => {
+    this.afStore.collection("users").doc(firebase.auth().currentUser.uid).get().subscribe(ref => {
         this.profile.type = ref.data().type;
         this.profile.displayName = ref.data().fname;
+        this.profile.buddycounter = 0;
       });
   }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad RegisterprofilePage");
+    
   }
 
   setDays() {
@@ -165,15 +161,15 @@ export class RegisterprofilePage {
     this.afStore
       .collection("profile")
       .doc(firebase.auth().currentUser.uid)
-      .set(this.profile);
+      .update(this.profile);
       this.setDays();
-      
+      this.navCtrl.push("QualificationsPage");
     
-        if (this.profile.type == "Tutor") {
-          this.setLevel();
-          this.navCtrl.push("InterestsPage");
-        } else {
-          this.navCtrl.push("ProfilepicPage");
-        }
+        // if (this.profile.type == "Tutor") {
+        //   this.setLevel();
+        //   this.navCtrl.push("QualificationsPage");
+        // } else {
+        //   this.navCtrl.push("ProfilepicPage");
+        // }
   }
 }

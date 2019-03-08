@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import * as firebase from 'firebase/app';
 import { UserProvider } from '../../providers/user/user';
 import { ImghandlerProvider } from '../../providers/imghandler/imghandler';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ export class ValididPage {
   moveon = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public imgservice: ImghandlerProvider,
-    public zone: NgZone, public loadingCtrl: LoadingController, public userservice: UserProvider) {
+    public zone: NgZone, public loadingCtrl: LoadingController, public userservice: UserProvider, private afStore: AngularFirestore) {
   }
 
   ionViewDidLoad() {
@@ -52,6 +53,12 @@ export class ValididPage {
         alert(res);
       }
     })
+    this.afStore
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        isVerified: true
+      });
   }
  
   proceed() {

@@ -41,7 +41,8 @@ $colors: (
   bg : #ECECEC, 
   energy: #f2b632,
   verifycolor: lightgreen,
-  white: white
+  white: white,
+  danger: #f04141
 );
 
 $toolbar-background: color($colors, primary);

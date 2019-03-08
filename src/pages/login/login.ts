@@ -43,14 +43,25 @@ export class LoginPage {
     try {
         this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
           .then(tawo => {
+            
             this.afStore.collection('profile').doc(tawo.user.uid).get().subscribe((querySnapshot) => {
               loader.dismiss();
-              if(querySnapshot.exists){
-                this.navCtrl.setRoot('TabsPage');
-              } else {
+              // if(querySnapshot.exists){
+              //   this.navCtrl.setRoot('TabsPage');
+              // } else {
+              //   this.navCtrl.setRoot('RegisterprofilePage');
+              // }
+              if(querySnapshot.data().firstlogin == true){
                 this.navCtrl.setRoot('RegisterprofilePage');
+              } else {
+                console.log(querySnapshot.data().uid);
+                if(querySnapshot.data().uid == "LhrBACDxh0Zf4mpxmpg5KVz6aHI2"){
+                  this.navCtrl.setRoot('AdminPage');
+                } else {
+                  this.navCtrl.setRoot('TabsPage');
+                }
+                
               }
-              
             })
           
           }).catch(e => {
@@ -123,7 +134,7 @@ export class LoginPage {
   // }
 
   register() {
-    this.navCtrl.push('AskagePage');
+    this.navCtrl.push('RegisterPage');
   }
 
 

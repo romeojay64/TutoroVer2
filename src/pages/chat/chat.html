@@ -10,8 +10,51 @@
 </ion-header>
 
 
-<ion-content class="background">
+<ion-content class="">
+    <ion-list *ngIf="!tutor; else istutor">
+    <ion-list-header>
+        Hired tutors
+      </ion-list-header>
+        <ion-item *ngFor="let message of learnerapprovedmessages" (click)="buddychat(message.reciever, message.recieverphotoURL)">
+         <!-- (click)="openmessage(message.reciever,message.sender)" -->
+          <ion-avatar item-start>
+              <img *ngIf = "message.recieverphotoURL; else noPic" src="{{message.recieverphotoURL}}">
+              <ng-template #noPic>
+                  <img src="{{imgurl}}">
+                </ng-template>
+          </ion-avatar>
+          <span>
+              <h2>{{message.recieverfname}}</h2>
+              <p>{{message.topic}}</p>
+        </span>
+       
+            <ion-icon name="chatbubbles" item-end ></ion-icon>
+      
+        </ion-item>
+        </ion-list>
 
+        <ng-template #istutor>
+            <ion-list-header>
+                Clients
+              </ion-list-header>
+                <ion-item *ngFor="let message of tutorapprovedmessages" (click)="buddychat(message.sender, message.senderphotoURL)">
+                 <!-- (click)="openmessage(message.reciever,message.sender)" -->
+                  <ion-avatar item-start>
+                      <img *ngIf = "message.senderphotoURL; else noPic" src="{{message.senderphotoURL}}">
+                      <ng-template #noPic>
+                          <img src="{{imgurl}}">
+                        </ng-template>
+                  </ion-avatar>
+                  <span>
+                      <h2>{{message.senderfname}}</h2>
+                      <p>{{message.topic}}</p>
+                </span>
+               
+                    <ion-icon name="chatbubbles" item-end ></ion-icon>
+              
+                </ion-item>
+
+        </ng-template>
   
         
     

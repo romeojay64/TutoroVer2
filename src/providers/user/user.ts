@@ -21,7 +21,7 @@ export class UserProvider {
     private afStore: AngularFirestore
   ) {
     this.tutors = this.afStore
-      .collection("profile", ref => ref.where("type", "==", "Tutor"))
+      .collection("profile", ref => ref.where("type", "==", "Tutor").where("include","==",true))
       .valueChanges();
     console.log("Hello UserProvider Provider");
   }
@@ -152,6 +152,7 @@ export class UserProvider {
         ref
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
+          .where("include","==",true)
       )
       .valueChanges();
   }
@@ -162,6 +163,7 @@ export class UserProvider {
           .where("teaches." + level, "==", true)
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
+          .where("include","==",true)
       )
       .valueChanges();
   }
@@ -173,6 +175,7 @@ export class UserProvider {
           .where("brgy", "==", brgy)
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
+          .where("include","==",true)
       )
       .valueChanges();
   }
@@ -196,6 +199,7 @@ export class UserProvider {
           .where("teaches", "array-contains", level)
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
+          .where("include","==",true)
       )
       .valueChanges();
   }
@@ -205,6 +209,7 @@ export class UserProvider {
         ref
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
+          .where("include","==",true)
       )
       .valueChanges();
 

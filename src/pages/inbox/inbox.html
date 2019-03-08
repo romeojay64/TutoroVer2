@@ -39,6 +39,7 @@
             <ion-list-header>
               Approved Requests
             </ion-list-header>
+            <div *ngIf="approvedexists; else noappprovedexists">
               <ion-item *ngFor="let message of learnerapprovedmessages">
                <!-- (click)="openmessage(message.reciever,message.sender)" -->
                 <ion-avatar item-start>
@@ -52,17 +53,16 @@
                     <p>{{message.topic}}</p>
               </span>
              
+            
+                <ion-icon *ngIf="!message.isBuddies" name="person-add" item-end (click)="hiretutor(message.reciever, message.recieverfname, message.sender)"></ion-icon>
              
-                  <ion-icon *ngIf="!message.isBuddies; else bud" name="person-add" item-end (click)="hiretutor(message.reciever, message.recieverfname, message.sender)"></ion-icon>
+                  
               
-              <ng-template #bud>
-                  <ion-icon name="chatbubbles" item-end (click)="buddychat(message.reciever, message.recieverphotoURL)"></ion-icon>
-              </ng-template>
-
-              <!-- <ion-icon name="person" item-end (click)="goToDetailPage(message.reciever)"></ion-icon> -->
-             
-                <!-- <ion-icon item-end name="arrow-dropright"></ion-icon> -->
               </ion-item>
+            </div>
+              <ng-template #noappprovedexists>
+                  <p style="text-align: center; align-content: center;">You have no Accepted requests.</p>
+              </ng-template>
          
         </ion-list>
 
@@ -101,6 +101,7 @@
           <ion-list-header>
                   Approved Requests
                 </ion-list-header>
+                <div *ngIf="approvedexists; else noappprovedexists">
                   <ion-item *ngFor="let message of tutorapprovedmessages">
                     <ion-avatar item-start>
                         <img *ngIf = "message.senderphotoURL; else noPic" src="{{message.senderphotoURL}}">
@@ -116,8 +117,13 @@
                   <ion-icon *ngIf="message.isBuddies" name="chatbubbles" item-end (click)="buddychat(message.sender,message.senderphotoURL)"></ion-icon>
                   
                   </ion-item>
+                  </div>
                
+                  <ng-template #noappprovedexists>
 
+                      <p style="text-align: center; align-content: center;">You have no Approved requests.</p>
+                
+                    </ng-template>
 
           
 

@@ -16,5 +16,8 @@ export interface Profile {
     educlevel?: string;
     profession?: string; 
     desc?: string;
+    contactno?: number;
+    course?: string;
+    buddycounter?: number;
     
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IonicPage, NavController, NavParams, Keyboard } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Keyboard, AlertController } from "ionic-angular";
 import { AngularFireDatabase } from "@angular/fire/database";
 import { AngularFireAuth } from "@angular/fire/auth";
 // import * as Lodash from 'lodash';
@@ -188,8 +188,11 @@ export class SearchPage implements OnInit {
     private afDatabase: AngularFireDatabase,
     private userservice: UserProvider,
     private afStore: AngularFirestore,
-    private keyboard: Keyboard
+    private keyboard: Keyboard,
+    private alertCtrl: AlertController
   ) {
+
+    
 
     
     // this.userservice.getTutors().subscribe(items => {
@@ -245,12 +248,17 @@ export class SearchPage implements OnInit {
   }
 
   search() {
-    if (!this.input.trim().length || !this.keyboard.isOpen()) {
-      this.countries = [];
-      return;
+    if(this.input != null){
+      if (!this.input.trim().length || !this.keyboard.isOpen()) {
+        this.countries = [];
+        return;
+      }
+
+      this.countries = this.list.filter(item => item.toUpperCase().includes(this.input.toUpperCase()));
     }
     
-    this.countries = this.list.filter(item => item.toUpperCase().includes(this.input.toUpperCase()));
+    
+   
   }
 
   ngOnInit() {
@@ -283,17 +291,18 @@ export class SearchPage implements OnInit {
     console.log("RESET!");
     this.filter.level = null;
     this.filter.subj = null;
-    // this.input = null;
-    this.userservice.resetTutors().subscribe(items => {
-      this.filteredtutors = items;
-    });
+    this.input = null;
+    // this.userservice.resetTutors().subscribe(items => {
+      this.filteredtutors = [];
+    // });
   }
   filtertutors() {
     console.log(this.filter.level);
     console.log(this.input);
-    console.log(this.filter.city);
+    // console.log(this.filter.city);
     console.log(this.filter.brgy);
-    if (this.filter.level && this.filter.brgy) {
+    if(this.input != null && this.filter.brgy != null && this.filter.level != null){
+      if (this.filter.level && this.filter.brgy) {
         this.userservice
           .getFilteredtutorsbyBoth(this.filter.level, this.filter.brgy, this.input)
           .subscribe(items => {
@@ -314,6 +323,15 @@ export class SearchPage implements OnInit {
             this.filteredtutors = items;
           });
       }
+    } else {
+      const alert = this.alertCtrl.create({
+        title: 'Oh no!',
+        subTitle: "There are no items to filter",
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    
     // if (this.filter.subj && this.filter.level) {
     //   this.userservice
     //     .getFilteredtutorsbyBoth(this.filter.subj, this.filter.level)
@@ -336,19 +354,20 @@ export class SearchPage implements OnInit {
   }
   searchtutors(){
     this.exists = true;
-    console.log(this.input)
-    this.userservice
-          .search(this.input)
-          .subscribe(items => {
-            if(items.length > 0){
-              console.log(items);
-              this.filteredtutors = items;
-            } else {
-              console.log("WALEY");
-              this.exists = false;
-            }
-            
-          });
+    console.log(this.input);
+    if(this.input != null){
+      this.userservice.search(this.input).subscribe(items => {
+        if(items.length > 0) {
+          console.log(items);
+          this.filteredtutors = items;
+        } else {
+          console.log("WALEY");
+          this.exists = false;
+        }
+        
+      });
+    }
+    
   }
 
   goToDetailPage(tutor) {
@@ -365,8 +384,5 @@ export class SearchPage implements OnInit {
     console.log("ionViewDidLoad SearchPage");
   }
 
-  logout() {
-    this.afAuth.auth.signOut();
-    this.navCtrl.setRoot("LoginPage");
-  }
+ 
 }

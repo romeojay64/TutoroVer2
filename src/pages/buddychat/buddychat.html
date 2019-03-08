@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>{{buddy.displayName}}</ion-title>
+    <ion-title>{{fname}} {{lname}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -34,11 +34,11 @@
   </ion-content>
   <ion-footer ion-fixed>    
     <ion-toolbar class="no-border" color="white">
-        <ion-buttons start>
+        <!-- <ion-buttons start>
             <button ion-button (click)="sendPicMsg()">
                 <ion-icon name="camera" color="primary"></ion-icon>
               </button>
-        </ion-buttons>      
+        </ion-buttons>       -->
       <ion-input [(ngModel)]="newmessage" placeholder="Write your message ..."></ion-input>  
       <ion-buttons end>
         <button ion-button (click)="addmessage()">

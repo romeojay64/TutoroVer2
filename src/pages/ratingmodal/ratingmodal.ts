@@ -31,7 +31,7 @@ export class RatingmodalPage {
 
   loaduserdetails() {
 
-      this.utype = this.afStore.collection('user').doc(firebase.auth().currentUser.uid).valueChanges();
+      this.utype = this.afStore.collection('users').doc(firebase.auth().currentUser.uid).valueChanges();
       this.utype.subscribe(res => {
         console.log(res.fname);
         this.fname = res.fname;        

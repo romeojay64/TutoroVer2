@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, NgZone} from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { AngularFireObject } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs-compat';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-
+import { Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -22,13 +22,33 @@ export class TabsPage {
   tab5: string = "InboxPage"
   learner: boolean = false;
   utype :  Observable<any>;
+  inboxbadge: number = null;
+  chatbadge: number = null;
+  temp: number;
 
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, 
-   private afStore: AngularFirestore) {
+   private afStore: AngularFirestore, private alertCtrl: AlertController, public toastCtrl: ToastController,
+   public events: Events, public zone: NgZone,) {
 
-      this.utype = this.afStore.collection('user').doc(firebase.auth().currentUser.uid).valueChanges();
+    this.events.subscribe('badgecount', () => {
+      // this.gettutormessages();
+     
+        this.inboxbadge = this.inboxbadge - 1; 
+     
+        this.inboxbadge = null;
+     
+      
+      
+    }) 
+
+ 
+  
+
+     
+
+      this.utype = this.afStore.collection('users').doc(firebase.auth().currentUser.uid).valueChanges();
       this.utype.subscribe(res => {
             if(res.type != 'Tutor'){
               this.learner = true;
@@ -38,28 +58,63 @@ export class TabsPage {
               console.log('User is a tutor! '+ res.type)
             }
       })
-
-      // this.afAuth.authState.subscribe(auth => {
-      //   this.typeRef = this.afDatabase.object('profile/'+ auth.uid)
-      //   this.utype = this.typeRef.valueChanges();
-      //   this.utype.subscribe(res => {
-      //     if(res.type != 'Tutor'){
-      //       this.learner = true;
-      //       console.log('User is a learner! '+ res.type)
-      //     }
-      //     else{
-      //       console.log('User is a tutor! '+ res.type)
-      //     }
-      //   })
-      // })
+    
 
   }
 
+  ionViewDidEnter() {
+
+  }
   
 
   ionViewDidLoad() {
+    this.gettutormessages();
     console.log('ionViewDidLoad TabsPage');
     
+    
   }
+
+ 
+  // gettutormessages() {
+ 
+  //   let count: number;
+  //   firebase.firestore().collection('messages').where("isRead", "==", false).where("reciever", "==", firebase.auth().currentUser.uid).onSnapshot(function(doc){
+  //     count =  doc.size ;
+  //     console.log('count: '+count);
+  //     if(this.inboxbadge != null){
+  //       this.inboxbadge = this.inboxbadge + count;   
+  //     } else {
+  //       this.inboxbadge = 0;
+  //       this.inboxbadge = this.inboxbadge + count;  
+  //     }
+      
+  //     console.log('inboxbadge: '+this.inboxbadge);
+  //   })
+  
+
+    gettutormessages() {
+      this.afStore.collection('messages', ref =>
+      ref.where("reciever", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", false)).valueChanges().subscribe(ref => {
+        
+        
+        console.log(ref);
+        
+                
+                if(ref.length > 0){
+                  this.inboxbadge = ref.length;  
+                } else {
+                  this.inboxbadge = null;
+                }
+              
+       
+       console.log("InboxBadge: "+ this.inboxbadge);
+      });
+    
+    }
+    
+  
+  
+
+ 
 
 }

@@ -65,7 +65,7 @@ export class AvailabilityPage {
   }
 
   rawt() {
-    this.afStore.collection('user').doc(firebase.auth().currentUser.uid).get().subscribe((documentSnapshot) => {  
+    this.afStore.collection('users').doc(firebase.auth().currentUser.uid).get().subscribe((documentSnapshot) => {  
       if(documentSnapshot.data().type == "Tutor"){
         this.navCtrl.push('WillingtoteachPage');
       } else {

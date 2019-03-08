@@ -1,0 +1,48 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Academic Qualifications</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<ion-list>
+      <ion-item>
+          <ion-label floating>Educational Level</ion-label>
+          <ion-select [(ngModel)]="profile.educlevel">
+            <ion-option value="Senior High School">Senior High School</ion-option>
+            <ion-option value="College Student">College Undergraduate</ion-option>
+            <ion-option value="Baccalaureate">Baccalaureate</ion-option>
+            <ion-option value="PhD">Doctorate</ion-option>
+            <ion-option value="MAT">Masteral</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Course</ion-label>
+            <ion-input type="text" [(ngModel)]="profile.course"></ion-input>
+        </ion-item>
+
+      <ion-item>
+          <ion-label floating>School</ion-label>
+          <ion-input type="text" [(ngModel)]="profile.school"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Bio: </ion-label>
+        <ion-textarea  rows="3" [(ngModel)]="profile.desc"></ion-textarea>
+      </ion-item>
+
+
+     
+    </ion-list>
+    <ion-row>
+        <ion-col>
+          <button ion-button block color="secondary" (click)="goback()">Previous</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button block (click)="done()">Next</button>
+        </ion-col>
+      </ion-row>
+
+</ion-content>

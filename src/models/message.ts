@@ -15,5 +15,6 @@ export interface Message {
     recieverphotoURL?: string;
     timestamp?: any;
     isBuddies?: boolean;
+    isArchived? : boolean;
 
 }

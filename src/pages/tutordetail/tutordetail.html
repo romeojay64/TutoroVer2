@@ -12,27 +12,68 @@
         </ion-avatar>
         <ion-card-header class="centeritems">
           <h1>
-            <b>{{(profileData | async)?.displayName }}</b>
+            <b>{{(profileData | async)?.displayName }}</b> <ion-icon *ngIf="verified" name="checkmark-circle" color="verifycolor"></ion-icon>
           </h1>
-          <p>{{(profileData | async)?.school }}</p>
+          <p>{{(profileData | async)?.course}}</p>
+          <p>{{(profileData | async)?.educlevel}}, {{(profileData | async)?.school}}</p>
+          <p>{{(profileData | async)?.desc}}</p>
         </ion-card-header>
         <ion-card-content>
-            <p><span><ion-icon name="star" color="primary"></ion-icon></span><b> Specializations:</b> </p>
-              <p>{{ (profileData | async)?.interests }}</p>
-            <p><span><ion-icon name="calendar" color="primary"></ion-icon></span><b> Availble on:</b></p>
-            <span *ngIf="adlaw[0].Monday">Monday,</span>
-              <span *ngIf="adlaw[1].Tuesday">Tuesday,</span>
-              <span *ngIf="adlaw[2].Wednesday">Wednesday,</span>
-              <span *ngIf="adlaw[3].Thursday">Thursday,</span>
-              <span *ngIf="adlaw[4].Friday">Friday,</span>
-              <span *ngIf="adlaw[5].Saturday">Saturday,</span>
-              <span *ngIf="adlaw[6].Sunday">Sunday</span>
-              <p><b>Flexible?:</b>
-                <span *ngIf="flex; else no">Yes</span>
-                <ng-template #no>
-                   <span>No</span>
-                  </ng-template>
-              </p>
+            <ion-item>
+                <ion-icon item-start name="star" color="energy"></ion-icon>
+                <span>
+                  <h2>Specializations</h2>
+                  <p>{{(profileData | async)?.interests}}</p>
+                </span>
+           
+              </ion-item>
+              <ion-item>
+                  <ion-icon item-start name="people" color="primary"></ion-icon>
+                  <span>
+                    <h2>Teaches</h2>
+                    <p *ngIf="levels[0].PreSchool">
+                        Pre-School
+                    </p>
+                     <p *ngIf="levels[1].Elementary">
+                        Elementary
+                     </p>
+                     <p *ngIf="levels[2].HighSchool">
+                          High School
+                     </p>
+                     <p *ngIf="levels[3].JuniorHighSchool">
+                         Junior High School
+                     </p>
+                     <p *ngIf="levels[4].SeniorHighSchool">
+                        Senior High School
+                     </p>
+                     <p *ngIf="levels[5].CollegeUndergraduate">
+                          College Undergraduate
+                     </p>
+                     <p *ngIf="levels[6].Adult">
+                          Adult
+                     </p>
+                  </span>
+                
+                </ion-item>
+                <ion-item>
+                    <ion-icon item-start name="calendar" color="secondary"></ion-icon>
+                    <span>
+                      <h2>Availble on:</h2>
+                      <span *ngIf="adlaw[0].Monday">Monday,</span>
+                      <span *ngIf="adlaw[1].Tuesday">Tuesday,</span>
+                      <span *ngIf="adlaw[2].Wednesday">Wednesday,</span>
+                      <span *ngIf="adlaw[3].Thursday">Thursday,</span>
+                      <span *ngIf="adlaw[4].Friday">Friday,</span>
+                      <span *ngIf="adlaw[5].Saturday">Saturday,</span>
+                      <span *ngIf="adlaw[6].Sunday">Sunday</span>
+                      <p>Flexible?:
+                        <span *ngIf="flex; else no">Yes</span>
+                        <ng-template #no>
+                           <span>No</span>
+                          </ng-template>
+                    </span>
+               
+                  </ion-item>
             
           
               <ion-row *ngIf="!buddies; else bud">
@@ -49,12 +90,12 @@
        
          <ng-template #bud>
            <ion-row>
-            <ion-col>
-            <button ion-button block icon-start round  color="secondary" (click)="messageTutor()" class="message">
+            <!-- <ion-col>
+            <button ion-button block icon-start round  color="secondary" (click)="gotochat()" class="message">
                 <ion-icon name="chatbubbles"></ion-icon>
                 <div>Chat</div>
               </button>
-            </ion-col>
+            </ion-col> -->
             <ion-col>
                 <button ion-button block icon-start round  color="energy" (click)="ratingmodal()" class="message">
                     <ion-icon name="star"></ion-icon>
@@ -68,50 +109,22 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card>
-          <ion-card-header>
-            <h2><ion-icon name="people" color="primary"></ion-icon>Teaches</h2>
-          </ion-card-header>
-          <ion-card-content>
-              <span *ngIf="levels[0].PreSchool">
-                  <ion-checkbox disabled slot="end" checked="{{ levels[0].PreSchool }}"></ion-checkbox> Pre-School
-              </span>
-                <span *ngIf="levels[1].Elementary">
-                    <ion-checkbox disabled slot="end" checked="{{ levels[1].Elementary }}"></ion-checkbox> Elementary
-                </span>
-                <span *ngIf="levels[2].HighSchool">
-                    <ion-checkbox disabled slot="end" checked="{{ levels[2].HighSchool }}"></ion-checkbox> High School
-                </span>
-                <span *ngIf="levels[3].JuniorHighSchool">
-                    <ion-checkbox disabled slot="end" checked="{{ levels[3].JuniorHighSchool }}"></ion-checkbox> Junior High School
-                </span>
-                <span *ngIf="levels[4].SeniorHighSchool">
-                    <ion-checkbox disabled slot="end" checked="{{ levels[4].SeniorHighSchool }}"></ion-checkbox> Senior High School
-                </span>
-                <span *ngIf="levels[5].CollegeUndergraduate">
-                    <ion-checkbox disabled slot="end" checked="{{ levels[5].CollegeUndergraduate }}"></ion-checkbox> College Undergraduate
-                </span>
-                <span *ngIf="levels[6].Adult">
-                    <ion-checkbox disabled slot="end" checked="{{ levels[6].Adult }}"></ion-checkbox> Adult
-                </span>
-          </ion-card-content>
-        </ion-card>
-      
 
 
   <ion-card>
     <ion-card-header>
-      <span>Reviews</span>
-     
-     
       
+      <span>Reviews - <ion-icon name="star" color="energy">
+        </ion-icon> {{avgrating}}</span>
+        
     </ion-card-header>
     <ion-card-content> 
        <ion-list>
          <ion-item *ngFor="let rating of alleachratings">
-            <!-- <ion-icon name="star" *ngFor="let num of [1, 2, 3, 4, 5]" (click)="rate(num)" [ngStyle]="{'color': getColor(num)}">
-              </ion-icon> -->
-            "<i>{{rating.desc}}</i>" - {{rating.learnerfname}}
+            
+            <p><ion-icon name="star" color="energy">
+              </ion-icon>{{rating.rating}}<i>"{{rating.desc}}"</i> - {{rating.learnerfname}}</p>
+            <p> </p>
         
          </ion-item>
          </ion-list>

@@ -6,6 +6,7 @@ import { Profile } from '../../models/profile';
 import { Message } from '../../models/message';
 import * as firebase from "firebase/app";
 import { ToastController } from 'ionic-angular';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -27,9 +28,18 @@ export class InitialmessagePage {
     {val: 'CollegeUndergraduate', name: 'College Undergraduate'},
     {val: 'Adult', name: 'Adult'},
   ];
+  messageform: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private afStore: AngularFirestore, public toastCtrl: ToastController) {
+
+      this.messageform = new FormGroup({
+        topic: new FormControl('', [Validators.required]),
+        level: new FormControl('', [Validators.required]),
+        place: new FormControl('', [Validators.required]),
+        subject: new FormControl('', [Validators.required]),
+        message: new FormControl('', [Validators.required])
+      });
 
     this.params  = this.navParams.get('tutorid');
     this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).valueChanges().subscribe((res: any) => {
@@ -59,6 +69,7 @@ export class InitialmessagePage {
       this.initialmessage.isAccepted = false;
       this.initialmessage.isRead = false;
       this.initialmessage.isBuddies = false;
+      this.initialmessage.isArchived = false;
       
       
       this.forSelect = this.profileData.interests;

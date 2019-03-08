@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ModalController, ToastController } from 'ionic-angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Profile } from '../../models/profile';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs-compat';
 import { UserProvider } from '../../providers/user/user';
-
+import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
+import { Config } from '../../app/app.paypal.config';
 
 @IonicPage()
 @Component({
@@ -21,6 +22,7 @@ export class EditprofilePage {
   public cities = [
     {name: 'Cebu City'},
   ];
+  type: string;
 
   public brgys = [
     {name: 'Adlaon'},
@@ -100,8 +102,12 @@ export class EditprofilePage {
     {name: 'Sudlon II'},
 ];
 
+payPalEnvironment: string = 'payPalEnvironmentSandbox';
+payment: PayPalPayment = new PayPalPayment('2.00', 'USD', 'Tutoro Subscription', 'subscription');
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private afStore: AngularFirestore,
-    public userservice: UserProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+    public userservice: UserProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController, private payPal: PayPal,  public toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -111,12 +117,69 @@ export class EditprofilePage {
   loaduserdetails() {
     this.userservice.getuserdetails().subscribe((res: any) => {
       this.profile = res;
-      this.utype = this.afStore.collection('user').doc(firebase.auth().currentUser.uid).valueChanges();
+      this.utype = this.afStore.collection('users').doc(firebase.auth().currentUser.uid).valueChanges();
       this.utype.subscribe(res => {
         this.fname = res.fname;        
-        this.lname = res.lname;        
+        this.lname = res.lname;     
+        this.type = res.type;   
       })
     })
+  }
+
+  changepassword(){
+  
+    let credential
+    this.utype = this.afStore.collection('users').doc(firebase.auth().currentUser.uid).valueChanges();
+      this.utype.subscribe(res => {
+         credential = res.email;   
+         firebase.auth().sendPasswordResetEmail(credential);  
+         let toast = this.toastCtrl.create({
+          message: 'Check your email to change your password',
+          duration: 3000,
+          position: 'bottom'
+        }); 
+        toast.present();
+      })
+  
+  }
+
+  submitid(){
+    this.navCtrl.push('ValididPage');
+    
+
+  }
+
+  paypal(){
+    this.payPal.init({
+      PayPalEnvironmentProduction: Config.payPalEnvironmentProduction,
+			PayPalEnvironmentSandbox: Config.payPalEnvironmentSandbox
+		}).then(() => {
+			this.payPal.prepareToRender(this.payPalEnvironment, new PayPalConfiguration({})).then(() => {
+				this.payPal.renderSinglePaymentUI(this.payment).then((response) => {
+					// alert('Successfully paid. Status = ${response.response.state}');
+          console.log(response);
+          this.afStore
+          .collection("profile")
+          .doc(firebase.auth().currentUser.uid)
+          .update({
+            'isPremium': true
+          })
+          const alert = this.alertCtrl.create({
+						title: 'Success!',
+						subTitle: "You are now Premium.",
+						buttons: ['OK']
+					});
+					alert.present();
+					this.navCtrl.pop();
+				}, () => {
+					console.error('Error or render dialog closed without being successful');
+				});
+			}, () => {
+				console.error('Error in configuration');
+			});
+		}, () => {
+			console.error('Error in initialization, maybe PayPal isn\'t supported or something else');
+		});
   }
 
   save() {
@@ -129,7 +192,7 @@ export class EditprofilePage {
       .doc(firebase.auth().currentUser.uid)
       .set(this.profile).then(() => {
         this.afStore
-      .collection("user")
+      .collection("users")
       .doc(firebase.auth().currentUser.uid)
       .update({
         'fname': this.fname,

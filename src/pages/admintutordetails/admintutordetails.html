@@ -1,0 +1,63 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Tutor Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="background">
+    <!-- <ion-list>
+        <ion-item >
+          <p>{{userprofile.fname}} {{userprofile.lname}}</p>
+          <p>{{userprofile.contactno}}</p>
+          <p>{{userprofile.email}}</p>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-item>
+              <p>{{profileData.gender}}</p>
+              <p>{{profileData.educlevel}}</p>
+              <p>{{profileData.course}}</p>
+              <p>{{profileData.school}}</p>
+              <p>{{profileData.profession}}</p>
+              </ion-item>
+            </ion-list> -->
+
+            <ion-card>
+                <ion-avatar class="profile-image">
+                  <img src="{{ avatar }}" class="centerer" />
+                </ion-avatar>
+                <ion-card-header class="centeritems">
+                  <h1>
+                    <b>{{userprofile.fname}} {{userprofile.lname}}</b>
+                  </h1>
+                  <p>{{profileData.course}}</p>
+                  <p>{{profileData.educlevel}} , {{profileData.school}}</p>
+                  <p>{{profileData.profession}}</p>
+                </ion-card-header>
+                <ion-card-content>
+                    
+                      
+                      <ion-row >
+                          <ion-col >
+                              <button ion-button block icon-start round color="secondary" (click)="messageTutor()" class="message">
+                                  <ion-icon name="mail"></ion-icon>
+                                  <div>Verify</div>
+                                </button>
+                          </ion-col>
+                         
+                        </ion-row>
+                
+                 
+               
+                
+                  
+                 
+                </ion-card-content>
+              </ion-card>
+        
+        
+        
+
+</ion-content>
