@@ -4,6 +4,7 @@ import * as firebase from "firebase/app";
 import { AngularFirestore } from '@angular/fire/firestore';
 import { connreq } from '../../models/requests';
 import { Events } from 'ionic-angular';
+import { Observable } from 'rxjs-compat';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class MessagedetailsPage {
   newrequest = {} as connreq;
   tutorid: any;
   messagedetails: any;
+  timeacceptedrequest: any;
   tutor: boolean;
   senderid: any;
   imgurl =
@@ -56,10 +58,17 @@ export class MessagedetailsPage {
   }
 
   accept(sender){
+
+    let petsa = new Date();
+
+    let stringDate = petsa.getFullYear().toString() + petsa.getMonth().toLocaleString() + petsa.getDate().toLocaleString() + petsa.getHours().toLocaleString() + petsa.getMinutes().toLocaleString() + petsa.getSeconds().toLocaleString() + petsa.getMilliseconds().toLocaleString();
+    // this.timeacceptedrequest = parseInt(stringDate);
+    // this.timeacceptedrequest = firebase.database.ServerValue.TIMESTAMP
     
 
       this.afStore.collection("messages").doc(sender+"_"+firebase.auth().currentUser.uid).update({
-          'isAccepted': true 
+          'isAccepted': true,
+          'timeacceptedrequest':  new Date()
         }).then(() => {
           this.events.publish('badgecount');
         const alert = this.alertCtrl.create({

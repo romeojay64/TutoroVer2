@@ -1,7 +1,7 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>Message {{(profileData)?.fname}} {{(profileData)?.lname}}</ion-title>
+    <ion-title>Request Tutor</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -22,7 +22,7 @@
           <ion-item>
             <ion-label floating>Level</ion-label>
             <ion-select [(ngModel)]="initialmessage.level" formControlName="level" name="level">
-              <ion-option  *ngFor="let level of levels" value="{{level.val}}">{{level.name}}</ion-option>
+              <ion-option  *ngFor="let level of forSelectLevels" value="{{level}}">{{level}}</ion-option>
             </ion-select>
           </ion-item>
           <ion-item no-lines *ngIf="messageform.get('level').hasError('required') && messageform.get('level').touched">
@@ -33,7 +33,7 @@
           <ion-item>
               <ion-label floating>Preferred Meeting Place</ion-label>
               <ion-select [(ngModel)]="initialmessage.place" formControlName="place" name="place">
-                <ion-option value="Home">Home</ion-option>
+                <ion-option value="Home">Learner's Home</ion-option>
                 <ion-option value="School">School</ion-option>
               </ion-select>
             </ion-item>

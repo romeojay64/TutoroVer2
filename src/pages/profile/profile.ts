@@ -32,6 +32,7 @@ export class ProfilePage {
   lname: string;
   verified: boolean;
   hiredtutors: any;
+  parent: boolean;
 
   public levels = [
     {'PreSchool' : false},
@@ -122,10 +123,12 @@ export class ProfilePage {
 
               
              
-            } else {
+            } else if (res.type == 'Parent') {
+              this.parent = true;
+            }else {
               console.log("Learner");
               this.afStore.collection('messages', ref =>
-              ref.where("sender", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", true).where("isBuddies", "==", true)).valueChanges().subscribe(ref => {
+              ref.where("sender", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", true).where("isBuddies", "==", true).orderBy('timehiredtutor', "desc")).valueChanges().subscribe(ref => {
                 
                 this.hiredtutors = ref;
                 console.log(this.hiredtutors);

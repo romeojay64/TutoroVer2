@@ -14,9 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterPage {
 
-   signupform: FormGroup;
-   userData = { "type": "", "password": "", "email": "", "fname": "", "lname": "","contactno": "" };
-
+  signupform: FormGroup;
   user = {} as User
   profile = {} as Profile
   phoneNumber: any;
@@ -25,9 +23,8 @@ export class RegisterPage {
   dob: any;
   
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public afAuth: AngularFireAuth, private afStore: AngularFirestore,
-     public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, private afStore: AngularFirestore,
+    public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 
       let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
       this.signupform = new FormGroup({
@@ -42,16 +39,13 @@ export class RegisterPage {
       });
 
       this.dateyear = new Date().getFullYear() - 18;
-      // console.log(this.daterange);
       this.daterange = this.dateyear+"-12-31";
-    
 
   }
 
   async register(user: User) {
-    // console.log(this.dob);
     let loader = this.loadingCtrl.create({
-      content: 'Logging in...'
+      content: 'Registering ...'
     })
     loader.present();
     try {
@@ -80,7 +74,6 @@ export class RegisterPage {
         buttons: ['OK']
       });
       alert.present();
-      // console.error(e);
     }
   }
 
@@ -99,15 +92,28 @@ export class RegisterPage {
         uid: firebase.auth().currentUser.uid,
        
       });
-      this.afStore
-      .collection("profile")
-      .doc(firebase.auth().currentUser.uid)
-      .set({
-        dob: this.dob,
-        firstlogin: true,
-        isPremium: false,
-        include: true
-      });
+
+      if(this.user.type == 'Tutor'){
+        this.afStore
+        .collection("profile")
+        .doc(firebase.auth().currentUser.uid)
+        .set({
+          dob: this.dob,
+          avgrating: 0,
+          firstlogin: true,
+          isPremium: false,
+          include: true
+        });
+      } else {
+        this.afStore
+        .collection("profile")
+        .doc(firebase.auth().currentUser.uid)
+        .set({
+          dob: this.dob,
+          firstlogin: true
+        });
+      }
+      
   }
 
 }

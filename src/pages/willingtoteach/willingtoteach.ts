@@ -19,7 +19,7 @@ export class WillingtoteachPage {
     { label: "College Undergraduate", val: "CollegeUndergraduate" },
     { label: "Adult", val: "Adult" }
   ];
-
+  completed: boolean;
 
   
   selectedArray: any = [];
@@ -31,6 +31,7 @@ export class WillingtoteachPage {
     private afStore: AngularFirestore,
     private app: App
   ) {
+
     
   }
 
@@ -40,9 +41,7 @@ export class WillingtoteachPage {
   selectlevel(data) {
     this.selectedArray.push(data);
   }
-
   
-
   done() {
    
     this.selectedArray.forEach(ele => {

@@ -19,5 +19,5 @@ export interface Profile {
     contactno?: number;
     course?: string;
     buddycounter?: number;
-    
+    isFlexible? : boolean;
 }

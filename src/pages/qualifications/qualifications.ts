@@ -17,7 +17,6 @@ export class QualificationsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad QualificationsPage');
   }
 
   done(){

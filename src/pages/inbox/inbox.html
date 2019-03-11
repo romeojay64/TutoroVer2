@@ -6,6 +6,14 @@
 </ion-header>
 
 <ion-content >
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to update"
+          refreshingSpinner="circles"
+          refreshingText="Please wait...">
+        </ion-refresher-content>
+      </ion-refresher>
     <ion-list *ngIf="!tutor; else istutor">
         <ion-list-header>
             Pending Requests sent to Tutors

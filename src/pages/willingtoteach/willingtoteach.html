@@ -11,9 +11,13 @@
         <ion-list-header>
             What level/s are you able to teach?
         </ion-list-header>
+        <ion-item>
+            <ion-label>Select All</ion-label>
+            <ion-toggle [(ngModel)]="completed"></ion-toggle>
+          </ion-item>
           <ion-item *ngFor="let educ of level">
             <ion-label>{{educ.label}}</ion-label>
-              <ion-checkbox slot="end" (click)="selectlevel(educ.val)"></ion-checkbox>
+              <ion-checkbox slot="end" [disabled]="completed" [checked]="completed" (click)="selectlevel(educ.val)"></ion-checkbox>
           </ion-item>
         </ion-list>
   <br>

@@ -5,7 +5,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from "firebase/app";
 import { AngularFireDatabase } from "@angular/fire/database";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs-compat";
 
 @Injectable()
 export class UserProvider {
@@ -21,7 +21,7 @@ export class UserProvider {
     private afStore: AngularFirestore
   ) {
     this.tutors = this.afStore
-      .collection("profile", ref => ref.where("type", "==", "Tutor").where("include","==",true))
+      .collection("profile", ref => ref.where("type", "==", "Tutor").where("include","==",true).orderBy("avgrating"))
       .valueChanges();
     console.log("Hello UserProvider Provider");
   }
@@ -153,6 +153,7 @@ export class UserProvider {
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
           .where("include","==",true)
+          .orderBy("avgrating", "desc")
       )
       .valueChanges();
   }
@@ -164,6 +165,7 @@ export class UserProvider {
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
           .where("include","==",true)
+          .orderBy("avgrating", "desc")
       )
       .valueChanges();
   }
@@ -176,6 +178,7 @@ export class UserProvider {
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
           .where("include","==",true)
+          .orderBy("avgrating", "desc")
       )
       .valueChanges();
   }
@@ -196,10 +199,11 @@ export class UserProvider {
       .collection("profile", ref =>
         ref
           .where("brgy", "==", brgy)
-          .where("teaches", "array-contains", level)
+          .where("teaches." + level, "==", true)
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
           .where("include","==",true)
+          .orderBy("avgrating", "desc")
       )
       .valueChanges();
   }
@@ -210,8 +214,19 @@ export class UserProvider {
           .where("interests", "array-contains", subj)
           .where("type", "==", "Tutor")
           .where("include","==",true)
+          .orderBy("avgrating", "desc")
       )
       .valueChanges();
 
+  }
+  besttutors(){
+    return this.afStore
+      .collection("profile", ref =>
+        ref
+          .where("type", "==", "Tutor")
+          .where("include","==",true)
+          .orderBy("avgrating", "desc")
+      )
+      .valueChanges();
   }
 }

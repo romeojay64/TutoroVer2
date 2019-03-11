@@ -163,13 +163,12 @@ export class RegisterprofilePage {
       .doc(firebase.auth().currentUser.uid)
       .update(this.profile);
       this.setDays();
-      this.navCtrl.push("QualificationsPage");
     
-        // if (this.profile.type == "Tutor") {
-        //   this.setLevel();
-        //   this.navCtrl.push("QualificationsPage");
-        // } else {
-        //   this.navCtrl.push("ProfilepicPage");
-        // }
+        if (this.profile.type == "Parent") {
+          // this.setLevel();
+          this.navCtrl.push("ProfilepicPage");
+        } else {
+          this.navCtrl.push("QualificationsPage");
+        }
   }
 }

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
-// import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
-// import { Observable } from 'rxjs-compat';
+
 
 
 @IonicPage()
@@ -12,24 +11,15 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class MainPage {
 
-  
-  
-
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, 
      private app: App) {
-      
-    
   }
 
-  ionViewDidLoad() {
-    
-    
-  
+  ionViewDidLoad() { 
   }
 
   logout() {
     this.afAuth.auth.signOut();
-    // this.navCtrl.setRoot('LoginPage');
     this.app.getRootNav().setRoot('LoginPage');
   }
 

@@ -26,12 +26,17 @@
           <p>{{(profileData)?.desc}}</p>
         </ion-card-header>
         <ion-card-content>
+          <div *ngIf="!parent; else parent">
             <p><b>Educational Level:</b> {{(profileData)?.educlevel}}</p>
             <p><b>Course:</b> {{(profileData)?.course}}</p>
             <p><b>School:</b> {{(profileData)?.school}}</p>
             <p><b>Location:</b> {{(profileData)?.brgy}}, {{(profileData)?.city}}</p>
             <p><b>Birthday:</b> {{(profileData)?.dob}}</p>
-            
+          </div>
+          <ng-template #parent>
+              <p><b>Location:</b> {{(profileData)?.brgy}}, {{(profileData)?.city}}</p>
+              <p><b>Birthday:</b> {{(profileData)?.dob}}</p>
+          </ng-template>
 
             <ion-row>
                 <ion-col>
@@ -120,7 +125,7 @@
         <h3>Tutors</h3>
       </ion-card-header>
       <ion-card-content>
-          <ion-item *ngFor="let tutor of hiredtutors" (click)="gototutorcontact(tutor.reciever)">
+          <ion-item *ngFor="let tutor of hiredtutors" (click)="gototutorcontact(tutor.reciever)" >
               <ion-avatar item-start>
                   <img *ngIf = "tutor.recieverphotoURL; else noPic" src="{{tutor.recieverphotoURL}}">
                   <ng-template #noPic>
@@ -132,7 +137,7 @@
                   <p><b>{{tutor.topic}}</b></p>
                 </span>
               <ion-icon item-end name="arrow-dropright"></ion-icon> 
-            </ion-item>
+          </ion-item>
       </ion-card-content>
       
 </ion-card>

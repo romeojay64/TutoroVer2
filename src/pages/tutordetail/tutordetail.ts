@@ -121,15 +121,15 @@ getratings(){
   .collection("ratings", ref => ref.where("tutor", "==", this.params))
   .valueChanges()
   this.allratings.subscribe(items => {
-    console.log(items);
-    items.forEach(element => {
-      let rate
-      rate = element.rating;
-      this.counter++;
-      this.accumulaterating = this.accumulaterating + rate;
-      console.log(this.counter, this.accumulaterating);
-      this.avgrating = this.accumulaterating/this.counter;
-    });
+    // console.log(items);
+    // items.forEach(element => {
+    //   let rate
+    //   rate = element.rating;
+    //   this.counter++;
+    //   this.accumulaterating = this.accumulaterating + rate;
+    //   console.log(this.counter, this.accumulaterating);
+    //   this.avgrating = this.accumulaterating/this.counter;
+    // });
     
       this.alleachratings = items;
       

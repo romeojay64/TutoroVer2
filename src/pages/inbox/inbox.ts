@@ -40,6 +40,8 @@ export class InboxPage {
   counter: number;
   isPremium: any;
   ptype: Observable<any>;
+  timehiredtutor: number;
+  type: string;
 
   imgurl =
     "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e";
@@ -58,6 +60,7 @@ export class InboxPage {
       .doc(firebase.auth().currentUser.uid)
       .get()
       .subscribe(ref => {
+      this.type = ref.data().type;
         if (ref.data().type == "Tutor") {
           console.log("You are a tutor!");
           this.tutor = true;
@@ -72,22 +75,37 @@ export class InboxPage {
       });
   }
 
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    if (this.type == "Tutor") {
+      console.log("You are a tutor!");
+      this.tutor = true;
+      this.gettutormessages();
+      this.gettutorapprovedrequests();
+    } else {
+      console.log("You are NOT a tutor!");
+      this.tutor = false;
+      this.getlearnermessages();
+      this.getlearnerapprovedrequests();
+    }
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
+  }
+
   ionViewDidLoad() {
     console.log("ionViewDidLoad InboxPage");
   }
 
   getlearnermessages() {
     this.afStore
-      .collection("messages", ref =>
-        ref
-          .where("sender", "==", firebase.auth().currentUser.uid)
-          .where("isAccepted", "==", false)
-      )
-      .valueChanges()
-      .subscribe(ref => {
+      .collection("messages", ref => ref.where("sender", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", false).orderBy('timesentrequest')).valueChanges().subscribe(ref => {
         if (ref.length > 0) {
           this.learnermessages = ref;
         } else {
+          console.log("WALA");
           this.exists = false;
         }
       });
@@ -120,6 +138,7 @@ export class InboxPage {
           .where("reciever", "==", firebase.auth().currentUser.uid)
           .where("isAccepted", "==", true)
           .where("isBuddies", "==", false)
+          .orderBy("timeacceptedrequest","desc")
       )
       .valueChanges()
       .subscribe(ref => {
@@ -140,6 +159,8 @@ export class InboxPage {
         ref
           .where("sender", "==", firebase.auth().currentUser.uid)
           .where("isAccepted", "==", true)
+          .where("isBuddies", "==", false)
+          .orderBy("timeacceptedrequest", "desc")
       )
       .valueChanges()
       .subscribe(ref => {
@@ -178,45 +199,51 @@ export class InboxPage {
   }
 
   hiretutor(tutor, name, sender) {
-    this.payPal
-      .init({
-        PayPalEnvironmentProduction: Config.payPalEnvironmentProduction,
-        PayPalEnvironmentSandbox: Config.payPalEnvironmentSandbox
-      })
-      .then(
-        () => {
-          this.payPal
-            .prepareToRender(
-              this.payPalEnvironment,
-              new PayPalConfiguration({})
-            )
-            .then(
-              () => {
-                this.payPal.renderSinglePaymentUI(this.payment).then(
-                  response => {
-                    alert(
-                      "Successfully paid. Status = ${response.response.state}"
-                    );
-                    console.log(response);
-                  },
-                  () => {
-                    console.error(
-                      "Error or render dialog closed without being successful"
-                    );
-                  }
-                );
-              },
-              () => {
-                console.error("Error in configuration");
-              }
-            );
-        },
-        () => {
-          console.error(
-            "Error in initialization, maybe PayPal isn't supported or something else"
-          );
-        }
-      );
+
+    let petsa = new Date();
+
+    let stringDate = petsa.getFullYear().toString() + petsa.getMonth().toLocaleString() + petsa.getDate().toLocaleString() + petsa.getHours().toLocaleString() + petsa.getMinutes().toLocaleString() + petsa.getSeconds().toLocaleString() + petsa.getMilliseconds().toLocaleString();
+    this.timehiredtutor = parseInt(stringDate);
+
+    // this.payPal
+    //   .init({
+    //     PayPalEnvironmentProduction: Config.payPalEnvironmentProduction,
+    //     PayPalEnvironmentSandbox: Config.payPalEnvironmentSandbox
+    //   })
+    //   .then(
+    //     () => {
+    //       this.payPal
+    //         .prepareToRender(
+    //           this.payPalEnvironment,
+    //           new PayPalConfiguration({})
+    //         )
+    //         .then(
+    //           () => {
+    //             this.payPal.renderSinglePaymentUI(this.payment).then(
+    //               response => {
+    //                 alert(
+    //                   "Successfully paid. Status = ${response.response.state}"
+    //                 );
+    //                 console.log(response);
+    //               },
+    //               () => {
+    //                 console.error(
+    //                   "Error or render dialog closed without being successful"
+    //                 );
+    //               }
+    //             );
+    //           },
+    //           () => {
+    //             console.error("Error in configuration");
+    //           }
+    //         );
+    //     },
+    //     () => {
+    //       console.error(
+    //         "Error in initialization, maybe PayPal isn't supported or something else"
+    //       );
+    //     }
+    //   );
 
     this.afStore
       .collection("chat")
@@ -229,7 +256,8 @@ export class InboxPage {
           .collection("messages")
           .doc(sender + "_" + tutor)
           .update({
-            isBuddies: true
+            'isBuddies': true,
+            'timehiredtutor':   new Date()
           });
 
         this.ptype = this.afStore
@@ -247,7 +275,8 @@ export class InboxPage {
             .collection("profile")
             .doc(tutor)
             .update({
-              buddycounter: res.data().buddycounter + 1
+              'buddycounter': res.data().buddycounter + 1,
+              
             });
 
           if (!this.isPremium) {

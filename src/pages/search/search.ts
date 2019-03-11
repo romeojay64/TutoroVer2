@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IonicPage, NavController, NavParams, Keyboard, AlertController } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Keyboard, AlertController, LoadingController } from "ionic-angular";
 import { AngularFireDatabase } from "@angular/fire/database";
 import { AngularFireAuth } from "@angular/fire/auth";
 // import * as Lodash from 'lodash';
@@ -189,11 +189,15 @@ export class SearchPage implements OnInit {
     private userservice: UserProvider,
     private afStore: AngularFirestore,
     private keyboard: Keyboard,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public loadingCtrl: LoadingController
   ) {
-
+    this.userservice.besttutors().subscribe(items => {
+     
+      this.filteredtutors = items;
+    });
     
-
+    
     
     // this.userservice.getTutors().subscribe(items => {
     //   this.tutors = items;
@@ -256,8 +260,7 @@ export class SearchPage implements OnInit {
 
       this.countries = this.list.filter(item => item.toUpperCase().includes(this.input.toUpperCase()));
     }
-    
-    
+  
    
   }
 
@@ -288,42 +291,86 @@ export class SearchPage implements OnInit {
   }
 
   reset() {
+    let loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+    loader.present();
     console.log("RESET!");
-    this.filter.level = null;
-    this.filter.subj = null;
-    this.input = null;
+    this.filter.level = undefined;
+    this.input = '';
+    this.exists = true;
+    this.filter.brgy = undefined;
+    loader.dismiss();
     // this.userservice.resetTutors().subscribe(items => {
-      this.filteredtutors = [];
+      this.userservice.besttutors().subscribe(items => {
+     
+        this.filteredtutors = items;
+      });
     // });
   }
   filtertutors() {
+    let loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+    
     console.log(this.filter.level);
     console.log(this.input);
-    // console.log(this.filter.city);
     console.log(this.filter.brgy);
-    if(this.input != null && this.filter.brgy != null && this.filter.level != null){
-      if (this.filter.level && this.filter.brgy) {
-        this.userservice
-          .getFilteredtutorsbyBoth(this.filter.level, this.filter.brgy, this.input)
-          .subscribe(items => {
-            this.filteredtutors = items;
-          });
-      } else if (this.filter.brgy) {
+    if(this.input != ''){
+      console.log("Nisud Dre");
+      loader.present();
+      if (this.filter.brgy && this.input != null) {
         this.userservice
           .getFilteredtutorsbrgy(this.filter.brgy,this.input)
           .subscribe(items => {
-            this.filteredtutors = items;
+            if(items.length > 0) {
+              console.log(items);
+              loader.dismiss();
+              this.filteredtutors = items;
+              
+            } else {
+              console.log("WALEY");
+              loader.dismiss();
+              this.exists = false;
+            }
+            
           });
       }
 
-      else {
+      else if (this.filter.level && this.input != null){
         this.userservice
           .getFilteredtutorsbyLevel(this.filter.level,this.input)
           .subscribe(items => {
-            this.filteredtutors = items;
+            if(items.length > 0) {
+              console.log(items);
+              loader.dismiss();
+              this.filteredtutors = items;
+              
+            } else {
+              console.log("WALEY");
+              loader.dismiss();
+              this.exists = false;
+            }
+          });
+      }
+      else if (this.filter.level && this.input != null && this.filter.brgy) {
+        this.userservice
+          .getFilteredtutorsbyBoth(this.filter.level,this.filter.brgy,this.input)
+          .subscribe(items => {
+            if(items.length > 0) {
+              console.log(items);
+              loader.dismiss();
+              this.filteredtutors = items;
+              
+            } else {
+              console.log("WALEY");
+              loader.dismiss();
+              this.exists = false;
+            }
           });
       }
     } else {
+
       const alert = this.alertCtrl.create({
         title: 'Oh no!',
         subTitle: "There are no items to filter",
@@ -353,15 +400,22 @@ export class SearchPage implements OnInit {
     // }
   }
   searchtutors(){
+    let loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+    loader.present();
     this.exists = true;
     console.log(this.input);
     if(this.input != null){
       this.userservice.search(this.input).subscribe(items => {
         if(items.length > 0) {
           console.log(items);
+          loader.dismiss();
           this.filteredtutors = items;
+          
         } else {
           console.log("WALEY");
+          loader.dismiss();
           this.exists = false;
         }
         
@@ -377,7 +431,7 @@ export class SearchPage implements OnInit {
   }
 
   messageTutor(tutor) {
-    this.navCtrl.push("InitialmessagePage", { tutorid: tutor });
+    this.navCtrl.push("InitialmessagePage", { tutorid: tutor, topic: this.input});
   }
 
   ionViewDidLoad() {

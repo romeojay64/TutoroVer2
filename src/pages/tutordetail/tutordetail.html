@@ -115,7 +115,7 @@
     <ion-card-header>
       
       <span>Reviews - <ion-icon name="star" color="energy">
-        </ion-icon> {{avgrating}}</span>
+        </ion-icon> {{(profileData | async)?.avgrating}}</span>
         
     </ion-card-header>
     <ion-card-content> 

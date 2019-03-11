@@ -13,7 +13,9 @@ export interface Message {
     isRead? : boolean;
     senderphotoURL?: string;
     recieverphotoURL?: string;
-    timestamp?: any;
+    timesentrequest?: any;
+    timeapproved?: any;
+    timehired?: any;
     isBuddies?: boolean;
     isArchived? : boolean;
 

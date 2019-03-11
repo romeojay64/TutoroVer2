@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController, AlertController } 
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs-compat';
+import { Rating } from '../../models/rating';
 
 
 @IonicPage()
@@ -22,6 +23,12 @@ export class RatingmodalPage {
   fname: string;
   lname: string;
   photoURL: string;
+  accumulaterating: number = 0;
+counter: number = 0;
+avgrating: number;
+allratings: Observable<any>;
+alleachratings = [] as Rating;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
     private afStore: AngularFirestore, public alertCtrl: AlertController) {
@@ -57,6 +64,32 @@ export class RatingmodalPage {
       'learnerfname': this.fname,
       'tutor': this.params
     }).then(()=> {
+
+      this.allratings = this.afStore
+      .collection("ratings", ref => ref.where("tutor", "==", this.params))
+      .valueChanges()
+      this.allratings.subscribe(items => {
+        console.log(items);
+        items.forEach(element => {
+          let rate
+          rate = element.rating;
+          this.counter++;
+          this.accumulaterating = this.accumulaterating + rate;
+          console.log(this.counter, this.accumulaterating);
+          this.avgrating = this.accumulaterating/this.counter;
+          this.afStore
+          .collection("profile")
+          .doc(this.params)
+          .update({
+            'avgrating': this.avgrating,
+          })
+        });
+        
+          
+          
+      });
+
+
       const alert = this.alertCtrl.create({
         title: 'Success!',
         subTitle: "Rating submitted",
