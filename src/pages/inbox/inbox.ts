@@ -100,6 +100,7 @@ export class InboxPage {
   }
 
   getlearnermessages() {
+     this.exists = true;
     this.afStore
       .collection("messages", ref => ref.where("sender", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", false).orderBy('timesentrequest')).valueChanges().subscribe(ref => {
         if (ref.length > 0) {
@@ -112,6 +113,7 @@ export class InboxPage {
   }
 
   gettutormessages() {
+    this.exists = true;
     this.afStore
       .collection("messages", ref =>
         ref
@@ -132,6 +134,7 @@ export class InboxPage {
   }
 
   gettutorapprovedrequests() {
+    this.approvedexists = true;
     this.afStore
       .collection("messages", ref =>
         ref
@@ -154,6 +157,7 @@ export class InboxPage {
   }
 
   getlearnerapprovedrequests() {
+    this.approvedexists = true;
     this.afStore
       .collection("messages", ref =>
         ref

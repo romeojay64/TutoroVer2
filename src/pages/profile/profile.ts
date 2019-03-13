@@ -269,8 +269,12 @@ export class ProfilePage {
 
   }
 
-  viewtutors(){
+  gotoedittutorprofile(){
+    this.navCtrl.push("EdittutorprofilePage");
+  }
 
+  gotoeditavail(){
+    this.navCtrl.push("EditavailPage");
   }
 
   ionViewDidLoad() {
@@ -290,26 +294,7 @@ export class ProfilePage {
         }
       }
     })
-    // this.loaduserdetails();
-    // this.afAuth.authState.subscribe(data => {
-    //   if(data && data.email && data.uid) {
-    //     this.profileData = this.afDatabase.object('profile/'+data.uid).valueChanges();
-    //     this.afDatabase.list('interests/'+data.uid).valueChanges()
-    //     .subscribe(datas => {
-    //         console.log(datas);
-            
-    //         datas.forEach(sub => {
-    //           this.subjectArray.push(sub);
-    //         });
 
-    //     }, (err) => {
-    //       console.log(err);
-    //     });
-    
-    //   // this.profileData = this.afDatabase.object(`profile/${data.uid}`).valueChanges();
-    // }
-  
-    // });
   }
 
 }

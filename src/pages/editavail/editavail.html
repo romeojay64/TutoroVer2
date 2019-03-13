@@ -1,0 +1,54 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit Availability</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="background"> 
+    <ion-list>
+        <ion-list-header>
+          What days are you available?
+        </ion-list-header>
+        <!-- <ion-item *ngFor="let day of days">
+          <ion-label>{{day}}</ion-label>
+          <ion-checkbox slot="end" (ionChange)="addCheckbox($event,day)"></ion-checkbox>
+        </ion-item> -->
+        <ion-item>
+            <ion-label>{{days[0]}}</ion-label>
+            <ion-checkbox slot="end" [checked]="adlaw[0].Monday" (ionChange)="addCheckbox($event,days[0])"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{days[1]}}</ion-label>
+            <ion-checkbox slot="end"  [checked]="adlaw[1].Tuesday" (ionChange)="addCheckbox($event,days[1])"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{days[2]}}</ion-label>
+            <ion-checkbox slot="end" [checked]="adlaw[2].Wednesday" (ionChange)="addCheckbox($event,days[2])"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{days[3]}}</ion-label>
+            <ion-checkbox slot="end"   [checked]="adlaw[3].Thursday" (ionChange)="addCheckbox($event,days[3])"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+              <ion-label>{{days[4]}}</ion-label>
+              <ion-checkbox slot="end" [checked]="adlaw[4].Friday" (ionChange)="addCheckbox($event,days[4])"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+        <ion-label>{{days[5]}}</ion-label>
+        <ion-checkbox slot="end"  [checked]="adlaw[5].Saturday" (ionChange)="addCheckbox($event,days[5])"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                  <ion-label>{{days[6]}}</ion-label>
+                  <ion-checkbox slot="end"  [checked]="adlaw[6].Sunday" (ionChange)="addCheckbox($event,days[6])"></ion-checkbox>
+                </ion-item>
+    <br>
+        <ion-item>
+          <ion-label>Flexible?</ion-label>
+          <ion-toggle [(ngModel)]="flex"></ion-toggle>
+        </ion-item>
+      </ion-list>
+    
+      <button ion-button block (click)="done()" color='secondary'>Save</button>
+
+</ion-content>

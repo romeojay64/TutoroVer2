@@ -29,10 +29,15 @@ export class BuddychatPage {
     public events: Events, public zone: NgZone, public loadingCtrl: LoadingController,
     public imgstore: ImghandlerProvider, private afStore: AngularFirestore) {
       console.log(this.navParams.get('buddypic'));
-      this.buddypicurl =  this.navParams.get('buddypic');
+       if(this.navParams.get('buddypic') == undefined) {
+        this.buddypicurl = "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e";
+      } else {
+        this.buddypicurl =  this.navParams.get('buddypic');
+      }
+     
       this.buddyuid =  this.navParams.get('buddyid');
       this.buddy = this.chatservice.buddy;
-      this.photoURL = firebase.auth().currentUser.photoURL;
+      
       this.scrollto();
 
       this.afStore.collection('users').doc(this.buddyuid).get().subscribe(ref => {
@@ -41,6 +46,17 @@ export class BuddychatPage {
         this.lname = ref.data().lname;
         this.email = ref.data().email;
         this.contactno = ref.data().contactno;
+      });
+
+      this.afStore.collection('profile').doc(this.buddyuid).get().subscribe(ref => {
+        // console.log(ref.data());
+        if(ref.data().photoURL == undefined) {
+          this.photoURL  = "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e";
+        } else {
+          this.photoURL = ref.data().photoURL;
+        }
+       
+      
       });
 
       this.events.subscribe('newmessage', () => {

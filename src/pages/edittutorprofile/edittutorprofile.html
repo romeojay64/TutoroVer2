@@ -1,10 +1,54 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>edittutorprofile</ion-title>
+    <ion-title>Edit level of students</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+ 
 
+  <ion-list>
+    <ion-list-header>
+        What level/s are you able to teach?
+    </ion-list-header>
+    <ion-item>
+        <ion-label>Select All</ion-label>
+        <ion-toggle [(ngModel)]="completed"></ion-toggle>
+      </ion-item>
+  <ion-item>
+      <ion-label>{{levels[0].label}}</ion-label>
+      <ion-checkbox slot="end" [disabled]="completed" [checked]="completed || savedlevels[0].PreSchool" (ionChange)="addCheckbox($event,levels[0].val)"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+      <ion-label>{{levels[1].label}}</ion-label>
+      <ion-checkbox slot="end" [disabled]="completed" [checked]="completed || savedlevels[1].Elementary" (ionChange)="addCheckbox($event,levels[1].val)"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+      <ion-label>{{levels[2].label}}</ion-label>
+      <ion-checkbox slot="end" [disabled]="completed"  [checked]="completed || savedlevels[2].HighSchool" (ionChange)="addCheckbox($event,levels[2].val)"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+      <ion-label>{{levels[3].label}}</ion-label>
+      <ion-checkbox slot="end" [disabled]="completed"  [checked]="completed || savedlevels[3].JuniorHighSchool" (ionChange)="addCheckbox($event,levels[3].val)"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+        <ion-label>{{levels[4].label}}</ion-label>
+        <ion-checkbox slot="end" [disabled]="completed" [checked]="completed || savedlevels[4].SeniorHighSchool" (ionChange)="addCheckbox($event,levels[4].val)"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+  <ion-label>{{levels[5].label}}</ion-label>
+  <ion-checkbox slot="end" [disabled]="completed" [checked]="completed || savedlevels[5].CollegeUndergraduate" (ionChange)="addCheckbox($event,levels[5].val)"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{levels[6].label}}</ion-label>
+            <ion-checkbox slot="end" [disabled]="completed" [checked]="completed || savedlevels[6].Adult" (ionChange)="addCheckbox($event,levels[6].val)"></ion-checkbox>
+          </ion-item>
+  
+ 
+ 
+  
+</ion-list>
+    
+<button ion-button block (click)="done()" color='secondary'>Save</button>
 </ion-content>

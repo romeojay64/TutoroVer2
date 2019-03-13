@@ -53,4 +53,10 @@ export class MainPage {
     
   }
 
+  edit() {
+ 
+    this.navCtrl.push('EdittutorprofilePage');
+    
+  }
+
 }
