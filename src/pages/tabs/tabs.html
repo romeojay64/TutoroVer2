@@ -1,6 +1,6 @@
 <ion-tabs color="hcolor" *ngIf = "learner; else tutor" >
     
-  <ion-tab [root]="tab1" tabTitle="Temp" tabIcon="construct" tabsHideOnSubPages="true"></ion-tab>
+  <!-- <ion-tab [root]="tab1" tabTitle="Temp" tabIcon="construct" tabsHideOnSubPages="true"></ion-tab> -->
   <ion-tab [root]="tab12" tabTitle="Search" tabIcon="search" tabsHideOnSubPages="true"></ion-tab>  
   <!-- <ion-tab [root]="tab2" tabTitle="Schedule" tabIcon="calendar" tabsHideOnSubPages="true"></ion-tab> -->
   <ion-tab [root]="tab5" tabTitle="Requests" tabIcon="mail" tabsHideOnSubPages="true" 
@@ -14,7 +14,7 @@
 
 <ng-template #tutor>
     <ion-tabs color="hcolor">
-  <ion-tab [root]="tab1" tabTitle="Home" tabIcon="construct" tabsHideOnSubPages="true"></ion-tab>
+  <!-- <ion-tab [root]="tab1" tabTitle="Home" tabIcon="construct" tabsHideOnSubPages="true"></ion-tab> -->
   <ion-tab [root]="tab5" tabTitle="Requests" tabIcon="mail" tabsHideOnSubPages="true" tabBadge="{{inboxbadge}}"  tabBadgeStyle="danger"></ion-tab>
   <ion-tab [root]="tab3" tabTitle="Clients" tabIcon="people" tabsHideOnSubPages="true"  tabBadge="{{chatbadge}}"  tabBadgeStyle="danger"></ion-tab>
   <ion-tab [root]="tab4" tabTitle="Profile" tabIcon="contact" tabsHideOnSubPages="true"></ion-tab> 

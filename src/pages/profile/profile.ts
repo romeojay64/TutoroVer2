@@ -87,31 +87,31 @@ export class ProfilePage {
                 
                 // console.log(querySnapshot.data().teaches.CollegeUndergraduate);
                 if(querySnapshot.exists) {
-                  if(querySnapshot.data().teaches.PreSchool){
+                  if(querySnapshot.data().teaches.PreSchool != undefined){
                     console.log('Preschool Exists!');
                     this.levels[0].PreSchool = true;
                   }
-                  if(querySnapshot.data().teaches.Elementary){
+                  if(querySnapshot.data().teaches.Elementary!= undefined){
                     console.log('Elementary Exists!');
                     this.levels[1].Elementary = true;
                   }
-                  if(querySnapshot.data().teaches.HighSchool){
+                  if(querySnapshot.data().teaches.HighSchool!= undefined){
                     console.log('HighSchool Exists!');
                     this.levels[2].HighSchool = true;
                   }
-                  if(querySnapshot.data().teaches.JuniorHighSchool){
+                  if(querySnapshot.data().teaches.JuniorHighSchool!= undefined){
                     console.log('JuniorHighSchool Exists!');
                     this.levels[3].JuniorHighSchool = true;
                   }
-                  if(querySnapshot.data().teaches.SeniorHighSchool){
+                  if(querySnapshot.data().teaches.SeniorHighSchool!= undefined){
                     console.log('SeniorHighSchool Exists!');
                     this.levels[4].SeniorHighSchool = true;
                   }
-                  if(querySnapshot.data().teaches.CollegeUndergraduate){
+                  if(querySnapshot.data().teaches.CollegeUndergraduate!= undefined){
                     console.log('CollegeUndergraduate Exists!');
                     this.levels[5].CollegeUndergraduate = true;
                   }
-                  if(querySnapshot.data().teaches.Adult){
+                  if(querySnapshot.data().teaches.Adult!= undefined){
                     console.log('Adult Exists!');
                     this.levels[6].Adult = true;
                   }
@@ -125,6 +125,12 @@ export class ProfilePage {
              
             } else if (res.type == 'Parent') {
               this.parent = true;
+              this.afStore.collection('messages', ref =>
+              ref.where("sender", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", true).where("isBuddies", "==", true).orderBy('timehiredtutor', "desc")).valueChanges().subscribe(ref => {
+                
+                this.hiredtutors = ref;
+                console.log(this.hiredtutors);
+              })
             }else {
               console.log("Learner");
               this.afStore.collection('messages', ref =>
@@ -287,7 +293,8 @@ export class ProfilePage {
             // duration: 3000,
             position: 'bottom',
             showCloseButton: true,
-            closeButtonText: "Okay"
+            closeButtonText: "Okay",
+            // dismissOnPageChange: true
           });
     
           toast.present();

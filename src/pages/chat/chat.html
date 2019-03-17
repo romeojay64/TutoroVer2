@@ -1,7 +1,10 @@
 
 <ion-header>
   <ion-navbar>
-      <ion-title>Tutors</ion-title>
+      <ion-title *ngIf="!tutor; else tyutor">Tutors</ion-title>
+      <ng-template #tyutor>
+        <ion-title>Clients</ion-title>
+      </ng-template>
    
     
   </ion-navbar>
@@ -34,6 +37,7 @@
         </ion-list>
 
         <ng-template #istutor>
+          <ion-list>
             <ion-list-header>
                 Clients
               </ion-list-header>
@@ -53,7 +57,7 @@
                     <ion-icon name="chatbubbles" item-end ></ion-icon>
               
                 </ion-item>
-
+              </ion-list>
         </ng-template>
   
         

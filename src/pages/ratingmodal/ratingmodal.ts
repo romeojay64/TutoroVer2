@@ -77,11 +77,13 @@ alleachratings = [] as Rating;
           this.accumulaterating = this.accumulaterating + rate;
           console.log(this.counter, this.accumulaterating);
           this.avgrating = this.accumulaterating/this.counter;
+          let avg = this.avgrating
+         
           this.afStore
           .collection("profile")
           .doc(this.params)
           .update({
-            'avgrating': this.avgrating,
+            'avgrating': avg.toFixed(1),
           })
         });
         

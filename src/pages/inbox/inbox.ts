@@ -1,16 +1,8 @@
 import { Component } from "@angular/core";
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  AlertController
-} from "ionic-angular";
+import { IonicPage, NavController, NavParams, AlertController } from "ionic-angular";
 import { AngularFirestore } from "@angular/fire/firestore";
 import * as firebase from "firebase/app";
-import {
-  PayPal,
-  PayPalPayment,
-  PayPalConfiguration
+import { PayPal, PayPalPayment, PayPalConfiguration
 } from "@ionic-native/paypal";
 import { Config } from "../../app/app.paypal.config";
 import { ChatProvider } from "../../providers/chat/chat";
@@ -29,12 +21,7 @@ export class InboxPage {
   tutorapprovedmessages: any;
   learnerapprovedmessages: any;
   payPalEnvironment: string = "payPalEnvironmentSandbox";
-  payment: PayPalPayment = new PayPalPayment(
-    "2.00",
-    "USD",
-    "Tutoro Subscription",
-    "subscription"
-  );
+  payment: PayPalPayment = new PayPalPayment("2.00", "USD", "Tutoro Subscription", "subscription");
   exists = true;
   approvedexists = true;
   counter: number;
@@ -55,6 +42,20 @@ export class InboxPage {
     public chatservice: ChatProvider,
     public events: Events
   ) {
+    this.events.subscribe('badgecount', () => {
+      if (this.type == "Tutor") {
+        console.log("You are a tutor!");
+        this.tutor = true;
+        this.gettutormessages();
+        this.gettutorapprovedrequests();
+      } else {
+        console.log("You are NOT a tutor!");
+        this.tutor = false;
+        this.getlearnermessages();
+        this.getlearnerapprovedrequests();
+      }
+    }) 
+
     this.afStore
       .collection("users")
       .doc(firebase.auth().currentUser.uid)
@@ -189,7 +190,8 @@ export class InboxPage {
       .update({
         isRead: true
       });
-    // this.events.publish('badgecount');
+      
+    this.events.publish('badgecount');
     this.navCtrl.push("MessagedetailsPage", {
       tutorid: tutor,
       learnerid: learner
@@ -263,6 +265,8 @@ export class InboxPage {
             'isBuddies': true,
             'timehiredtutor':   new Date()
           });
+
+          this.events.publish('badgecount');
 
         this.ptype = this.afStore
           .collection("profile")

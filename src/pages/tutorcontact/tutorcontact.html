@@ -6,7 +6,10 @@
 </ion-header>
 
 <ion-content class="background">
-  <ion-card>
+  <ion-card padding>
+      <ion-avatar class="profile-image">
+          <img src="{{img}}" class="centerer" />
+        </ion-avatar>
     <ion-card-header>
         <h1>{{fname}} {{lname}}</h1>
        
@@ -17,6 +20,35 @@
         <p>{{email}}</p>
         <p>{{contactno}}</p>
     </ion-card-content>
+
+    <ion-row>
+        <ion-col align-self-center text-center>
+          <button
+            (click)="goToDetailPage()"
+            ion-button
+            icon-start
+            block
+            round
+            color="secondary"
+          >
+            <ion-icon name="contact"></ion-icon>
+            <div>Profile</div>
+          </button>
+        </ion-col>
+        <ion-col align-self-center text-center>
+          <button
+            ion-button
+            icon-start
+            block
+            round
+            (click)="rateTutor()"
+            color="energy"
+          >
+            <ion-icon name="star"></ion-icon>
+            <div>Rate</div>
+          </button>
+        </ion-col>
+      </ion-row>
   
   </ion-card>
 

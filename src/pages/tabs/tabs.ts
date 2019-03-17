@@ -35,26 +35,41 @@ export class TabsPage {
     this.events.subscribe('badgecount', () => {
       // this.gettutormessages();
      
-        this.inboxbadge = this.inboxbadge - 1; 
+        // this.inboxbadge = this.inboxbadge - 1; 
      
         this.inboxbadge = null;
+
+        this.utype = this.afStore.collection('users').doc(firebase.auth().currentUser.uid).valueChanges();
+        this.utype.subscribe(res => {
+              if(res.type != 'Tutor'){
+                this.learner = true;
+                // this.getlearnermessages();
+                this.getlearnerapprovedrequests();
+                console.log('User is a learner! '+ res.type)
+              }
+              else{
+                this.gettutormessages();
+                // this.gettutorapprovedrequests();
+                console.log('User is a tutor! '+ res.type)
+              }
+        })
      
       
       
     }) 
-
- 
-  
-
      
 
       this.utype = this.afStore.collection('users').doc(firebase.auth().currentUser.uid).valueChanges();
       this.utype.subscribe(res => {
             if(res.type != 'Tutor'){
               this.learner = true;
+              // this.getlearnermessages();
+              this.getlearnerapprovedrequests();
               console.log('User is a learner! '+ res.type)
             }
             else{
+              this.gettutormessages();
+              // this.gettutorapprovedrequests();
               console.log('User is a tutor! '+ res.type)
             }
       })
@@ -68,7 +83,7 @@ export class TabsPage {
   
 
   ionViewDidLoad() {
-    this.gettutormessages();
+   
     console.log('ionViewDidLoad TabsPage');
     
     
@@ -102,17 +117,63 @@ export class TabsPage {
                 
                 if(ref.length > 0){
                   this.inboxbadge = ref.length;  
-                } else {
-                  this.inboxbadge = null;
-                }
+                } 
               
        
        console.log("InboxBadge: "+ this.inboxbadge);
       });
     
     }
-    
+
+    // gettutorapprovedrequests() {
+      
+    //   this.afStore
+    //     .collection("messages", ref =>
+    //       ref
+    //         .where("reciever", "==", firebase.auth().currentUser.uid)
+    //         .where("isAccepted", "==", true)
+    //         .where("isBuddies", "==", false)
+    //         .orderBy("timeacceptedrequest","desc")
+    //     )
+    //     .valueChanges()
+    //     .subscribe(ref => {
+    //       if (ref.length > 0) {
+           
+    //         this.inboxbadge = this.inboxbadge  + ref.length;  
+    //       } 
   
+    //     });
+    // }
+    
+
+  //   getlearnermessages() {
+      
+  //    this.afStore
+  //      .collection("messages", ref => ref.where("sender", "==", firebase.auth().currentUser.uid).where("isAccepted", "==", false).orderBy('timesentrequest')).valueChanges().subscribe(ref => {
+  //        if (ref.length > 0) {
+  //         this.inboxbadge = this.inboxbadge  + ref.length;  
+  //        } 
+  //      });
+  //  }
+
+   getlearnerapprovedrequests() {
+   
+    this.afStore
+      .collection("messages", ref =>
+        ref
+          .where("sender", "==", firebase.auth().currentUser.uid)
+          .where("isAccepted", "==", true)
+          .where("isBuddies", "==", false)
+          .orderBy("timeacceptedrequest", "desc")
+      )
+      .valueChanges()
+      .subscribe(ref => {
+        if (ref.length > 0) {
+          this.inboxbadge = this.inboxbadge  + ref.length;  
+        } 
+       
+      });
+  }
   
 
  

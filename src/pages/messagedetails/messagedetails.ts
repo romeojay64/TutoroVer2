@@ -88,6 +88,7 @@ export class MessagedetailsPage {
     this.afStore.collection("messages").doc(sender+"_"+firebase.auth().currentUser.uid).update({
       'isArchived': true 
     })
+    this.events.publish('badgecount');
   }
 
 }
