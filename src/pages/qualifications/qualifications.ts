@@ -35,7 +35,7 @@ export class QualificationsPage {
       if(documentSnapshot.data().type == "Tutor"){
         this.navCtrl.push('InterestsPage');
       } else {
-        this.navCtrl.setRoot('TabsPage');
+        this.navCtrl.setRoot('ProfilepicPage');
       }
     })
   }

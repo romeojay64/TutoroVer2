@@ -41,10 +41,10 @@ export class MyApp {
             .doc(firebase.auth().currentUser.uid)
             .get();
           this.utype.subscribe(querySnapshot => {
-            if (querySnapshot.exists) {
-              this.rootPage = "TabsPage";
+            if (querySnapshot.data().firstlogin == true) {
+              this.rootPage = "RegisterprofilePage";
             } else {
-              this.rootPage = "LoginPage";
+              this.rootPage = "TabsPage";
             }
           });
         } else {

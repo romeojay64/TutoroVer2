@@ -7,7 +7,7 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label floating>Gender: </ion-label>
+      <ion-label floating>*Gender: </ion-label>
       <ion-select [(ngModel)]="profile.gender">
         <ion-option value="Male">Male</ion-option>
         <ion-option value="Female">Female</ion-option>
@@ -15,28 +15,29 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating>City: </ion-label>
+      <ion-label floating>*City: </ion-label>
       <ion-select [(ngModel)]="profile.city">
         <ion-option *ngFor="let city of cities" value="{{ city.name }}">{{city.name}}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Barangay: </ion-label>
+      <ion-label floating>*Barangay: </ion-label>
       <ion-select [(ngModel)]="profile.brgy">
         <ion-option *ngFor="let brgy of brgys" value="{{ brgy.name }}">{{brgy.name}}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Profession: </ion-label>
+      <ion-label floating>*Profession: </ion-label>
       <ion-select [(ngModel)]="profile.profession">
         <ion-option value="Student">Student</ion-option>
         <ion-option value="Employed">Employed</ion-option>
-        <ion-option value="Both">Both</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
 
-  <button ion-button color="secondary" block (click)="createProfile()">Create Profile</button>
+
+  <!-- <button ion-button color="secondary" block (click)="createProfile()"> <ion-icon name="save"></ion-icon><div>Create Profile</div></button> -->
+  <button ion-button color="secondary" block round (click)="createProfile()"> <ion-icon name="checkmark"></ion-icon><div style="padding-left: 10px;">Create Profile </div></button>
 </ion-content>

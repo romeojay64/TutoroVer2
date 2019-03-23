@@ -48,7 +48,7 @@ export class BuddychatPage {
         this.contactno = ref.data().contactno;
       });
 
-      this.afStore.collection('profile').doc(this.buddyuid).get().subscribe(ref => {
+      this.afStore.collection('profile').doc(firebase.auth().currentUser.uid).get().subscribe(ref => {
         // console.log(ref.data());
         if(ref.data().photoURL == undefined) {
           this.photoURL  = "https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e";

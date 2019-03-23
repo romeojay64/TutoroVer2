@@ -34,6 +34,8 @@
             <p><b>Birthday:</b> {{(profileData)?.dob}}</p>
           </div>
           <ng-template #parent>
+
+              <p><b>User Type:</b> {{(profileData)?.type}}</p>
               <p><b>Location:</b> {{(profileData)?.brgy}}, {{(profileData)?.city}}</p>
               <p><b>Birthday:</b> {{(profileData)?.dob}}</p>
           </ng-template>
@@ -56,7 +58,7 @@
       </ion-card-header>
       <ion-card-content>
         
-          <ion-item>
+          <ion-item text-wrap>
             <ion-icon item-start name="star" color="energy"></ion-icon>
             <span>
               <h2>Specializations</h2>
@@ -64,7 +66,7 @@
             </span>
             <ion-icon item-end name="arrow-dropright"></ion-icon> 
           </ion-item>
-          <ion-item (click)=gotoedittutorprofile()>
+          <ion-item (click)=gotoedittutorprofile() text-wrap>
               <ion-icon item-start name="people" color="primary"></ion-icon>
               <span>
                 <h2>Teaches</h2>
@@ -92,7 +94,7 @@
               </span>
               <ion-icon item-end name="arrow-dropright"></ion-icon>
             </ion-item>
-            <ion-item (click)=gotoeditavail()>
+            <ion-item (click)=gotoeditavail() text-wrap>
                 <ion-icon item-start name="calendar" color="secondary"></ion-icon>
                 <span>
                   <h2>Availble on:</h2>

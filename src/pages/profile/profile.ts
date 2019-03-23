@@ -60,10 +60,26 @@ export class ProfilePage {
   public userservice: UserProvider, public zone: NgZone, public alertCtrl: AlertController,
     public imghandler: ImghandlerProvider, public loadingCtrl: LoadingController,
     private afStore: AngularFirestore,  private app: App, public toastCtrl: ToastController){
+
+    
   }
 
   ionViewWillEnter() {
     this.loaduserdetails();
+    
+        if(firebase.auth().currentUser.emailVerified){
+          let toast = this.toastCtrl.create({
+            message: 'Check your email to verify your account',
+            // duration: 3000,
+            position: 'bottom',
+            showCloseButton: true,
+            closeButtonText: "Okay",
+            dismissOnPageChange: true
+          });
+    
+          toast.present();
+        }
+      
   }
 
   edittutorprofile(){
@@ -285,22 +301,7 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     this.getavail();
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        if(!user.emailVerified){
-          let toast = this.toastCtrl.create({
-            message: 'Check your email to verify your account',
-            // duration: 3000,
-            position: 'bottom',
-            showCloseButton: true,
-            closeButtonText: "Okay",
-            // dismissOnPageChange: true
-          });
     
-          toast.present();
-        }
-      }
-    })
 
   }
 

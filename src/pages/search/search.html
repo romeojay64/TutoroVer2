@@ -103,9 +103,10 @@
         <h2>
           <b>Tutor {{ user.displayName }}</b>
         </h2>
-        <p>{{ user.course }} {{ user.school }}</p>
-        <p>
-          <ion-icon name="star" color="energy"></ion-icon>{{ user.avgrating }}
+        <p>{{ user.course }}</p> 
+        <p> {{ user.school }}</p>
+        <p item-end style="font-size: 20px;">
+            {{ user.avgrating }} <ion-icon name="star" color="energy" style="padding-left: 2px;"></ion-icon>
         </p>
       </ion-item>
 

@@ -1,7 +1,7 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>Inbox</ion-title>
+    <ion-title>Requests</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -62,7 +62,7 @@
               </span>
              
             
-                <ion-icon *ngIf="!message.isBuddies" name="person-add" item-end (click)="hiretutor(message.reciever, message.recieverfname, message.sender)"></ion-icon>
+                <ion-icon *ngIf="!message.isBuddies" color="secondary" name="person-add" item-end (click)="hiretutor(message.reciever, message.recieverfname, message.sender)"></ion-icon>
              
                   
               
@@ -122,7 +122,7 @@
                     <p>{{message.topic}}</p>
                   </span>
 
-                  <ion-icon *ngIf="message.isBuddies" name="chatbubbles" item-end (click)="buddychat(message.sender,message.senderphotoURL)"></ion-icon>
+                  <ion-icon color="secondary" *ngIf="message.isBuddies" name="chatbubbles" item-end (click)="buddychat(message.sender,message.senderphotoURL)"></ion-icon>
                   
                   </ion-item>
                   </div>

@@ -49,7 +49,8 @@ export class WillingtoteachPage {
         .collection("profile")
         .doc(firebase.auth().currentUser.uid)
         .update({
-          ["teaches." + ele]: true
+          ["teaches." + ele]: true,
+          firstlogin: false
         });
 
         // this.navCtrl.setRoot("ProfilepicPage");
